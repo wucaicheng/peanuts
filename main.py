@@ -618,7 +618,7 @@ class TestSuitePage(wx.Panel):
 
     def TestCaseGenerator(self):
 
-        cases = {}
+        cases = OrderedDict()
         for child in self.root.GetChildren():
             for child2 in child.GetChildren():
                 child2Name = self.tree.GetItemText(child2)
@@ -634,7 +634,7 @@ class TestSuitePage(wx.Panel):
         for (i, j) in cases.items():
             if len(j) == 0:
                 del cases[i]
-
+        #print cases
         return cases
 
     def TextTestRunnerFailCheck(self, jobID, abortEvent, testcase, count):
