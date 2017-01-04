@@ -908,6 +908,7 @@ class Frame(wx.Frame):
 
 # when use multiprocess module on windows platform, " 'if __name__ == '__main__' "should be added
 if __name__ == '__main__':
+    mp.freeze_support()
     app = wx.App()
     frame = Frame()
     frame.Show()

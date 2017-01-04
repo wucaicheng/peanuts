@@ -2,7 +2,7 @@
 from common2 import *
 import os
 
-VER = '3.9.3'
+VER = '3.9.5'
 
 TOOL_LIST = ["General", "Memory Tracking", "Test Suite"]
 
@@ -93,7 +93,7 @@ DEFAULT_PATH = os.getcwd() + os.sep
 SSH_LOG_PATH = DEFAULT_PATH + "ssh_connection.log"
 DEVICE_STATUS_LOG = "device_status_log"
 
-PING_PERCENT_PASS = 100
+PING_PERCENT_PASS = 60
 PING_COUNT = 5
 PING_TARGET = 'www.baidu.com'
 CHECK_ACCESS_URL = "http://miwifi.com/cgi-bin/luci/web"

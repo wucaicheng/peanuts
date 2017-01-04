@@ -1,4 +1,6 @@
 # -*- coding: utf8 -*-
+import Tkinter         ##resolve pyinstaller exe ImportError: No module named Tkinter
+import FileDialog       ##resolve pyinstaller exe ImportError: No module named FileDialog
 import multiprocessing as mp
 import threading
 import re
@@ -6,7 +8,8 @@ from collections import *
 import numpy as np
 import matplotlib.pyplot as plt
 from openpyxl import Workbook, load_workbook
-from openpyxl.cell import column_index_from_string
+# from openpyxl.cell import column_index_from_string    ##openpyxl version2.3
+from openpyxl.utils import column_index_from_string
 import shutil
 
 from var import *
