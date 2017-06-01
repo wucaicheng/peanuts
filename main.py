@@ -794,13 +794,27 @@ class TestSuitePage(wx.Panel):
                         for child3 in child2.GetChildren():
                             child3Name = self.tree.GetItemText(child3)
                             m = re.search("2g", child3Name)
-                            if m:
-                                self.tree.CheckItem(child3)
+                            n = re.search("5g", child3Name)
+                            if child.IsChecked():
+                                if m:
+                                    self.tree.CheckItem(child3)
+                                elif n and not self.sel5gCheck.IsChecked():
+                                    self.tree.CheckItem(child3, checked=False)
+                            # if m and child.IsChecked():
+                            #     self.tree.CheckItem(child3)
+                            # elif m == True and :
+                            #     self.tree.CheckItem(child3, checked=False)
                     else:
                         child2Name = self.tree.GetItemText(child2)
                         m = re.search("2g", child2Name)
-                        if m:
-                            self.tree.SelectItem(child2)
+                        n = re.search("5g", child2Name)
+                        if child.IsChecked():
+                                if m:
+                                    self.tree.CheckItem(child2)
+                                elif n and not self.sel5gCheck.IsChecked():
+                                    self.tree.CheckItem(child2, checked=False)
+                        # if m and child.IsChecked():
+                        #     self.tree.SelectItem(child2)
         elif self.sel2gCheck.IsChecked() is False:
             for child in self.root.GetChildren():
                 for child2 in child.GetChildren():
@@ -809,13 +823,21 @@ class TestSuitePage(wx.Panel):
                             import re
                             child3Name = self.tree.GetItemText(child3)
                             m = re.search('2g', child3Name)
-                            if m:
-                                self.tree.CheckItem(child3, checked=False)
+                            if child.IsChecked():
+                                if m:
+                                    self.tree.CheckItem(child3, checked=False)
+                                # else:
+                                #     self.tree.CheckItem(child3)
+                            # if m and child.IsChecked():
+                            #     self.tree.CheckItem(child3, checked=False)
                     else:
                         child2Name = self.tree.GetItemText(child2)
                         m = re.search('2g', child2Name)
-                        if m:
-                            self.tree.CheckItem(child2, checked=False)
+                        if child.IsChecked():
+                                if m:
+                                    self.tree.CheckItem(child2, checked=False)
+                        # if m and child.IsChecked():
+                        #     self.tree.CheckItem(child2, checked=False)
 
     def EvtSel5g(self, event):
         import re
@@ -826,13 +848,21 @@ class TestSuitePage(wx.Panel):
                         for child3 in child2.GetChildren():
                             child3Name = self.tree.GetItemText(child3)
                             m = re.search("5g", child3Name)
-                            if m:
-                                self.tree.CheckItem(child3)
+                            n = re.search("2g", child3Name)
+                            if child.IsChecked():
+                                if m:
+                                    self.tree.CheckItem(child3)
+                                elif n and not self.sel2gCheck.IsChecked():
+                                    self.tree.CheckItem(child3, checked=False)
                     else:
                         child2Name = self.tree.GetItemText(child2)
                         m = re.search("5g", child2Name)
-                        if m:
-                            self.tree.SelectItem(child2)
+                        n = re.search("2g", child2Name)
+                        if child.IsChecked():
+                                if m:
+                                    self.tree.CheckItem(child2)
+                                elif n and not self.sel2gCheck.IsChecked():
+                                    self.tree.CheckItem(child2, checked=False)
         elif self.sel5gCheck.IsChecked() is False:
             for child in self.root.GetChildren():
                 for child2 in child.GetChildren():
@@ -841,13 +871,15 @@ class TestSuitePage(wx.Panel):
                             import re
                             child3Name = self.tree.GetItemText(child3)
                             m = re.search('5g', child3Name)
-                            if m:
-                                self.tree.CheckItem(child3, checked=False)
+                            if child.IsChecked():
+                                if m:
+                                    self.tree.CheckItem(child3, checked=False)
                     else:
                         child2Name = self.tree.GetItemText(child2)
                         m = re.search('5g', child2Name)
-                        if m:
-                            self.tree.CheckItem(child2, checked=False)
+                        if child.IsChecked():
+                                if m:
+                                    self.tree.CheckItem(child2, checked=False)
 
     def EvtSelGuest(self, event):
         import re

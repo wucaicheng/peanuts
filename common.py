@@ -616,8 +616,8 @@ def getSiteSurvey(terminal, intf, logname):
 def getWlanTxPower(terminal, intf, logname):
     commandDic1 = {"2g": "wl -i wl1 curpower | grep 'Maximum Power Target among all rates'",
                    "5g": "wl -i wl0 curpower | grep 'Maximum Power Target among all rates'", }
-    commandDic2 = {"2g": "iwconfig wl1 | grep 'Tx-Power='",
-                  "5g": "iwconfig wl0 | grep 'Tx-Power='", }
+    commandDic2 = {"2g": "iwconfig wl1 | grep 'Tx-Power'",
+                  "5g": "iwconfig wl0 | grep 'Tx-Power'", }
 
     result = 0
     command = commandDic1.get(intf)

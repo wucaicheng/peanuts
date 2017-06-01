@@ -10,7 +10,7 @@ TOOL_LIST = ["General", "Memory Tracking", "Test Suite"]
 
 SAVE_BTN_FLAG = False  # represent save button pressed or not
 
-DUT_MODULE_LIST = ['R1D', 'R1CM', 'R2D', "R1CL", "R3", "R3L", "R3P"]
+DUT_MODULE_LIST = ['R1D', 'R1CM', 'R2D', "R1CL", "R3", "R3L", "R3P", "R3D", "PLW", "R3A", "R3G"]
 DUT_MODULE = DUT_MODULE_LIST[0]
 HOST = "192.168.31.1"
 HOST_ORIGINAL = ""
