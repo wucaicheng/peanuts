@@ -549,7 +549,7 @@ class GetThroughputLog(threading.Thread):
 
                 # plt.xlabel('Bandwidth', fontsize=10)
                 plt.ylabel('Mbps', fontsize=10, ha='left')
-                plt.suptitle(picname.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
+                plt.suptitle(picname.split(".")[-2].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
                 plt.xticks(index + bar_width, ('20MHz', '40MHz',), fontsize=10)
                 plt.yticks((25, 50, 100), fontsize=10)
                 plt.legend(prop={'size': 10})
@@ -602,7 +602,7 @@ class GetThroughputLog(threading.Thread):
 
                 # plt.xlabel('Bandwidth', fontsize=10)
                 plt.ylabel('Mbps', fontsize=10, ha='left')
-                plt.suptitle(picname.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
+                plt.suptitle(picname.split(".")[-2].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
                 plt.xticks(index + bar_width, ('20MHz', '40MHz', '80MHz'), fontsize=10)
                 plt.yticks((100, 200, 300), fontsize=10)
                 plt.legend(prop={'size': 10})
@@ -657,7 +657,7 @@ class GetThroughputLog(threading.Thread):
 
                 # plt.xlabel('Bandwidth', fontsize=10)
                 plt.ylabel('Mbps', fontsize=10, ha='left')
-                plt.suptitle(picname.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
+                plt.suptitle(picname.split(".")[-2].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
                 plt.xticks(index + bar_width, ('Normal', 'Guest', 'Relay', 'WRelay'), fontsize=10)
                 plt.yticks((10, 20, 30), fontsize=10)
                 plt.legend(prop={'size': 10})
@@ -710,7 +710,7 @@ class GetThroughputLog(threading.Thread):
 
                 # plt.xlabel('Bandwidth', fontsize=10)
                 plt.ylabel('Mbps', fontsize=10, ha='left')
-                plt.suptitle(picname.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
+                plt.suptitle(picname.split(".")[-2].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
                 plt.xticks(index + bar_width, ('Normal', 'Relay', 'WRelay'), fontsize=10)
                 plt.yticks((10, 20, 30), fontsize=10)
                 plt.legend(prop={'size': 10})

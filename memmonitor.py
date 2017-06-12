@@ -357,12 +357,11 @@ class MemMonitorXlsx(threading.Thread):
 def drawCPU(data):
     # draw a chart
     fig, ax = plt.subplots(figsize=(12, 6))
-    print "draw CPU chart"
-    ax.plot(xrange(len(data)), data)
+    # print "draw CPU chart"
+    ax.plot(xrange(len(data)), data, '^', xrange(len(data)), data)
     # ax.set_title('Total Memory Used')
-    plt.suptitle(v.MAIL_PIC4.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique',
-                 va='top')
-    # plt.xlabel('Counts')
+    plt.suptitle('Current CPU Load', fontsize=12, style='oblique', va='top')
+    plt.xlabel('Number of Times')
     plt.ylabel('Percent%')
     # plt.show()
     plt.savefig(v.MAIL_PIC4)
@@ -372,13 +371,11 @@ def drawCPU(data):
 def drawMem(data):
     # draw a chart
     fig, ax = plt.subplots(figsize=(12, 6))
-    print "draw memory chart"
-    ax.plot(xrange(len(data)), data)
+    # print "draw memory chart"
+    ax.plot(xrange(len(data)), data, '^', xrange(len(data)), data)
     # ax.set_title('Total Memory Used')
-    plt.suptitle("Total Memory Used")
-    plt.suptitle(v.MAIL_PIC1.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique',
-                 va='top')
-    # plt.xlabel('Counts')
+    plt.suptitle('Total Memory Used', fontsize=12, style='oblique', va='top')
+    plt.xlabel('Number of Times')
     plt.ylabel('KB')
     # plt.show()
     plt.savefig(v.MAIL_PIC1)

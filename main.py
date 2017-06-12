@@ -383,8 +383,8 @@ class GeneralPage(wx.Panel):
         if len(v.PC_HOST) is not 0:
             v.PC_USERNAME = self.pcUsr.GetValue()
             v.PC_PWD = self.pcPasswd.GetValue()
-            pcConn = threading.Thread(target=self.pcSshCheckThread, args=(v.PC_HOST, v.PC_USERNAME, v.PC_PWD))
-            pcConn.start()
+            # pcConn = threading.Thread(target=self.pcSshCheckThread, args=(v.PC_HOST, v.PC_USERNAME, v.PC_PWD))
+            # pcConn.start()
 
     def EvtTextChange(self, event):
         self.saveBtn.Enable(True)
