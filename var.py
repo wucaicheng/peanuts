@@ -39,7 +39,7 @@ PC_HOST = '10.237.143.13'
 IPERF_PORT = 5001
 
 # ----------------Memory Tracking-----------------
-
+TOTAL_MEM = 256
 WIDTH = 2000
 WIDTH2 = 4000
 INTERVAL = 1
@@ -137,7 +137,7 @@ ROOT_AP_CHANNEL = 11
 
 UPLOAD_LOG = 1
 FAIL_RETRY = 3
-MEM_MONITOR_INTERVAL = 300
+MEM_MONITOR_INTERVAL = 60
 
 # -------------api------------------#
 WEB_USERNAME = 'admin'

@@ -643,7 +643,7 @@ class TestSuitePage(wx.Panel):
         # save file in windows, default code is gbk
 
         # curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
-        f = open(v.REPORT_FILE_NAME, 'a')
+        f = open(v.REPORT_FILE_NAME, 'w')
         runner = TextTestRunner(f, verbosity=2)
         res = runner.run(testcase)
         errors = res.errors
@@ -709,16 +709,17 @@ class TestSuitePage(wx.Panel):
             t.sleep(0.1)
             # set testKeepGoing to False when click cancel
 
+        if testKeepGoing is False: # click cancel
+            os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
+        else: # reboot android device
+            co.setAdbReboot(v.ANDROID_SERIAL_NUM, v.DEVICE_STATUS_LOG)
+
         if os.path.exists(v.TEST_SUITE_LOG_PATH):
             if not os.path.exists(v.REPORT_NAME):
                 os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_NAME)
             else:
                 os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_NAME + "_" + str(random.randint(1, 9999)))
 
-        if testKeepGoing is False: # click cancel
-            os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
-        else: # reboot android device
-            co.setAdbReboot(v.ANDROID_SERIAL_NUM, v.DEVICE_STATUS_LOG)
         self.abortEvent.set()
         self.dlg.Destroy()
 

@@ -358,11 +358,13 @@ def drawCPU(data):
     # draw a chart
     fig, ax = plt.subplots(figsize=(12, 6))
     # print "draw CPU chart"
-    ax.plot(xrange(len(data)), data, '^', xrange(len(data)), data)
+    ax.plot(xrange(len(data)), data)
     # ax.set_title('Total Memory Used')
     plt.suptitle('Current CPU Load', fontsize=12, style='oblique', va='top')
-    plt.xlabel('Number of Times')
+    plt.ylim(0,100)
+    plt.xlabel('Frequency = time / min')
     plt.ylabel('Percent%')
+    plt.grid(True)
     # plt.show()
     plt.savefig(v.MAIL_PIC4)
     plt.close()
@@ -372,11 +374,13 @@ def drawMem(data):
     # draw a chart
     fig, ax = plt.subplots(figsize=(12, 6))
     # print "draw memory chart"
-    ax.plot(xrange(len(data)), data, '^', xrange(len(data)), data)
+    ax.plot(xrange(len(data)), data)
     # ax.set_title('Total Memory Used')
     plt.suptitle('Total Memory Used', fontsize=12, style='oblique', va='top')
-    plt.xlabel('Number of Times')
-    plt.ylabel('KB')
+    plt.ylim(0, v.TOTAL_MEM)
+    plt.xlabel('Frequency = time / min')
+    plt.ylabel('MB, Total = %dMB' % v.TOTAL_MEM)
+    plt.grid(True)
     # plt.show()
     plt.savefig(v.MAIL_PIC1)
     plt.close()
