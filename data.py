@@ -65,7 +65,20 @@ treeBasicApi = [
         "chanselection_2g",
         "chanselection_5g",
     ],
-
+    "AP_MIXEDPSK_CHAN_CHECK",
+    [
+        "chan1_check_2g",
+        "chan6_check_2g",
+        "chan11_check_2g",
+        "chan13_check_2g",
+        "chan36_check_5g",
+        "chan44_check_5g",
+        "chan52_check_5g",
+        "chan60_check_5g",
+        "chan149_check_5g",
+        "chan157_check_5g",
+        "chan165_check_5g",
+    ],
     'AP_PSK2_CHAN',
     [
         'assoc_psk2_sta_2g',

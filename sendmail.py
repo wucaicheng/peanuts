@@ -83,9 +83,13 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
         """ % "".join(module)
 
     content3 = """
-        <p>本次自动化成功执行用例 %(ransum)d 个，通过%(ranpass)d 个，通过率 %(percent)0.2f%%。有%(error)d个脚本执行错误，
-        共用时 %(time)0.2f 小时。无线终端尝试上线 %(onlinesum)d 次，成功上线 %(onlinepass)d 次，上线率 %(onlinepercent)0.2f%%</p>
+        <p>测试结果：<br/>自动化执行用例 %(ransum)d 个，通过%(ranpass)d 个，通过率 %(percent)0.2f%%。有%(error)d个脚本执行错误，
+        用时 %(time)0.2f 小时。<br/>STA尝试上线 %(onlinesum)d 次，成功 %(onlinepass)d 次，上线率 %(onlinepercent)0.2f%%。</p>
         """ % argsdic
+
+    content0 = """
+        <p>Failed/Error测试例：<br/>......后续添加这部分内容，让邮件更直观，另外，附件报告已经进行了修改，更易读了。</p>
+        """
 
     content5 = """
         <img src="cid:%s" alt="%s" />
@@ -134,6 +138,10 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
         contents = content1 + content2 + content3 + content4
     else:
         contents = content1 + content2 + content3
+
+    if argsdic['percent'] != 100:
+        contents += content0
+
     # 2.4g throughput chart
     if os.path.isfile(v.MAIL_PIC2):
         piclist.append(v.MAIL_PIC2)

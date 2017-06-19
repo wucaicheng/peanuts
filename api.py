@@ -1320,12 +1320,12 @@ def getDeviceSystemInfo(terminal, logname):
         usageNum = float(usage)
         # totalNum = float(total.split()[0])
         totalNum = float(re.sub("\D", "", total))
-        v.TOTAL_MEM = int(totalNum)
         usedMemNum = int(usageNum * totalNum)
         load = ret['cpu']['load']
         loadPercent = float(load) * 100
         result['memUsed'] = usedMemNum
         result['cpuLoad'] = loadPercent
+        result['memTotal'] = int(totalNum)
         return result
 
 

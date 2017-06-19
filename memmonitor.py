@@ -142,6 +142,7 @@ class HttpMemCPUMonitor(threading.Thread):
         self.running = True
         self.plot = []
         self.plot2 = []
+        self.totalmem = 256
         status = dict()
         last_time = t.time()
         while self.running:
@@ -162,8 +163,10 @@ class HttpMemCPUMonitor(threading.Thread):
                 if self.callback is not None:
                     pass
             t.sleep(self.period)
+        if status.get('memTotal') is not None:
+            self.totalmem = status.get('memTotal')
         self.terminal.close()
-        p = mp.Process(target=drawMem, args=(self.plot,))
+        p = mp.Process(target=drawMem, args=(self.plot, self.totalmem))
         p2 = mp.Process(target=drawCPU, args=(self.plot2,))
         p.start()
         p2.start()
@@ -370,16 +373,16 @@ def drawCPU(data):
     plt.close()
 
 
-def drawMem(data):
+def drawMem(data,totalmem):
     # draw a chart
     fig, ax = plt.subplots(figsize=(12, 6))
     # print "draw memory chart"
     ax.plot(xrange(len(data)), data)
     # ax.set_title('Total Memory Used')
     plt.suptitle('Total Memory Used', fontsize=12, style='oblique', va='top')
-    plt.ylim(0, v.TOTAL_MEM)
+    plt.ylim(0, totalmem)
     plt.xlabel('Frequency = time / min')
-    plt.ylabel('MB, Total = %dMB' % v.TOTAL_MEM)
+    plt.ylabel('MB, Total = %dMB' % totalmem)
     plt.grid(True)
     # plt.show()
     plt.savefig(v.MAIL_PIC1)

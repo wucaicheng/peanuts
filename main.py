@@ -562,7 +562,7 @@ class TestSuitePage(wx.Panel):
         self.sel5gCheck = wx.CheckBox(self, -1, "5G")
         self.selGuestCheck = wx.CheckBox(self, -1, "Guest WiFi")
         self.selUploadLog = wx.CheckBox(self, -1, 'Upload Log')
-        self.selUploadLog.SetValue(True)
+        self.selUploadLog.SetValue(False)
         self.selSendMail = wx.CheckBox(self, -1, 'Send Mail')
         self.selSendMail.SetValue(True)
 
@@ -644,18 +644,33 @@ class TestSuitePage(wx.Panel):
 
         # curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
         f = open(v.REPORT_FILE_NAME, 'w')
+        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        f.write(curTime + v.REPORT_TAG_BEGIN)
+        f.write('\n\n')
+        c = 0
+
         runner = TextTestRunner(f, verbosity=2)
         res = runner.run(testcase)
         errors = res.errors
         failures = res.failures
-        c = 0
 
         while (len(errors) != 0 or len(failures) != 0) and c < count and not abortEvent():
             # when failures occoured, start upload log
+            c += 1
             if v.UPLOAD_LOG == 1:
                 upload = api.SetUploadLog2(v.DEVICE_STATUS_LOG)
                 upload.start()
                 upload.join()
+
+            f.write('\n')
+            f.write('######################################################################\n')
+            f.write('\n')
+            if c == count:
+                f.write('The Last Time:\n')
+            curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+            f.write(curTime + v.REPORT_TAG_RETRY)
+            f.write(str(c))
+            f.write('\n\n')
 
             suitefailed = TestSuite()
             for testcase in failures:
@@ -664,8 +679,9 @@ class TestSuitePage(wx.Panel):
             res = runner.run(suitefailed)
             errors = res.errors
             failures = res.failures
-            c += 1
 
+        f.write('\n')
+        f.write(v.REPORT_TAG_END)
         f.close()
         return jobID
 

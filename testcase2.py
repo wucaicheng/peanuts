@@ -973,6 +973,241 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
         else:
             self.fail("Txpower isnot correct.")
 
+class AP_MIXEDPSK_CHAN_CHECK(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = ShellClient(v.CONNECTION_TYPE)
+        self.dut2 = api.HttpClient()
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
+        if ret1 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut2, self.__name__, **option2g)
+        api.setWifi(self.dut2, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def chan1_check_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL1,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        chan_expect = api.getWifiChannel(self.dut2, '2g', self.__class__.__name__)
+        chan_actually = getWlanChannel(self.dut, "2g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL1)) == chan_expect == chan_actually:
+            pass
+        else:
+            self.fail("Channel 1 Setup failed.")
+
+    def chan6_check_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL6,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        chan_expect = api.getWifiChannel(self.dut2, '2g', self.__class__.__name__)
+        chan_actually = getWlanChannel(self.dut, "2g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL6)) == chan_expect == chan_actually:
+            pass
+        else:
+            self.fail("Channel 6 Setup failed.")
+
+    def chan11_check_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL11,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        chan_expect = api.getWifiChannel(self.dut2, '2g', self.__class__.__name__)
+        chan_actually = getWlanChannel(self.dut, "2g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL11)) == chan_expect == chan_actually:
+            pass
+        else:
+            self.fail("Channel 11 Setup failed.")
+
+    def chan13_check_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL13,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        chan_expect = api.getWifiChannel(self.dut2, '2g', self.__class__.__name__)
+        chan_actually = getWlanChannel(self.dut, "2g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL13)) == chan_expect == chan_actually:
+            pass
+        else:
+            self.fail("Channel 13 Setup failed.")
+
+    def chan36_check_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        chan_expect = api.getWifiChannel(self.dut2, '5g', self.__class__.__name__)
+        chan_actually = getWlanChannel(self.dut, "5g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL36)) == chan_expect == chan_actually:
+            pass
+        else:
+            self.fail("Channel 36 Setup failed.")
+
+    def chan44_check_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL44,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        chan_expect = api.getWifiChannel(self.dut2, '5g', self.__class__.__name__)
+        chan_actually = getWlanChannel(self.dut, "5g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL44)) == chan_expect == chan_actually:
+            pass
+        else:
+            self.fail("Channel 44 Setup failed.")
+
+    def chan52_check_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        chan_expect = api.getWifiChannel(self.dut2, '5g', self.__class__.__name__)
+        chan_actually = getWlanChannel(self.dut, "5g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL52)) == chan_expect == chan_actually:
+            pass
+        else:
+            self.fail("Channel 52 Setup failed.")
+
+    def chan60_check_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL60,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        chan_expect = api.getWifiChannel(self.dut2, '5g', self.__class__.__name__)
+        chan_actually = getWlanChannel(self.dut, "5g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL60)) == chan_expect == chan_actually:
+            pass
+        else:
+            self.fail("Channel 60 Setup failed.")
+
+    def chan149_check_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        chan_expect = api.getWifiChannel(self.dut2, '5g', self.__class__.__name__)
+        chan_actually = getWlanChannel(self.dut, "5g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL149)) == chan_expect == chan_actually:
+            pass
+        else:
+            self.fail("Channel 149 Setup failed.")
+
+    def chan157_check_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL157,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        chan_expect = api.getWifiChannel(self.dut2, '5g', self.__class__.__name__)
+        chan_actually = getWlanChannel(self.dut, "5g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL157)) == chan_expect == chan_actually:
+            pass
+        else:
+            self.fail("Channel 157 Setup failed.")
+
+    def chan165_check_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL165,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        chan_expect = api.getWifiChannel(self.dut2, '5g', self.__class__.__name__)
+        chan_actually = getWlanChannel(self.dut, "5g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL165)) == chan_expect == chan_actually:
+            pass
+        else:
+            self.fail("Channel 165 Setup failed.")
+
 
 class AP_CLEAR_CHANSELECTION(TestCase):
     @classmethod
@@ -1005,7 +1240,7 @@ class AP_CLEAR_CHANSELECTION(TestCase):
             'ssid': v.SSID,
             'encryption': 'none',
         }
-        while count < 10:
+        while count < 5:
             api.setWifi(self.dut, self.__class__.__name__, **option2g)
             channel = api.getWifiChannel(self.dut, '2g', self.__class__.__name__)
             if channel not in chan2g:
@@ -1021,7 +1256,7 @@ class AP_CLEAR_CHANSELECTION(TestCase):
             'ssid': v.SSID_5G,
             'encryption': 'none',
         }
-        while count < 10:
+        while count < 5:
             api.setWifi(self.dut, self.__class__.__name__, **option5g)
             channel = api.getWifiChannel(self.dut, '5g', self.__class__.__name__)
             if channel not in chan5g:

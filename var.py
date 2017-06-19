@@ -39,7 +39,7 @@ PC_HOST = '10.237.143.13'
 IPERF_PORT = 5001
 
 # ----------------Memory Tracking-----------------
-TOTAL_MEM = 256
+# TOTAL_MEM = 256
 WIDTH = 2000
 WIDTH2 = 4000
 INTERVAL = 1
@@ -149,8 +149,9 @@ ACCOUNT_DEFAULT_PWD = 'b3a4190199d9ee7fe73ef9a4942a69fece39a771'
 
 # -------------process report------------------#
 WIFI_MAX_THROUGHPUT = 300
-
-
+REPORT_TAG_BEGIN = '----->TestSuite Execution Begin:'
+REPORT_TAG_RETRY = '----->Failed or Error TestCases Retry Times:'
+REPORT_TAG_END = '----->TestSuite Execution END'
 # -------------mail------------------#
 SEND_MAIL = 1
 MAILTO_LIST = ['miwifi-test-wifi@xiaomi.com']
