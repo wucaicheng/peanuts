@@ -70,6 +70,7 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
     if queue is not None:
         argsdic = queue.get(True)
         module = argsdic.get('module')
+        detail = argsdic.get('detail')
     else:
         raise Exception
 
@@ -88,8 +89,8 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
         """ % argsdic
 
     content0 = """
-        <p>Failed/Error测试例：<br/>......后续添加这部分内容，让邮件更直观，另外，附件报告已经进行了修改，更易读了。</p>
-        """
+        <p>Failed/Error测试例:<br/> %s</p>
+        """ % '<br/>'.join(detail)
 
     content5 = """
         <img src="cid:%s" alt="%s" />

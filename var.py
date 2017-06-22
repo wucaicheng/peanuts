@@ -62,7 +62,7 @@ INTF_GUEST = 'guest'
 
 WORD_RANGE = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
 SPEC_RANGE = '`~!@#$%^&*() =+\\|]}[{\'\";:/?.>,<'
-CHINESE_RANGE = "宣室求贤访逐臣贾生才调更无伦可怜夜半虚前席不问苍生问鬼神"
+CHINESE_RANGE = "宣室求贤访逐臣贾生才调更无伦可怜夜半虚前席不问苍生问鬼神火佛秋金"
 
 SSID = generateRandomString(WORD_RANGE, 31)
 SSID_5G = generateRandomString(WORD_RANGE, 31)
@@ -108,6 +108,11 @@ BSSID = ''
 BSSID_5G = ''
 STA_MAC = ''
 STA_MAC_5G = ''
+
+CHANNEL_2_ALL = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
+CHANNEL_5_ALL = ['36', '40', '44', '48', '52', '56', '60', '64', '149', '153', '157', '161', '165']
+CHANNEL_2_RANDOM = generateRandomChannel(CHANNEL_2_ALL)
+CHANNEL_5_RANDOM = generateRandomChannel(CHANNEL_5_ALL)
 
 CHANNEL1 = '1'
 CHANNEL6 = '6'

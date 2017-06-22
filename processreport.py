@@ -30,13 +30,15 @@ class ProcessReport(mp.Process):
         throughput = GetThroughputLog(self.report)
         online = GetOnlineLog(self.report)
         module = GetTestModule(self.report)
+        faileddetail = GetFailedDetail(self.report)
         time.start()
         test.start()
         throughput.start()
         online.start()
         module.start()
+        faileddetail.start()
         while time.is_alive() or test.is_alive() or throughput.is_alive() \
-                or online.is_alive() or module.is_alive():
+                or online.is_alive() or module.is_alive() or faileddetail.is_alive():
             pass
         self.result.update(error=test.result['error'])
         self.result.update(ranpass=test.result["ranpass"])
@@ -54,6 +56,7 @@ class ProcessReport(mp.Process):
         else:
             self.result.update(onlinepercent=online.result["pass"]/float(onlineSum)*100)
         self.result.update(module=module.result)
+        self.result.update(detail=faileddetail.result)
         if len(throughput.wanBWResult) is not 0:
             self.result.update(wandownload=throughput.wanBWResult['wandownload'])
             self.result.update(wanupload=throughput.wanBWResult['wanupload'])
@@ -847,6 +850,53 @@ class GetWanBandwidth(threading.Thread):
                     self.result['wandownload'] = n.group(1)
                     self.result['wanupload'] = m.group(1)
                     break
+
+class GetFailedDetail(threading.Thread):
+    '''
+    在testcase自动生成的log中,找到下面的结构,列出err,failed点
+    ######################################################################
+
+    The Last Time:
+    2017.06.19 01:56:59----->Failed or Error TestCases Retry Times:3
+
+    chan36_check_5g (testcase2.AP_MIXEDPSK_CHAN_CHECK) ... FAIL
+    chan44_check_5g (testcase2.AP_MIXEDPSK_CHAN_CHECK) ... FAIL
+    chan52_check_5g (testcase2.AP_MIXEDPSK_CHAN_CHECK) ... FAIL
+    chan60_check_5g (testcase2.AP_MIXEDPSK_CHAN_CHECK) ... FAIL
+
+    ======================================================================
+    '''
+    def __init__(self, report):
+        threading.Thread.__init__(self)
+        self.running = False
+        self.reportName = report
+        self.fileNotEnd = True
+        self.result = list()
+
+    def run(self):
+        self.running = True
+        f = open(self.reportName)
+        for line in f:
+            if not line.isspace():
+                m = re.search('The Last Time:', line)
+                if m:
+                    while self.fileNotEnd:
+                        line1 = next(f)
+                        if not line1.isspace():
+                            m1 = re.search('^=*=$', line1)
+                            m2 = re.search('.*FAIL$', line1)
+                            m3 = re.search('.*ERROR$', line1)
+                            if m1:
+                                self.fileNotEnd = False
+                            if m2:
+                                self.result.append(m2.group())
+                            if m3:
+                                self.result.append(m3.group())
+        f.close()
+        self.stop()
+
+    def stop(self):
+        self.running = False
 
 
 if __name__ == '__main__':
