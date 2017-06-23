@@ -127,7 +127,7 @@ treeBasicApi = [
         "assoc_psk2_sta_ssidchinese_2g",
         'assoc_psk2_sta_ssidchinese_5g',
     ],
-    'AP_SSIDHIDE',
+    'AP_SSIDHIDE_CHECK',
     [
         'ap_clear_ssidhide_2g',
         'ap_clear_ssidhide_5g',
@@ -139,13 +139,7 @@ treeBasicApi = [
     'AP_MIXEDPSK_SSIDHIDE',
     [
         'assoc_psk2_sta_2g',
-        'assoc_psk_sta_2g',
-        'assoc_tkippsk2_sta_2g',
-        'assoc_tkippsk_sta_2g',
         'assoc_psk2_sta_5g',
-        'assoc_psk_sta_5g',
-        'assoc_tkippsk2_sta_5g',
-        'assoc_tkippsk_sta_5g',
     ],
 
 ]
