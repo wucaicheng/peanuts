@@ -86,6 +86,17 @@ treeBasicApi = [
     'AP_MIXEDPSK_BW_CHECK',
     [
         'autochan_BW_check_2g',
+        'autochan_BW_check_5g',
+        'chan1_BW40_CHECK_2g',
+        'chan6_BW20_CHECK_2g',
+        'chan11_BW40_CHECK_2g',
+        'chan13_BWauto_CHECK_2g',
+        'chan36_BW20_CHECK_5g',
+        'chan48_BW40_CHECK_5g',
+        'chan52_BW80_CHECK_5g',
+        'chan64_BW20_CHECK_5g',
+        'chan157_BW40_CHECK_5g',
+        'chan165_BWauto_CHECK_5g',
     ],
     'AP_MIXEDPSK_CHAN',
     [

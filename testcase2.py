@@ -1777,7 +1777,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'mixed-psk',
-            'pwd': v.KEY
+            'pwd': v.KEY,
         }
 
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -1809,185 +1809,410 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             else:
                 self.fail("Auto BW isnot correct.")
 
-    def autochan_txpower_5g(self):
+    def autochan_BW_check_5g(self):
 
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'encryption': 'none',
-            'txpwr': 'min',
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
         }
 
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+        bw = getWlanBW(self.dut, "5g", self.__class__.__name__)
 
-        minPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 1.015
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+            if bw == v.R1CM_MAX_RATE_5G['80']:
+                pass
+            else:
+                self.fail("Auto BW isnot correct.")
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            if bw == v.R1D_MAX_RATE_5G['80']:
+                pass
+            else:
+                self.fail("Auto BW isnot correct.")
+        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+            self.fail("Donot Support 5G.")
+        if v.DUT_MODULE == 'R3P':
+            if bw == v.R3P_MAX_RATE_5G['80']:
+                pass
+            else:
+                self.fail("Auto BW isnot correct.")
+        if v.DUT_MODULE == 'R3D':
+            if bw == v.R3D_MAX_RATE_5G['80']:
+                pass
+            else:
+                self.fail("Auto BW isnot correct.")
 
-        if minPower <= power <= maxPower:
-            pass
-        else:
-            self.fail("Txpower isnot correct.")
-
-    def chan1_txpower_2g(self):
+    def chan1_BW40_CHECK_2g(self):
 
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'encryption': 'none',
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
             'channel': v.CHANNEL1,
-            'txpwr': 'min',
+            'bandwidth': '40',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+        bw = getWlanBW(self.dut, "2g", self.__class__.__name__)
 
-        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+            if bw == v.R1CM_MAX_RATE_2G['40']:
+                pass
+            else:
+                self.fail("Channel 1 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            if bw == v.R1D_MAX_RATE_2G['40']:
+                pass
+            else:
+                self.fail("Channel 1 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+            if bw == v.R1CL_MAX_RATE_2G['40']:
+                pass
+            else:
+                self.fail("Channel 1 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R3P':
+            if bw == v.R3P_MAX_RATE_2G['40']:
+                pass
+            else:
+                self.fail("Channel 1 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R3D':
+            if bw == v.R3D_MAX_RATE_2G['40']:
+                pass
+            else:
+                self.fail("Channel 1 BW40 isnot correct.")
 
-        if minPower <= power <= maxPower:
-            pass
-        else:
-            self.fail("Txpower isnot correct.")
-
-    def chan6_txpower_2g(self):
+    def chan6_BW20_CHECK_2g(self):
 
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'encryption': 'none',
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
             'channel': v.CHANNEL6,
-            'txpwr': 'min',
+            'bandwidth': '20',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+        bw = getWlanBW(self.dut, "2g", self.__class__.__name__)
 
-        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+            if bw == v.R1CM_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Channel 6 BW20 isnot correct.")
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            if bw == v.R1D_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Channel 6 BW20 isnot correct.")
+        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+            if bw == v.R1CL_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Channel 6 BW20 isnot correct.")
+        if v.DUT_MODULE == 'R3P':
+            if bw == v.R3P_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Channel 6 BW20 isnot correct.")
+        if v.DUT_MODULE == 'R3D':
+            if bw == v.R3D_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Channel 6 BW20 isnot correct.")
 
-        if minPower <= power <= maxPower:
-            pass
-        else:
-            self.fail("Txpower isnot correct.")
-
-    def chan11_txpower_2g(self):
+    def chan11_BW40_CHECK_2g(self):
 
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'encryption': 'none',
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
             'channel': v.CHANNEL11,
-            'txpwr': 'min',
+            'bandwidth': '40',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+        bw = getWlanBW(self.dut, "2g", self.__class__.__name__)
 
-        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+            if bw == v.R1CM_MAX_RATE_2G['40']:
+                pass
+            else:
+                self.fail("Channel 11 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            if bw == v.R1D_MAX_RATE_2G['40']:
+                pass
+            else:
+                self.fail("Channel 11 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+            if bw == v.R1CL_MAX_RATE_2G['40']:
+                pass
+            else:
+                self.fail("Channel 11 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R3P':
+            if bw == v.R3P_MAX_RATE_2G['40']:
+                pass
+            else:
+                self.fail("Channel 1 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R3D':
+            if bw == v.R3D_MAX_RATE_2G['40']:
+                pass
+            else:
+                self.fail("Channel 11 BW40 isnot correct.")
 
-        if minPower <= power <= maxPower:
-            pass
-        else:
-            self.fail("Txpower isnot correct.")
-
-    def chan13_txpower_2g(self):
+    def chan13_BWauto_CHECK_2g(self):
 
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'encryption': 'none',
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
             'channel': v.CHANNEL13,
-            'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+        bw = getWlanBW(self.dut, "2g", self.__class__.__name__)
 
-        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+            if bw == v.R1CM_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Channel 13 BWauto isnot correct.")
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            if bw == v.R1D_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Channel 13 BWauto isnot correct.")
+        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+            if bw == v.R1CL_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Channel 13 BWauto isnot correct.")
+        if v.DUT_MODULE == 'R3P':
+            if bw == v.R3P_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Channel 13 BWauto isnot correct.")
+        if v.DUT_MODULE == 'R3D':
+            if bw == v.R3D_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Channel 13 BWauto isnot correct.")
 
-        if minPower <= power <= maxPower:
-            pass
-        else:
-            self.fail("Txpower isnot correct.")
-
-    def chan36_txpower_5g(self):
+    def chan36_BW20_CHECK_5g(self):
 
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'encryption': 'none',
             'channel': v.CHANNEL36,
-            'txpwr': 'min',
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+            'bandwidth': '20',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+        bw = getWlanBW(self.dut, "5g", self.__class__.__name__)
 
-        minPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 1.015
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+            if bw == v.R1CM_MAX_RATE_5G['20']:
+                pass
+            else:
+                self.fail("Channel 36 BW20 isnot correct.")
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            if bw == v.R1D_MAX_RATE_5G['20']:
+                pass
+            else:
+                self.fail("Channel 36 BW20 isnot correct.")
+        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+            self.fail("Donot Support 5G.")
+        if v.DUT_MODULE == 'R3P':
+            if bw == v.R3P_MAX_RATE_5G['20']:
+                pass
+            else:
+                self.fail("Channel 36 BW20 isnot correct.")
+        if v.DUT_MODULE == 'R3D':
+            if bw == v.R3D_MAX_RATE_5G['20']:
+                pass
+            else:
+                self.fail("Channel 36 BW20 isnot correct.")
 
-        if minPower <= power <= maxPower:
-            pass
-        else:
-            self.fail("Txpower isnot correct.")
-
-    def chan52_txpower_5g(self):
+    def chan48_BW40_CHECK_5g(self):
 
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'encryption': 'none',
+            'channel': v.CHANNEL48,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+            'bandwidth': '40',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        bw = getWlanBW(self.dut, "5g", self.__class__.__name__)
+
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+            if bw == v.R1CM_MAX_RATE_5G['40']:
+                pass
+            else:
+                self.fail("Channel 48 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            if bw == v.R1D_MAX_RATE_5G['40']:
+                pass
+            else:
+                self.fail("Channel 48 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+            self.fail("Donot Support 5G.")
+        if v.DUT_MODULE == 'R3P':
+            if bw == v.R3P_MAX_RATE_5G['40']:
+                pass
+            else:
+                self.fail("Channel 48 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R3D':
+            if bw == v.R3D_MAX_RATE_5G['40']:
+                pass
+            else:
+                self.fail("Channel 48 BW40 isnot correct.")
+
+    def chan52_BW80_CHECK_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
             'channel': v.CHANNEL52,
-            'txpwr': 'min',
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+            'bandwidth': '80',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+        bw = getWlanBW(self.dut, "5g", self.__class__.__name__)
 
-        minPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 1.015
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+            if bw == v.R1CM_MAX_RATE_5G['80']:
+                pass
+            else:
+                self.fail("Channel 52 BW80 isnot correct.")
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            if bw == v.R1D_MAX_RATE_5G['80']:
+                pass
+            else:
+                self.fail("Channel 52 BW80 isnot correct.")
+        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+            self.fail("Donot Support 5G.")
+        if v.DUT_MODULE == 'R3P':
+            if bw == v.R3P_MAX_RATE_5G['80']:
+                pass
+            else:
+                self.fail("Channel 52 BW80 isnot correct.")
+        if v.DUT_MODULE == 'R3D':
+            if bw == v.R3D_MAX_RATE_5G['80']:
+                pass
+            else:
+                self.fail("Channel 52 BW80 isnot correct.")
 
-        if minPower <= power <= maxPower:
-            pass
-        else:
-            self.fail("Txpower isnot correct.")
-
-    def chan149_txpower_5g(self):
+    def chan64_BW20_CHECK_5g(self):
 
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'encryption': 'none',
-            'channel': v.CHANNEL149,
-            'txpwr': 'min',
+            'channel': v.CHANNEL64,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+            'bandwidth': '20',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+        bw = getWlanBW(self.dut, "5g", self.__class__.__name__)
 
-        minPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 1.015
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+            if bw == v.R1CM_MAX_RATE_5G['20']:
+                pass
+            else:
+                self.fail("Channel 64 BW20 isnot correct.")
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            if bw == v.R1D_MAX_RATE_5G['20']:
+                pass
+            else:
+                self.fail("Channel 64 BW20 isnot correct.")
+        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+            self.fail("Donot Support 5G.")
+        if v.DUT_MODULE == 'R3P':
+            if bw == v.R3P_MAX_RATE_5G['20']:
+                pass
+            else:
+                self.fail("Channel 64 BW20 isnot correct.")
+        if v.DUT_MODULE == 'R3D':
+            if bw == v.R3D_MAX_RATE_5G['20']:
+                pass
+            else:
+                self.fail("Channel 64 BW20 isnot correct.")
 
-        if minPower <= power <= maxPower:
-            pass
-        else:
-            self.fail("Txpower isnot correct.")
-
-    def chan165_txpower_5g(self):
+    def chan157_BW40_CHECK_5g(self):
 
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'encryption': 'none',
+            'channel': v.CHANNEL157,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+            'bandwidth': '40',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        bw = getWlanBW(self.dut, "5g", self.__class__.__name__)
+
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+            if bw == v.R1CM_MAX_RATE_5G['40']:
+                pass
+            else:
+                self.fail("Channel 157 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            if bw == v.R1D_MAX_RATE_5G['40']:
+                pass
+            else:
+                self.fail("Channel 157 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+            self.fail("Donot Support 5G.")
+        if v.DUT_MODULE == 'R3P':
+            if bw == v.R3P_MAX_RATE_5G['40']:
+                pass
+            else:
+                self.fail("Channel 157 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R3D':
+            if bw == v.R3D_MAX_RATE_5G['40']:
+                pass
+            else:
+                self.fail("Channel 157 BW40 isnot correct.")
+
+    def chan165_BWauto_CHECK_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
             'channel': v.CHANNEL165,
-            'txpwr': 'min',
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+        bw = getWlanBW(self.dut, "5g", self.__class__.__name__)
 
-        minPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 1.015
-
-        if minPower <= power <= maxPower:
-            pass
-        else:
-            self.fail("Txpower isnot correct.")
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+            if bw == v.R1CM_MAX_RATE_5G['20']:
+                pass
+            else:
+                self.fail("Channel 165 BWauto isnot correct.")
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            if bw == v.R1D_MAX_RATE_5G['20']:
+                pass
+            else:
+                self.fail("Channel 165 BWauto isnot correct.")
+        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+            self.fail("Donot Support 5G.")
+        if v.DUT_MODULE == 'R3P':
+            if bw == v.R3P_MAX_RATE_5G['20']:
+                pass
+            else:
+                self.fail("Channel 165 BWauto isnot correct.")
+        if v.DUT_MODULE == 'R3D':
+            if bw == v.R3D_MAX_RATE_5G['20']:
+                pass
+            else:
+                self.fail("Channel 165 BWauto isnot correct.")
 
 
 class AP_MIXEDPSK_CHAN(TestCase):
