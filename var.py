@@ -17,6 +17,21 @@ HOST_ORIGINAL = ""
 USR = "root"
 PASSWD = "admin"
 
+R1CM_MAX_RATE_2G = {'20': 144, '40': 300}
+R1CM_MAX_RATE_5G = {'20': 173, '40': 400, '80': 867}
+R3P_MAX_RATE_2G = {'20': 288, '40': 600}
+R3P_MAX_RATE_5G = {'20': 346, '40': 800, '80': 1734}
+R3D_MAX_RATE_2G = {'20': 378, '40': 800}
+R3D_MAX_RATE_5G = {'20': 346, '40': 800, '80': 1733, '160': 1733}
+R3A_MAX_RATE_2G = {'20': 144, '40': 300}
+R3A_MAX_RATE_5G = {'20': 173, '40': 400, '80': 867}
+R1CL_MAX_RATE_2G = {'20': 144, '40': 300}
+R3G_MAX_RATE_2G = {'20': 144, '40': 300}
+R3G_MAX_RATE_5G = {'20': 173, '40': 400, '80': 867}
+R2D_MAX_RATE_2G = {'20': 144, '40': 300}
+R2D_MAX_RATE_5G = {'20': 173, '40': 400, '80': 866}
+R1D_MAX_RATE_2G = {'20': 144, '40': 300}
+R1D_MAX_RATE_5G = {'20': 173, '40': 400, '80': 866}
 """
 connection_type = 1 represent ssh
                   2 represent telnet
@@ -180,3 +195,7 @@ MAIL_PIC10 = TEST_SUITE_LOG_PATH + "Ookla_Speedtest_5GHz.png"
 MAIL_XLSX = TEST_SUITE_LOG_PATH + "Memory_Tracking.xlsx"
 MAIL_THROUGHPUT_XLSX_ORIGINAL = "throughput.xlsx"
 MAIL_THROUGHPUT_XLSX = TEST_SUITE_LOG_PATH + MAIL_THROUGHPUT_XLSX_ORIGINAL
+
+
+if __name__ == '__main__':
+    print R1CM_MAX_RATE_2G['20']

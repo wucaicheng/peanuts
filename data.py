@@ -83,6 +83,10 @@ treeBasicApi = [
         'assoc_psk2_sta_2g',
         'assoc_psk2_sta_5g',
     ],
+    'AP_MIXEDPSK_BW_CHECK',
+    [
+        'autochan_BW_check_2g',
+    ],
     'AP_MIXEDPSK_CHAN',
     [
         'assoc_psk2_sta_2g',

@@ -1890,15 +1890,15 @@ def getWlanChannel(terminal, intf, logname):
     return int(result)
 
 def getWlanBW(terminal, intf, logname):
-    commandDic1 = {"2g": "iwinfo wl1 info | grep -i channel",
-                   "5g": "iwinfo wl0 info | grep -i channel", }
+    commandDic1 = {"2g": "iwinfo wl1 info | grep -i Rate",
+                   "5g": "iwinfo wl0 info | grep -i Rate", }
 
     result = 0
     command = commandDic1.get(intf)
     ret = setGet(terminal, command, logname)
     if isinstance(ret, list):
         for line in ret:
-            m = re.search('Channel:\s(\d*)', line)
+            m = re.search('Bit Rate:\s(\d*)', line)
             if m:
                 result = m.group(1)
                 return int(result)

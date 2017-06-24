@@ -1781,16 +1781,33 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         }
 
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        bw = getWlanBW(self.dut, "2g", self.__class__.__name__)
 
-        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-
-        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
-
-        if minPower <= power <= maxPower:
-            pass
-        else:
-            self.fail("Txpower isnot correct.")
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+            if bw == v.R1CM_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Auto BW isnot correct.")
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            if bw == v.R1D_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Auto BW isnot correct.")
+        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+            if bw == v.R1CL_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Auto BW isnot correct.")
+        if v.DUT_MODULE == 'R3P':
+            if bw == v.R3P_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Auto BW isnot correct.")
+        if v.DUT_MODULE == 'R3D':
+            if bw == v.R3D_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Auto BW isnot correct.")
 
     def autochan_txpower_5g(self):
 
