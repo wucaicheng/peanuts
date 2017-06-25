@@ -3135,6 +3135,54 @@ class AP_MIXEDPSK_CHAN_REPEAT(TestCase):
 
         self.assertTrue(res5gConn, "Not all association were successful.")
 
+class AP_CLEAR_BSD(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+        option = {
+            'bsd': 1,
+            'ssid1': v.SSID,
+            'encryption1': 'none',
+        }
+        api.setAllWifi(self.dut, self.__name__, **option)
+
+    @classmethod
+    def tearDownClass(self):
+        api.setAllWifi(self.dut, self.__name__)
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_clear_near_field_sta(self):
+
+        resConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+
+        self.assertTrue(resConn, msg="Association wasnot successful.")
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
+
+        resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+        self.assertTrue(resConn2, msg="STA Online Successfully, But doesnot associate with 5g")
+
 
 class AP_MIXEDPSK_BSD(TestCase):
     @classmethod
@@ -3172,23 +3220,18 @@ class AP_MIXEDPSK_BSD(TestCase):
         self.dut.close()
 
     def assoc_psk2_near_field_sta(self):
-        count = 0
-        while count <= 1:
-            resConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if resConn and resConn2:
-                break
-            else:
-                resConn2 = False
-            count += 1
+
+        resConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
-        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
         result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
         resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
+
+        resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+        self.assertTrue(resConn2, msg="STA Online Successfully, But doesnot associate with 5g")
 
     def assoc_psk_near_field_sta(self):
         count = 0

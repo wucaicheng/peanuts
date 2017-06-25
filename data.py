@@ -156,7 +156,6 @@ treeBasicApi = [
         'assoc_psk2_sta_2g',
         'assoc_psk2_sta_5g',
     ],
-
 ]
 
 treeGuestWifiApi = [
@@ -181,97 +180,101 @@ treeGuestWifiApi = [
 
 
 treeBSDApi = [
+    'AP_CLEAR_BSD',
+    [
+        'assoc_clear_near_field_sta',
+    ],
     'AP_MIXEDPSK_BSD',
     [
         'assoc_psk2_near_field_sta',
-        'assoc_psk_near_field_sta',
-        'assoc_tkippsk2_near_field_sta',
-        'assoc_tkippsk_near_field_sta',
+        # 'assoc_psk_near_field_sta',
+        # 'assoc_tkippsk2_near_field_sta',
+        # 'assoc_tkippsk_near_field_sta',
     ],
-    'AP_MIXEDPSK_BSD_SSIDSPEC',
-    [
-        'assoc_psk2_near_field_sta',
-        'assoc_psk_near_field_sta',
-        'assoc_tkippsk2_near_field_sta',
-        'assoc_tkippsk_near_field_sta',
-    ],
-    'AP_MIXEDPSK_BSD_KEYSPEC',
-    [
-        'assoc_psk2_near_field_sta',
-        'assoc_psk_near_field_sta',
-        'assoc_tkippsk2_near_field_sta',
-        'assoc_tkippsk_near_field_sta',
-    ],
-    'AP_MIXEDPSK_BSD_SSIDCHINESE',
-    [
-        'assoc_psk2_near_field_sta',
-        'assoc_psk_near_field_sta',
-        'assoc_tkippsk2_near_field_sta',
-        'assoc_tkippsk_near_field_sta',
-    ],
-    'AP_BSD_SSIDHIDE',
-    [
-        'ap_clear_ssidhide',
-        'ap_psk2_ssidhide',
-        'ap_mixedpsk_ssidhide',
-    ],
-    'AP_MIXEDPSK_BSD_SSIDHIDE',
-    [
-        'assoc_psk2_near_field_sta',
-        'assoc_psk_near_field_sta',
-        'assoc_tkippsk2_near_field_sta',
-        'assoc_tkippsk_near_field_sta'
-    ],
-    'AP_MIXEDPSK_BSD_WHITELIST',
-    [
-        'assoc_psk2_near_field_sta_in_whitelist',
-        'assoc_psk2_near_field_sta_outof_whitelist',
-    ],
-    'AP_MIXEDPSK_BSD_BLACKLIST',
-    [
-        'assoc_psk2_near_field_sta_in_blacklist',
-        'assoc_psk2_near_field_sta_outof_blacklist',
-    ],
-    'AP_RELAY_MIXEDPSK_BSD',
-    [
-        'assoc_psk2_near_field_sta',
-        'assoc_psk_near_field_sta',
-        'assoc_tkippsk2_near_field_sta',
-        'assoc_tkippsk_near_field_sta',
-    ],
-    'AP_RELAY_BSD_SSIDHIDE',
-    [
-        'ap_clear_ssidhide',
-        'ap_psk2_ssidhide',
-        'ap_mixedpsk_ssidhide',
-    ],
-    'AP_RELAY_MIXEDPSK_BSD_SSIDHIDE',
-    [
-        'assoc_psk2_near_field_sta',
-        'assoc_psk_near_field_sta',
-        'assoc_tkippsk2_near_field_sta',
-        'assoc_tkippsk_near_field_sta',
-    ],
-    'AP_WIRELESS_RELAY_MIXEDPSK_BSD',
-    [
-        'assoc_psk2_near_field_sta',
-        'assoc_psk_near_field_sta',
-        'assoc_tkippsk2_near_field_sta',
-        'assoc_tkippsk_near_field_sta',
-    ],
-    'AP_WIRELESS_RELAY_BSD_SSIDHIDE',
-    [
-        'ap_clear_ssidhide',
-        'ap_psk2_ssidhide',
-        'ap_mixedpsk_ssidhide',
-    ],
-    'AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE',
-    [
-        'assoc_psk2_near_field_sta',
-        'assoc_psk_near_field_sta',
-        'assoc_tkippsk2_near_field_sta',
-        'assoc_tkippsk_near_field_sta',
-    ],
+    # 'AP_MIXEDPSK_BSD_SSIDSPEC',
+    # [
+    #     'assoc_psk2_near_field_sta',
+    #     'assoc_psk_near_field_sta',
+    #     'assoc_tkippsk2_near_field_sta',
+    #     'assoc_tkippsk_near_field_sta',
+    # ],
+    # 'AP_MIXEDPSK_BSD_KEYSPEC',
+    # [
+    #     'assoc_psk2_near_field_sta',
+    #     'assoc_psk_near_field_sta',
+    #     'assoc_tkippsk2_near_field_sta',
+    #     'assoc_tkippsk_near_field_sta',
+    # ],
+    # 'AP_MIXEDPSK_BSD_SSIDCHINESE',
+    # [
+    #     'assoc_psk2_near_field_sta',
+    #     'assoc_psk_near_field_sta',
+    #     'assoc_tkippsk2_near_field_sta',
+    #     'assoc_tkippsk_near_field_sta',
+    # ],
+    # 'AP_BSD_SSIDHIDE',
+    # [
+    #     'ap_clear_ssidhide',
+    #     'ap_psk2_ssidhide',
+    #     'ap_mixedpsk_ssidhide',
+    # ],
+    # 'AP_MIXEDPSK_BSD_SSIDHIDE',
+    # [
+    #     'assoc_psk2_near_field_sta',
+    #     'assoc_psk_near_field_sta',
+    #     'assoc_tkippsk2_near_field_sta',
+    #     'assoc_tkippsk_near_field_sta'
+    # ],
+    # 'AP_MIXEDPSK_BSD_WHITELIST',
+    # [
+    #     'assoc_psk2_near_field_sta_in_whitelist',
+    #     'assoc_psk2_near_field_sta_outof_whitelist',
+    # ],
+    # 'AP_MIXEDPSK_BSD_BLACKLIST',
+    # [
+    #     'assoc_psk2_near_field_sta_in_blacklist',
+    #     'assoc_psk2_near_field_sta_outof_blacklist',
+    # ],
+    # 'AP_RELAY_MIXEDPSK_BSD',
+    # [
+    #     'assoc_psk2_near_field_sta',
+    #     'assoc_psk_near_field_sta',
+    #     'assoc_tkippsk2_near_field_sta',
+    #     'assoc_tkippsk_near_field_sta',
+    # ],
+    # 'AP_RELAY_BSD_SSIDHIDE',
+    # [
+    #     'ap_clear_ssidhide',
+    #     'ap_psk2_ssidhide',
+    #     'ap_mixedpsk_ssidhide',
+    # ],
+    # 'AP_RELAY_MIXEDPSK_BSD_SSIDHIDE',
+    # [
+    #     'assoc_psk2_near_field_sta',
+    #     'assoc_psk_near_field_sta',
+    #     'assoc_tkippsk2_near_field_sta',
+    #     'assoc_tkippsk_near_field_sta',
+    # ],
+    # 'AP_WIRELESS_RELAY_MIXEDPSK_BSD',
+    # [
+    #     'assoc_psk2_near_field_sta',
+    #     'assoc_psk_near_field_sta',
+    #     'assoc_tkippsk2_near_field_sta',
+    #     'assoc_tkippsk_near_field_sta',
+    # ],
+    # 'AP_WIRELESS_RELAY_BSD_SSIDHIDE',
+    # [
+    #     'ap_clear_ssidhide',
+    #     'ap_psk2_ssidhide',
+    #     'ap_mixedpsk_ssidhide',
+    # ],
+    # 'AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE',
+    # [
+    #     'assoc_psk2_near_field_sta',
+    #     'assoc_psk_near_field_sta',
+    #     'assoc_tkippsk2_near_field_sta',
+    #     'assoc_tkippsk_near_field_sta',
+    # ],
 ]
 
 

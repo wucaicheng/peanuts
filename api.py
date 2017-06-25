@@ -965,7 +965,57 @@ def setRedirectApply(terminal, logname):
 
 
 def getWifiDetailAll(terminal, logname):
-
+    '''
+    :return  type dict
+    {'bsd': 1,
+     'info': [
+              {'status': '1',
+               'txbf': '0',
+               'device': 'mt7620.network1',
+               'bandwidth': '0',
+               'bsd': '1',
+               'password': '11111111',
+               'hidden': '0',
+               'txpwr': 'mid',
+               'ssid': 'fjr3p',
+               'encryption': 'mixed-psk',
+               'channelInfo': {'bandwidth': '0',
+                               'bandList': [],
+                               'channel': 8},
+               'mode': 'Master',
+               'ifname': 'wl1',
+               'signal': 0,
+               'channel': '0'
+             },
+              {'status': '1',
+               'txbf': '0',
+               'device': 'mt7612.network1',
+               'bandwidth': '0',
+               'bsd': '1',
+               'password': '11111111',
+               'hidden': '0',
+               'txpwr': 'mid',
+               'ssid': 'fjr3p_5G',
+               'encryption': 'mixed-psk',
+               'channelInfo': {'bandwidth': '0',
+                               'bandList': [],
+                               'channel': 149},
+               'mode': 'Master',
+               'ifname': 'wl0',
+               'signal': 0,
+               'channel': '0'
+             },
+              {'status': 1,
+               'ssid': 'fjr3p_Guest',
+               'encryption': 'psk2',
+               'enabled': '1',
+               'ifname': 'wl3',
+               'password': "11111111"
+             }
+           ],
+ 'code': 0
+}
+    '''
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/wifi_detail_all'
     ret = setGet(terminal, logname, api)
     if ret is not None:

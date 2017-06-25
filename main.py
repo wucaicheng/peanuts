@@ -521,7 +521,7 @@ class TestSuitePage(wx.Panel):
         self.tree.SetBackgroundColour(wx.WHITE)
 
         self.root = self.tree.AddRoot('Test Cases', ct_type=1)
-        self.rootBasic = self.tree.AppendItem(self.root, 'Basic', ct_type=1)
+        self.rootBasic = self.tree.AppendItem(self.root, 'Wifi Basic', ct_type=1)
         self.rootGuestWifi = self.tree.AppendItem(self.root, 'Guest Wifi', ct_type=1)
         self.rootBSD = self.tree.AppendItem(self.root, 'BSD', ct_type=1)
         self.rootQosApi = self.tree.AppendItem(self.root, 'QoS', ct_type=1)
