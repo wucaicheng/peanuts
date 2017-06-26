@@ -1290,7 +1290,12 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
             'option': 1
         }
         api.setEditDevice(self.dut, self.__name__, **option)
-        api.setWifiMacFilter(self.dut, self.__name__)
+
+        option2 = {
+            'model': 1,
+            'enable': 0
+        }
+        api.setWifiMacFilter(self.dut, self.__name__, **option2)
 
         option2g = {
             'wifiIndex': 1,
@@ -1438,16 +1443,21 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL11,
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL149,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
+
+        option = {
+            'model': 0,
+            'mac': '11:22:33:44:55:66',
+            'option': 0
+        }
+        api.setEditDevice(self.dut, self.__name__, **option)
 
         wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
         self.staMac = wlanInfo["mac"].upper()
