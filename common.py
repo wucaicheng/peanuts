@@ -1889,7 +1889,7 @@ def getWlanChannel(terminal, intf, logname):
 
     return int(result)
 
-def getWlanBW(terminal, intf, logname):
+def getWlanBWRate(terminal, intf, logname):
     commandDic1 = {"2g": "iwinfo wl1 info | grep -i Rate",
                    "5g": "iwinfo wl0 info | grep -i Rate", }
 

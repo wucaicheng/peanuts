@@ -187,9 +187,22 @@ treeBSDApi = [
     'AP_MIXEDPSK_BSD',
     [
         'assoc_psk2_near_field_sta',
+        'assoc_psk2_near_field_sta_repeat',
         # 'assoc_psk_near_field_sta',
         # 'assoc_tkippsk2_near_field_sta',
         # 'assoc_tkippsk_near_field_sta',
+    ],
+    'AP_BSD_CHAN_CHECK',
+    [
+        'chan_1_36_check_bsd',
+        'chan_6_52_check_bsd',
+        'chan_13_165_check_bsd',
+    ],
+    'AP_BSD_BW_CHECK',
+    [
+        'autochan_BW_check_bsd',
+        'chan6_48_BW40_20_check_bsd',
+        'chan13_64_BW20_40_check_bsd',
     ],
     # 'AP_MIXEDPSK_BSD_SSIDSPEC',
     # [

@@ -482,12 +482,6 @@ def setEditDevice(terminal, logname, **kwargs):
     :param kwargs:
     :return:
     """
-    """
-    :param terminal:
-    :param logname:
-    :param kwargs:
-    :return:
-    """
     option = {
         'model': 0,
         'mac': '11:22:33:44:55:66',
@@ -504,10 +498,6 @@ def setWifiMacFilter(terminal, logname, **kwargs):
     """
     model: (0/1 黑名单/白名单)
     enable: (0/1 关闭/开启)
-    :param terminal:
-    :param logname:
-    :param kwargs:
-    :return:
     """
     option = {
         'model' : 0,

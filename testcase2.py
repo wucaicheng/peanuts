@@ -1262,13 +1262,11 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL11,
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL149,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
@@ -1781,7 +1779,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         }
 
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-        bw = getWlanBW(self.dut, "2g", self.__class__.__name__)
+        bw = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_2G['20']:
@@ -1819,7 +1817,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         }
 
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-        bw = getWlanBW(self.dut, "5g", self.__class__.__name__)
+        bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_5G['80']:
@@ -1855,7 +1853,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             'bandwidth': '40',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-        bw = getWlanBW(self.dut, "2g", self.__class__.__name__)
+        bw = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_2G['40']:
@@ -1894,7 +1892,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             'bandwidth': '20',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-        bw = getWlanBW(self.dut, "2g", self.__class__.__name__)
+        bw = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_2G['20']:
@@ -1933,7 +1931,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             'bandwidth': '40',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-        bw = getWlanBW(self.dut, "2g", self.__class__.__name__)
+        bw = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_2G['40']:
@@ -1971,7 +1969,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             'channel': v.CHANNEL13,
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-        bw = getWlanBW(self.dut, "2g", self.__class__.__name__)
+        bw = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_2G['20']:
@@ -2010,7 +2008,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             'bandwidth': '20',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-        bw = getWlanBW(self.dut, "5g", self.__class__.__name__)
+        bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_5G['20']:
@@ -2046,7 +2044,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             'bandwidth': '40',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-        bw = getWlanBW(self.dut, "5g", self.__class__.__name__)
+        bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_5G['40']:
@@ -2082,7 +2080,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             'bandwidth': '80',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-        bw = getWlanBW(self.dut, "5g", self.__class__.__name__)
+        bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_5G['80']:
@@ -2118,7 +2116,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             'bandwidth': '20',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-        bw = getWlanBW(self.dut, "5g", self.__class__.__name__)
+        bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_5G['20']:
@@ -2154,7 +2152,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             'bandwidth': '40',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-        bw = getWlanBW(self.dut, "5g", self.__class__.__name__)
+        bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_5G['40']:
@@ -2189,7 +2187,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-        bw = getWlanBW(self.dut, "5g", self.__class__.__name__)
+        bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_5G['20']:
@@ -3233,6 +3231,32 @@ class AP_MIXEDPSK_BSD(TestCase):
         resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertTrue(resConn2, msg="STA Online Successfully, But doesnot associate with 5g")
 
+    def assoc_psk2_near_field_sta_repeat(self):
+
+        count = 0
+        failedCount = 0
+        assoc5gCount = 0
+        assoc2gCount = 0
+
+        while count < 10:
+            resConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+
+            if resConn and result['ip'] != '':
+                resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                if resConn2:
+                    assoc5gCount += 1
+                else:
+                    assoc2gCount += 1
+            else:
+                failedCount += 1
+
+            count += 1
+
+        self.assertEqual(failedCount, 0, 'STA try to assoc 10 times, Failed %d, 5G Online %d, 2G Online %d' % (failedCount, assoc5gCount, assoc2gCount))
+        self.assertEqual(assoc2gCount, 0, 'STA try to assoc 10 times, 5G Online %d, 2G Online %d' % (assoc5gCount, assoc2gCount))
+
+
     def assoc_psk_near_field_sta(self):
         count = 0
         while count <= 1:
@@ -3290,6 +3314,238 @@ class AP_MIXEDPSK_BSD(TestCase):
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
+class AP_BSD_CHAN_CHECK(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+    @classmethod
+    def tearDownClass(self):
+        api.setAllWifi(self.dut, self.__name__)
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def chan_1_36_check_bsd(self):
+
+        option = {
+            'bsd': 1,
+            'ssid1': v.SSID,
+            'encryption1': 'mixed-psk',
+            'pwd1': v.KEY,
+            'channel1': v.CHANNEL1,
+            'channel2': v.CHANNEL36,
+        }
+        api.setAllWifi(self.dut, self.__class__.__name__, **option)
+
+        chan_expect_2g = api.getWifiChannel(self.dut, '2g', self.__class__.__name__)
+        chan_actually_2g = getWlanChannel(self.dut2, "2g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL1)) == chan_expect_2g == chan_actually_2g:
+            pass
+        else:
+            self.fail("Channel 1 Setup failed.")
+
+        chan_expect_5g = api.getWifiChannel(self.dut, '5g', self.__class__.__name__)
+        chan_actually_5g = getWlanChannel(self.dut2, "5g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL36)) == chan_expect_5g == chan_actually_5g:
+            pass
+        else:
+            self.fail("Channel 36 Setup failed.")
+
+    def chan_6_52_check_bsd(self):
+
+        option = {
+            'bsd': 1,
+            'ssid1': v.SSID,
+            'encryption1': 'mixed-psk',
+            'pwd1': v.KEY,
+            'channel1': v.CHANNEL6,
+            'channel2': v.CHANNEL52,
+        }
+        api.setAllWifi(self.dut, self.__class__.__name__, **option)
+
+        chan_expect_2g = api.getWifiChannel(self.dut, '2g', self.__class__.__name__)
+        chan_actually_2g = getWlanChannel(self.dut2, "2g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL6)) == chan_expect_2g == chan_actually_2g:
+            pass
+        else:
+            self.fail("Channel 6 Setup failed.")
+
+        chan_expect_5g = api.getWifiChannel(self.dut, '5g', self.__class__.__name__)
+        chan_actually_5g = getWlanChannel(self.dut2, "5g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL52)) == chan_expect_5g == chan_actually_5g:
+            pass
+        else:
+            self.fail("Channel 52 Setup failed.")
+
+    def chan_13_165_check_bsd(self):
+
+        option = {
+            'bsd': 1,
+            'ssid1': v.SSID,
+            'encryption1': 'mixed-psk',
+            'pwd1': v.KEY,
+            'channel1': v.CHANNEL13,
+            'channel2': v.CHANNEL165,
+        }
+        api.setAllWifi(self.dut, self.__class__.__name__, **option)
+
+        chan_expect_2g = api.getWifiChannel(self.dut, '2g', self.__class__.__name__)
+        chan_actually_2g = getWlanChannel(self.dut2, "2g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL13)) == chan_expect_2g == chan_actually_2g:
+            pass
+        else:
+            self.fail("Channel 13 Setup failed.")
+
+        chan_expect_5g = api.getWifiChannel(self.dut, '5g', self.__class__.__name__)
+        chan_actually_5g = getWlanChannel(self.dut2, "5g", self.__class__.__name__)
+
+        if int(eval(v.CHANNEL165)) == chan_expect_5g == chan_actually_5g:
+            pass
+        else:
+            self.fail("Channel 165 Setup failed.")
+
+class AP_BSD_BW_CHECK(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+    @classmethod
+    def tearDownClass(self):
+        api.setAllWifi(self.dut, self.__name__)
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def autochan_BW_check_bsd(self):
+
+        option = {
+            'bsd': 1,
+            'ssid1': v.SSID,
+            'encryption1': 'mixed-psk',
+            'pwd1': v.KEY,
+        }
+        api.setAllWifi(self.dut, self.__class__.__name__, **option)
+        bw_2g = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
+        bw_5g = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
+
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+            self.assertEqual(bw_2g, v.R1CM_MAX_RATE_2G['20'], 'BSD 2g Auto BW isnot correct.')
+            self.assertEqual(bw_5g, v.R1CM_MAX_RATE_5G['80'], 'BSD 5g Auto BW isnot correct.')
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            self.assertEqual(bw_2g, v.R1D_MAX_RATE_2G['20'], 'BSD 2g Auto BW isnot correct.')
+            self.assertEqual(bw_5g, v.R1D_MAX_RATE_5G['80'], 'BSD 5g Auto BW isnot correct.')
+        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+            self.fail("Device Donot Support BSD.")
+        if v.DUT_MODULE == 'R3P':
+            self.assertEqual(bw_2g, v.R3P_MAX_RATE_2G['20'], 'BSD 2g Auto BW isnot correct.')
+            self.assertEqual(bw_5g, v.R3P_MAX_RATE_5G['80'], 'BSD 5g Auto BW isnot correct.')
+        if v.DUT_MODULE == 'R3D':
+            self.assertEqual(bw_2g, v.R3D_MAX_RATE_2G['20'], 'BSD 2g Auto BW isnot correct.')
+            self.assertEqual(bw_5g, v.R3D_MAX_RATE_5G['80'], 'BSD 5g Auto BW isnot correct.')
+
+    def chan6_48_BW40_20_check_bsd(self):
+
+        option = {
+            'bsd': 1,
+            'ssid1': v.SSID,
+            'encryption1': 'mixed-psk',
+            'pwd1': v.KEY,
+            'channel1': v.CHANNEL6,
+            'bandwidth1': '40',
+            'channel2': v.CHANNEL48,
+            'bandwidth2': '20',
+
+        }
+        api.setAllWifi(self.dut, self.__class__.__name__, **option)
+        bw_2g = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
+        bw_5g = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
+
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+            self.assertEqual(bw_2g, v.R1CM_MAX_RATE_2G['40'], 'BSD 2g BW40 isnot correct.')
+            self.assertEqual(bw_5g, v.R1CM_MAX_RATE_5G['20'], 'BSD 5g BW20 isnot correct.')
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            self.assertEqual(bw_2g, v.R1D_MAX_RATE_2G['40'], 'BSD 2g BW40 isnot correct.')
+            self.assertEqual(bw_5g, v.R1D_MAX_RATE_5G['20'], 'BSD 5g BW20 isnot correct.')
+        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+            self.fail("Device Donot Support BSD.")
+        if v.DUT_MODULE == 'R3P':
+            self.assertEqual(bw_2g, v.R3P_MAX_RATE_2G['40'], 'BSD 2g BW40 isnot correct.')
+            self.assertEqual(bw_5g, v.R3P_MAX_RATE_5G['20'], 'BSD 5g BW20 isnot correct.')
+        if v.DUT_MODULE == 'R3D':
+            self.assertEqual(bw_2g, v.R3D_MAX_RATE_2G['40'], 'BSD 2g BW40 isnot correct.')
+            self.assertEqual(bw_5g, v.R3D_MAX_RATE_5G['20'], 'BSD 5g BW20 isnot correct.')
+
+    def chan13_64_BW20_40_check_bsd(self):
+
+        option = {
+            'bsd': 1,
+            'ssid1': v.SSID,
+            'encryption1': 'mixed-psk',
+            'pwd1': v.KEY,
+            'channel1': v.CHANNEL13,
+            'bandwidth1': '20',
+            'channel2': v.CHANNEL64,
+            'bandwidth2': '40',
+
+        }
+        api.setAllWifi(self.dut, self.__class__.__name__, **option)
+        bw_2g = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
+        bw_5g = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
+
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+            self.assertEqual(bw_2g, v.R1CM_MAX_RATE_2G['20'], 'BSD 2g BW20 isnot correct.')
+            self.assertEqual(bw_5g, v.R1CM_MAX_RATE_5G['40'], 'BSD 5g BW40 isnot correct.')
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            self.assertEqual(bw_2g, v.R1D_MAX_RATE_2G['20'], 'BSD 2g BW20 isnot correct.')
+            self.assertEqual(bw_5g, v.R1D_MAX_RATE_5G['40'], 'BSD 5g BW40 isnot correct.')
+        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+            self.fail("Device Donot Support BSD.")
+        if v.DUT_MODULE == 'R3P':
+            self.assertEqual(bw_2g, v.R3P_MAX_RATE_2G['20'], 'BSD 2g BW20 isnot correct.')
+            self.assertEqual(bw_5g, v.R3P_MAX_RATE_5G['40'], 'BSD 5g BW40 isnot correct.')
+        if v.DUT_MODULE == 'R3D':
+            self.assertEqual(bw_2g, v.R3D_MAX_RATE_2G['20'], 'BSD 2g BW20 isnot correct.')
+            self.assertEqual(bw_5g, v.R3D_MAX_RATE_5G['40'], 'BSD 5g BW40 isnot correct.')
 
 class AP_MIXEDPSK_BSD_SSIDSPEC(TestCase):
     @classmethod
