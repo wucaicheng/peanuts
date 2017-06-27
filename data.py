@@ -540,13 +540,7 @@ treeAccessControlApi = [
     'AP_MIXEDPSK_WEB_ACCESS',
     [
         'assoc_psk2_sta_access_web_2g',
-        'assoc_psk_sta_access_web_2g',
-        'assoc_tkippsk_sta_access_web_2g',
-        'assoc_tkippsk2_sta_access_web_2g',
         'assoc_psk2_sta_access_web_5g',
-        'assoc_psk_sta_access_web_5g',
-        'assoc_tkippsk_sta_access_web_5g',
-        'assoc_tkippsk2_sta_access_web_5g',
     ],
 
 ]

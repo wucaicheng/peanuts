@@ -1147,17 +1147,49 @@ def getDeviceDetail(terminal, logname, **kwargs):
 
 def getDeviceList(terminal, logname, **kwargs):
     """
+    :param
     online:0/1 (在线+离线/ 在线)
     withbrlan:0/1 (无线/有线+无线)
     :return
-    "isap": 0,       (0/1/2  正常设备/无线中继/有线中继)
-    "parent": "",    (当该设备是通过中继路由连入该字段内容为中继路由器的MAC地址)
-    "active": 1,             该IP是否活跃
-    "type": 0,       (0/1/2/3  有线 / 2.4G wifi / 5G wifi / guest wifi)
-    :param terminal:
-    :param logname:
-    :param kwargs:
-    :return:
+    {
+   "mac":"XX:XX:XX:XX:XX:XX"    当前设备的mac地址
+   "list": [
+       {
+           "mac": "3C:07:54:54:C6:CC",
+           "oname": "SalmonMBP",
+           "isap": 0,       (0/1/2  正常设备/无线中继/有线中继)
+           "parent": "",    (当该设备是通过中继路由连入该字段内容为中继路由器的MAC地址)
+           "authority": {
+               "wan": 1,
+               "pridisk": 0,
+               "admin": 1,
+               "lan": 0
+           },
+           "online": 1,
+           "name": "Salmon_MacPro",
+           "times": 0,    防蹭网次数
+           "icon": "device_list_apple.png",
+           "ip": [
+               {
+                   "downspeed": "307",
+                   "online": "11489",
+                   "active": 1,             该IP是否活跃
+                   "upspeed": "611",
+                   "ip": "192.168.31.170"
+               }
+               ... (可能存在多IP)
+           ],
+           "statistics": {
+               "downspeed": "307",
+               "online": "11489",
+               "upspeed": "611"
+           },
+           "type": 0,       (0/1/2/3  有线 / 2.4G wifi / 5G wifi / guest wifi)
+           "push": 1       是否开启了指定设备上线提醒
+       },
+       ...
+    "code":0
+    }
     """
     option = {
         'online': 1,
@@ -1221,9 +1253,6 @@ def getInitInfo(terminal, logname, **kwargs):
 def getOnlineDeviceType(terminal, logname):
     """
     "type": 0,       (0/1/2/3  有线 / 2.4G wifi / 5G wifi / guest wifi)
-    :param terminal:
-    :param logname:
-    :return:
     """
     result = dict()
     option = {
