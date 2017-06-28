@@ -3,6 +3,7 @@
 treeBasicApi = [
     "AP_CLEAR_CHAN",
     [
+        "assoc_lan_wifi_2g",
         "assoc_clear_sta_2g",
         "assoc_clear_sta_5g",
     ],
