@@ -1905,6 +1905,24 @@ def getWlanBWRate(terminal, intf, logname):
 
     return int(result)
 
+def getMU_MIMO(terminal, intf, logname, module):
+    commandDic1 = {"R3P": "cat /etc/wireless/mt7615e5/mt7615e5.dat | grep -i txbf",
+                   "R3D": "iwpriv wl0 get_vhtmubfer", }
+    command = commandDic1.get(module)
+    ret = setGet(terminal, command, logname)
+    if isinstance(ret, list):
+        for line in ret:
+            m = re.search('txbf=3', line)
+            m2 = re.search('get_vhtmubfer:1', line)
+            if m or m2:
+                return True
+    return False
+
+
+
+
+
+
 
 if __name__ == '__main__':
     client = ShellClient(1)

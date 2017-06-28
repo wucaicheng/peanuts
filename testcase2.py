@@ -4979,6 +4979,92 @@ class AP_BSD_SSIDHIDE(TestCase):
         if ret is False:
             self.fail(msg='ssid should be hidden when bsd is on')
 
+class AP_MUMIMO(TestCase):
+    '''
+    MU-MIMO 配置下发check，并检查sta是否能关联
+    '''
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+        if ret2 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+        if ret3 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def MUMIMO_check(self):
+        mumimo = getMU_MIMO(self.dut, "5g", self.__class__.__name__, v.DUT_MODULE)
+        self.assertTrue(mumimo, "MU-MIMO should be Opened by Default")
+
+        option = {
+            'wifiIndex': 2,
+            'txbf': 0
+        }
+        api.setMU_MIMO(self.dut, self.__class__.__name__, **option)
+        mumimo2 = getMU_MIMO(self.dut, "5g", self.__class__.__name__, v.DUT_MODULE)
+        self.assertFalse(mumimo2, "MU-MIMO should be Closed When the Switch of Web is Off")
+
+        option2 = {
+            'wifiIndex': 2,
+            'txbf': 3
+        }
+        api.setMU_MIMO(self.dut, self.__class__.__name__, **option2)
+        mumimo3 = getMU_MIMO(self.dut, "5g", self.__class__.__name__, v.DUT_MODULE)
+        self.assertTrue(mumimo3, "MU-MIMO should be Opened When the Switch of Web is On")
+
+    def assoc_noMUMIMO_5g(self):
+
+        option = {
+            'wifiIndex': 2,
+            'txbf': 0
+        }
+        api.setMU_MIMO(self.dut, self.__class__.__name__, **option)
+
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
+
+        option2 = {
+            'wifiIndex': 2,
+            'txbf': 3
+        }
+        api.setMU_MIMO(self.dut, self.__class__.__name__, **option2)
+
 
 class AP_RELAY_CLEAR_CHAN(TestCase):
     @classmethod

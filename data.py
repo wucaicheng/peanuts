@@ -290,6 +290,13 @@ treeBSDApi = [
     # ],
 ]
 
+treeMUMIMOApi = [
+    'AP_MUMIMO',
+    [
+        'MUMIMO_check',
+        'assoc_noMUMIMO_5g',
+    ],
+]
 
 treeWireRelayApi = [
     'AP_RELAY_CLEAR_CHAN',

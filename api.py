@@ -403,6 +403,17 @@ def setWifi(terminal, logname, **kwargs):
                 curTime = int(t.time())
         return ret
 
+def setMU_MIMO(terminal, logname, **kwargs):
+    option = {
+        'wifiIndex': 2,
+        'txbf': 3
+    }
+
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi'
+    ret = setCheck(terminal, logname, api, **option)
+    t.sleep(30)
+    return ret
 
 def setAllWifi(terminal, logname, **kwargs):
     """
