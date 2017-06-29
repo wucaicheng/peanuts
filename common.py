@@ -773,7 +773,11 @@ def chkBootingUpFinished(terminal, logname):
 
 def chkStaOnline(terminal, intf, stamac, logname):
     commandDic = {"2g": "iwinfo wl1 assoclist | grep -i " + stamac,
-                  "5g": "iwinfo wl0 assoclist | grep -i " + stamac,}
+                  "5g": "iwinfo wl0 assoclist | grep -i " + stamac,
+                  "MTK_guest": "iwinfo wl3 assoclist | grep -i " + stamac,
+                  "Broadcom_guest": "iwinfo wl1.2 assoclist | grep -i " + stamac,
+                  "Qualcomm_guest": "iwinfo wl14 assoclist | grep -i " + stamac,
+                  }
     command = commandDic.get(intf)
     ret = setGet(terminal, command, logname)
     if len(ret) is not 0:

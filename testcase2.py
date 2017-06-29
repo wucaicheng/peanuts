@@ -4524,6 +4524,9 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -4561,6 +4564,7 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         self.dut.close()
+        self.dut2.close()
 
     def assoc_clear_sta_outof_blacklist_guest(self):
 
@@ -4582,7 +4586,7 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
 
         res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
         self.assertTrue(res2gConn, "Association should be successful which sta outof blacklist.")
-
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         option = {
             'model': 0,
             'mac': self.staMac,
@@ -4590,7 +4594,13 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
 
-        connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
+        # connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
+        if v.DUT_MODULE in ['R1CM', "R3", "R3P", "R3A", "R3G", "R1CL", "R3L"]:
+            checkSTA = chkStaOnline(self.dut2, 'MTK_guest', result['ip'], self.__class__.__name__)
+        if v.DUT_MODULE in ['R1D', 'R2D']:
+            checkSTA = chkStaOnline(self.dut2, 'Broadcom_guest', result['ip'], self.__class__.__name__)
+        if v.DUT_MODULE in ["R3D"]:
+            checkSTA = chkStaOnline(self.dut2, 'Qualcomm_guest', result['ip'], self.__class__.__name__)
 
         res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
 
@@ -4601,8 +4611,9 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
 
-        if self.staMac in connType.keys():
-            self.fail(msg='STA should be kicked off.')
+        # if self.staMac in connType.keys():
+        #     self.fail(msg='STA should be kicked off.')
+        self.assertFalse(checkSTA, "STA should be kicked off.")
 
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful which sta in blacklist.")
 
