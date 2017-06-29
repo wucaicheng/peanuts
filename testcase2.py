@@ -3372,6 +3372,7 @@ class AP_BSD_CHAN_CHECK(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
         self.dut.close()
+        self.dut2.close()
 
     def chan_1_36_check_bsd(self):
 
@@ -3485,6 +3486,7 @@ class AP_BSD_BW_CHECK(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
         self.dut.close()
+        self.dut2.close()
 
     def autochan_BW_check_bsd(self):
 
@@ -3495,8 +3497,8 @@ class AP_BSD_BW_CHECK(TestCase):
             'pwd1': v.KEY,
         }
         api.setAllWifi(self.dut, self.__class__.__name__, **option)
-        bw_2g = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
-        bw_5g = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
+        bw_2g = getWlanBWRate(self.dut2, "2g", self.__class__.__name__)
+        bw_5g = getWlanBWRate(self.dut2, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             self.assertEqual(bw_2g, v.R1CM_MAX_RATE_2G['20'], 'BSD 2g Auto BW isnot correct.')
@@ -3527,8 +3529,8 @@ class AP_BSD_BW_CHECK(TestCase):
 
         }
         api.setAllWifi(self.dut, self.__class__.__name__, **option)
-        bw_2g = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
-        bw_5g = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
+        bw_2g = getWlanBWRate(self.dut2, "2g", self.__class__.__name__)
+        bw_5g = getWlanBWRate(self.dut2, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             self.assertEqual(bw_2g, v.R1CM_MAX_RATE_2G['40'], 'BSD 2g BW40 isnot correct.')
@@ -3559,8 +3561,8 @@ class AP_BSD_BW_CHECK(TestCase):
 
         }
         api.setAllWifi(self.dut, self.__class__.__name__, **option)
-        bw_2g = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
-        bw_5g = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
+        bw_2g = getWlanBWRate(self.dut2, "2g", self.__class__.__name__)
+        bw_5g = getWlanBWRate(self.dut2, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             self.assertEqual(bw_2g, v.R1CM_MAX_RATE_2G['20'], 'BSD 2g BW20 isnot correct.')
@@ -5032,7 +5034,7 @@ class AP_MUMIMO(TestCase):
         self.dut2.close()
 
     def MUMIMO_check(self):
-        mumimo = getMU_MIMO(self.dut, "5g", self.__class__.__name__, v.DUT_MODULE)
+        mumimo = getMU_MIMO(self.dut2, "5g", self.__class__.__name__, v.DUT_MODULE)
         self.assertTrue(mumimo, "MU-MIMO should be Opened by Default")
 
         option = {
@@ -5040,7 +5042,7 @@ class AP_MUMIMO(TestCase):
             'txbf': 0
         }
         api.setMU_MIMO(self.dut, self.__class__.__name__, **option)
-        mumimo2 = getMU_MIMO(self.dut, "5g", self.__class__.__name__, v.DUT_MODULE)
+        mumimo2 = getMU_MIMO(self.dut2, "5g", self.__class__.__name__, v.DUT_MODULE)
         self.assertFalse(mumimo2, "MU-MIMO should be Closed When the Switch of Web is Off")
 
         option2 = {
@@ -5048,7 +5050,7 @@ class AP_MUMIMO(TestCase):
             'txbf': 3
         }
         api.setMU_MIMO(self.dut, self.__class__.__name__, **option2)
-        mumimo3 = getMU_MIMO(self.dut, "5g", self.__class__.__name__, v.DUT_MODULE)
+        mumimo3 = getMU_MIMO(self.dut2, "5g", self.__class__.__name__, v.DUT_MODULE)
         self.assertTrue(mumimo3, "MU-MIMO should be Opened When the Switch of Web is On")
 
     def assoc_noMUMIMO_5g(self):

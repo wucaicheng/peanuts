@@ -783,6 +783,7 @@ class GetTestModule(threading.Thread):
             'treeBasicApi': '基础功能',
             'treeGuestWifiApi': '访客网络',
             'treeBSDApi': '双频合一',
+            'treeMUMIMOApi': 'MU_MIMO',
             'treeWireRelayApi': '有线中继',
             'treeWirelessRelayApi': '无线中继',
             'treeAccessControlApi': '接入控制',
