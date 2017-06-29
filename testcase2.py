@@ -56,10 +56,25 @@ class AP_CLEAR_CHAN(TestCase):
             if result['ip'] == '':
                 self.fail(msg='STA got no ip address.')
             else:
-                lan_wifi = chkOSPingAvailable(result['ip'], 3, self.__class__.__name__)
+                os.popen('arp -d')
+                lan_wifi = chkOSPingAvailable(result['ip'], 5, self.__class__.__name__)
                 self.assertTrue(lan_wifi, "Lan to Wifi ping Failed.")
         else:
-            self.assertTrue(res2gConn, "STA Association wasnot successful.")
+            self.assertTrue(res2gConn, "STA association wasnot successful.")
+
+    def assoc_lan_wifi_5g(self):
+
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='STA got no ip address.')
+            else:
+                os.popen('arp -d')
+                lan_wifi = chkOSPingAvailable(result['ip'], 5, self.__class__.__name__)
+                self.assertTrue(lan_wifi, "Lan to Wifi ping Failed.")
+        else:
+            self.assertTrue(res5gConn, "STA association wasnot successful.")
 
     def assoc_clear_sta_2g(self):
 
