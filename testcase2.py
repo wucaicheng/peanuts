@@ -4595,6 +4595,7 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
 
         # connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
+        checkSTA = True
         if v.DUT_MODULE in ['R1CM', "R3", "R3P", "R3A", "R3G", "R1CL", "R3L"]:
             checkSTA = chkStaOnline(self.dut2, 'MTK_guest', result['ip'], self.__class__.__name__)
         if v.DUT_MODULE in ['R1D', 'R2D']:
