@@ -787,8 +787,15 @@ def setQosGuest(terminal, logname, **kwargs):
 
 def setQosGuest2(terminal, logname, **kwargs):
     """
+    :param
     percent: (0, 1]
     percent_up: (0, 1]
+    :return
+    {"guest":{"percent_up":0.1,
+              "percent":0.2,
+              "down":20480,
+              "up":10240},
+    "code":0}
     """
     option = {
         'percent': 1
