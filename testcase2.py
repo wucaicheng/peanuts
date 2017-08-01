@@ -1825,6 +1825,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
 
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         bw = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
+        bw_Broadcom = getBroadcomBW(self.dut, "2g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_2G['20']:
@@ -1832,7 +1833,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             else:
                 self.fail("Auto BW isnot correct.")
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            if bw == v.R1D_MAX_RATE_2G['20']:
+            if bw_Broadcom == 20:
                 pass
             else:
                 self.fail("Auto BW isnot correct.")
@@ -1863,6 +1864,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
 
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
+        bw_Broadcom = getBroadcomBW(self.dut, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_5G['80']:
@@ -1870,7 +1872,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             else:
                 self.fail("Auto BW isnot correct.")
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            if bw == v.R1D_MAX_RATE_5G['80']:
+            if bw_Broadcom == 80:
                 pass
             else:
                 self.fail("Auto BW isnot correct.")
@@ -1899,6 +1901,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         bw = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
+        bw_Broadcom = getBroadcomBW(self.dut, "2g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_2G['40']:
@@ -1906,7 +1909,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             else:
                 self.fail("Channel 1 BW40 isnot correct.")
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            if bw == v.R1D_MAX_RATE_2G['40']:
+            if bw_Broadcom == 40:
                 pass
             else:
                 self.fail("Channel 1 BW40 isnot correct.")
@@ -1938,6 +1941,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         bw = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
+        bw_Broadcom = getBroadcomBW(self.dut, "2g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_2G['20']:
@@ -1945,7 +1949,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             else:
                 self.fail("Channel 6 BW20 isnot correct.")
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            if bw == v.R1D_MAX_RATE_2G['20']:
+            if bw_Broadcom == 20:
                 pass
             else:
                 self.fail("Channel 6 BW20 isnot correct.")
@@ -1977,6 +1981,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         bw = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
+        bw_Broadcom = getBroadcomBW(self.dut, "2g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_2G['40']:
@@ -1984,7 +1989,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             else:
                 self.fail("Channel 11 BW40 isnot correct.")
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            if bw == v.R1D_MAX_RATE_2G['40']:
+            if bw_Broadcom == 40:
                 pass
             else:
                 self.fail("Channel 11 BW40 isnot correct.")
@@ -2015,6 +2020,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         bw = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
+        bw_Broadcom = getBroadcomBW(self.dut, "2g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_2G['20']:
@@ -2022,7 +2028,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             else:
                 self.fail("Channel 13 BWauto isnot correct.")
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            if bw == v.R1D_MAX_RATE_2G['20']:
+            if bw_Broadcom == 20:
                 pass
             else:
                 self.fail("Channel 13 BWauto isnot correct.")
@@ -2054,6 +2060,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
+        bw_Broadcom = getBroadcomBW(self.dut, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_5G['20']:
@@ -2061,7 +2068,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             else:
                 self.fail("Channel 36 BW20 isnot correct.")
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            if bw == v.R1D_MAX_RATE_5G['20']:
+            if bw_Broadcom == 20:
                 pass
             else:
                 self.fail("Channel 36 BW20 isnot correct.")
@@ -2090,6 +2097,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
+        bw_Broadcom = getBroadcomBW(self.dut, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_5G['40']:
@@ -2097,7 +2105,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             else:
                 self.fail("Channel 48 BW40 isnot correct.")
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            if bw == v.R1D_MAX_RATE_5G['40']:
+            if bw_Broadcom == 40:
                 pass
             else:
                 self.fail("Channel 48 BW40 isnot correct.")
@@ -2126,6 +2134,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
+        bw_Broadcom = getBroadcomBW(self.dut, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_5G['80']:
@@ -2133,7 +2142,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             else:
                 self.fail("Channel 52 BW80 isnot correct.")
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            if bw == v.R1D_MAX_RATE_5G['80']:
+            if bw_Broadcom == 80:
                 pass
             else:
                 self.fail("Channel 52 BW80 isnot correct.")
@@ -2162,6 +2171,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
+        bw_Broadcom = getBroadcomBW(self.dut, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_5G['20']:
@@ -2169,7 +2179,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             else:
                 self.fail("Channel 64 BW20 isnot correct.")
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            if bw == v.R1D_MAX_RATE_5G['20']:
+            if bw_Broadcom == 20:
                 pass
             else:
                 self.fail("Channel 64 BW20 isnot correct.")
@@ -2198,6 +2208,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
+        bw_Broadcom = getBroadcomBW(self.dut, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_5G['40']:
@@ -2205,7 +2216,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             else:
                 self.fail("Channel 157 BW40 isnot correct.")
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            if bw == v.R1D_MAX_RATE_5G['40']:
+            if bw_Broadcom == 40:
                 pass
             else:
                 self.fail("Channel 157 BW40 isnot correct.")
@@ -2233,6 +2244,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
+        bw_Broadcom = getBroadcomBW(self.dut, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             if bw == v.R1CM_MAX_RATE_5G['20']:
@@ -2240,7 +2252,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
             else:
                 self.fail("Channel 165 BWauto isnot correct.")
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            if bw == v.R1D_MAX_RATE_5G['20']:
+            if bw_Broadcom == 20:
                 pass
             else:
                 self.fail("Channel 165 BWauto isnot correct.")

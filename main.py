@@ -729,8 +729,8 @@ class TestSuitePage(wx.Panel):
 
         if testKeepGoing is False: # click cancel
             os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
-        else: # reboot android device
-            co.setAdbReboot(v.ANDROID_SERIAL_NUM, v.DEVICE_STATUS_LOG)
+        # else: # reboot android device
+        #     co.setAdbReboot(v.ANDROID_SERIAL_NUM, v.DEVICE_STATUS_LOG)
 
         if os.path.exists(v.TEST_SUITE_LOG_PATH):
             if not os.path.exists(v.REPORT_NAME):

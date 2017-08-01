@@ -1922,6 +1922,21 @@ def getMU_MIMO(terminal, intf, logname, module):
                 return True
     return False
 
+def getBroadcomBW(terminal, intf, logname):
+    commandDic1 = {"2g": "wl -i wl1 status | grep -i Chanspec",
+                   "5g": "wl -i wl0 status | grep -i Chanspec", }
+
+    result = 0
+    command = commandDic1.get(intf)
+    ret = setGet(terminal, command, logname)
+    if isinstance(ret, list):
+        for line in ret:
+            m = re.search('\s(\d*)MHz', line)
+            if m:
+                result = m.group(1)
+                return int(result)
+
+    return int(result)
 
 
 
