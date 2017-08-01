@@ -724,30 +724,30 @@ treeQosApi = [
     'AP_QOS_MIXEDPSK',
     [
         'assoc_psk2_sta_speedtest_2g',
-        'assoc_psk_sta_speedtest_2g',
-        'assoc_tkippsk2_sta_speedtest_2g',
-        'assoc_tkippsk_sta_speedtest_2g',
+        # 'assoc_psk_sta_speedtest_2g',
+        # 'assoc_tkippsk2_sta_speedtest_2g',
+        # 'assoc_tkippsk_sta_speedtest_2g',
         'assoc_psk2_sta_speedtest_5g',
-        'assoc_psk_sta_speedtest_5g',
-        'assoc_tkippsk2_sta_speedtest_5g',
-        'assoc_tkippsk_sta_speedtest_5g',
+        # 'assoc_psk_sta_speedtest_5g',
+        # 'assoc_tkippsk2_sta_speedtest_5g',
+        # 'assoc_tkippsk_sta_speedtest_5g',
      ],
-    'AP_QOS_CLEAR',
-    [
-        'assoc_clear_sta_speedtest_2g',
-        'assoc_clear_sta_speedtest_5g',
-    ],
-    'AP_QOS_PSK2',
-    [
-        'assoc_psk2_sta_speedtest_2g',
-        'assoc_psk2_sta_speedtest_5g',
-    ],
+    # 'AP_QOS_CLEAR',
+    # [
+    #     'assoc_clear_sta_speedtest_2g',
+    #     'assoc_clear_sta_speedtest_5g',
+    # ],
+    # 'AP_QOS_PSK2',
+    # [
+    #     'assoc_psk2_sta_speedtest_2g',
+    #     'assoc_psk2_sta_speedtest_5g',
+    # ],
     'AP_QOS_GUEST_MIXEDPSK',
     [
         'assoc_psk2_sta_speedtest_guest',
-        'assoc_psk_sta_speedtest_guest',
-        'assoc_tkippsk2_sta_speedtest_guest',
-        'assoc_tkippsk_sta_speedtest_guest',
+        # 'assoc_psk_sta_speedtest_guest',
+        # 'assoc_tkippsk2_sta_speedtest_guest',
+        # 'assoc_tkippsk_sta_speedtest_guest',
     ]
 ]
 

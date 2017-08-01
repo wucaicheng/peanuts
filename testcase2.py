@@ -8151,6 +8151,7 @@ class AP_QOS_MIXEDPSK(TestCase):
             'download': v.QOS_MAXDOWN,
         }
 
+        api.setQosBand(self.dut, self.__name__)
         api.setQosSwitch(self.dut, self.__name__)
         api.setMACQoSInfo(self.dut, self.__name__, **optionQos)
 
@@ -8168,6 +8169,7 @@ class AP_QOS_MIXEDPSK(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
+        api.setMACQosOff(self.dut, self.__name__)
         optionQosSwitch = {
             'on': 0,
         }
@@ -8523,12 +8525,12 @@ class AP_QOS_GUEST_MIXEDPSK(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **optionGuest)
-
+        api.setQosBand(self.dut, self.__name__)
         api.setQosSwitch(self.dut, self.__name__)
 
         optionGuest = {
-            'percent': 0.15,
-            'percent_up': 0.1,
+            'percent': 0.01,
+            'percent_up': 0.01,
         }
 
         self.guestQos = api.setQosGuest2(self.dut, self.__name__, **optionGuest)

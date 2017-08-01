@@ -675,6 +675,21 @@ def setQosSwitch(terminal, logname, **kwargs):
     api = '/cgi-bin/luci/;stok=token/api/misystem/qos_switch'
     return setCheck(terminal, logname, api, **option)
 
+def setQosBand(terminal, logname, **kwargs):
+    """
+    manual:1
+    upload:100
+    download:100
+    """
+    option = {
+        'manual': 1,
+        'upload': 100,
+        'download': 100
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/misystem/set_band'
+    return setCheck(terminal, logname, api, **option)
+
 
 # ======================abandoned==============================
 def setQosLimits(terminal, logname, **kwargs):
@@ -750,6 +765,13 @@ def setMACQoSInfo(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/misystem/qos_set_dev_info'
     return setCheck(terminal, logname, api, **option)
+
+def setMACQosOff(terminal, logname, **kwargs):
+    """
+    #参数：mac 可选 传mac则取消当前指定设备的速度限制，不传则取消所有设备的手动限制
+    """
+    api = '/cgi-bin/luci/;stok=token/api/misystem/qos_offlimit'
+    return setCheck(terminal, logname, api)
 
 
 def setQosMode(terminal, logname, **kwargs):
