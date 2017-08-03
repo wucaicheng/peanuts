@@ -8186,10 +8186,10 @@ class AP_QOS_MIXEDPSK(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
+                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.5,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], v.QOS_MAXDOWN))
-                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1,
+                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.5,
                                      "Uplink rate %s KB/s exceed maxup %s KB/s" % (speedTestRes['up'], v.QOS_MAXUP))
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
@@ -8203,10 +8203,10 @@ class AP_QOS_MIXEDPSK(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
+                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.5,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], v.QOS_MAXDOWN))
-                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1,
+                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.5,
                                      "Uplink rate %s KB/s exceed maxup %s KB/s" % (speedTestRes['up'], v.QOS_MAXUP))
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
@@ -8560,10 +8560,10 @@ class AP_QOS_GUEST_MIXEDPSK(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], self.guestQos['guest']['down'] * 1.1,
+                self.assertLessEqual(speedTestRes['down'], self.guestQos['guest']['down'] * 1.5,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], self.guestQos['guest']['down']))
-                self.assertLessEqual(speedTestRes['up'], self.guestQos['guest']['up'] * 1.1,
+                self.assertLessEqual(speedTestRes['up'], self.guestQos['guest']['up'] * 1.5,
                                      "Uplink rate %s KB/s exceed maxup %s KB/s" % (
                                          speedTestRes['up'], self.guestQos['guest']['up']))
         else:

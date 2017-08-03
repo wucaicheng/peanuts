@@ -535,17 +535,17 @@ treeAccessControlApi = [
         'assoc_clear_sta_in_blacklist_5g',
         'assoc_clear_sta_outof_blacklist_5g',
     ],
-    'AP_GUEST_CLEAR_WHITELIST',
-    [
-        'assoc_clear_sta_in_whitelist_guest',
-        'assoc_clear_sta_outof_whitelist_guest',
-    ],
-
-    'AP_GUEST_CLEAR_BLACKLIST',
-    [
-        'assoc_clear_sta_in_blacklist_guest',
-        'assoc_clear_sta_outof_blacklist_guest',
-    ],
+    # 'AP_GUEST_CLEAR_WHITELIST',
+    # [
+    #     'assoc_clear_sta_in_whitelist_guest',
+    #     'assoc_clear_sta_outof_whitelist_guest',
+    # ],
+    #
+    # 'AP_GUEST_CLEAR_BLACKLIST',
+    # [
+    #     'assoc_clear_sta_in_blacklist_guest',
+    #     'assoc_clear_sta_outof_blacklist_guest',
+    # ],
     'AP_MIXEDPSK_WEB_ACCESS',
     [
         'assoc_psk2_sta_access_web_2g',
