@@ -832,6 +832,31 @@ def setQosGuest2(terminal, logname, **kwargs):
             return ret
     return None
 
+def setQosRouterSelf(terminal, logname, **kwargs):
+    """
+    :param
+    percent: (0, 1]
+    percent_up: (0, 1]
+    :return
+    {"local":{"percent_up":0.1,
+              "percent":0.2,
+              "down":20480,
+              "up":10240},
+    "code":0}
+    """
+    option = {
+        'percent': 1
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/misystem/qos_guest'
+    ret = setGet(terminal, logname, api, **option)
+    if ret is not None:
+        if ret['code'] is 0:
+            ret['guest']['down'] = ret['guest']['down']/8 # change from kb/s to KB/s
+            ret['guest']['up'] = ret['guest']['up']/8
+            return ret
+    return None
+
 
 def setWebAccessOpt(terminal, logname, **kwargs):
     """
