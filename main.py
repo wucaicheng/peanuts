@@ -527,7 +527,7 @@ class TestSuitePage(wx.Panel):
         self.rootMUMIMO = self.tree.AppendItem(self.root, 'MU-MIMO', ct_type=1)
         self.rootAccessControlApi = self.tree.AppendItem(self.root, 'Access Control', ct_type=1)
         self.rootQosApi = self.tree.AppendItem(self.root, 'QoS', ct_type=1)
-        self.rootInternetAccessApi = self.tree.AppendItem(self.root, 'Internet Access Control', ct_type=1)
+        self.rootInternetAccessApi = self.tree.AppendItem(self.root, 'Parent Internet Control', ct_type=1)
         self.rootWireRelay = self.tree.AppendItem(self.root, 'Wire Relay', ct_type=1)
         self.rootWirelessRelay = self.tree.AppendItem(self.root, 'Wireless Relay', ct_type=1)
         self.rootThroughDUT = self.tree.AppendItem(self.root, 'Throughput DUT', ct_type=1)

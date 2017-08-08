@@ -19505,6 +19505,86 @@ class AP_WAN_BANDWIDTH(TestCase):
         ret, speedDict= api.getWanBandwidth(self.dut, self.__class__.__name__)
         self.assertTrue(ret, "WAN port bandwidth test run for wrong.")
 
+class AP_MIXEDPSK_NET_FORBIDDEN(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+        wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
+        self.staMac = wlanInfo["mac"].upper()
+        option = {
+            'mac': self.staMac,
+            'wan': '0'
+        }
+        api.setNetMacFilter(self.dut, self.__name__, **option)
+
+    @classmethod
+    def tearDownClass(self):
+
+        api.setNetMacFilter(self.dut, self.__name__)
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+        self.dut.close()
+
+    def assoc_psk2_netForbidden_2g(self):
+
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] != '':
+                ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL2, self.__class__.__name__)
+                self.assertFalse(ret, msg='STA Access to website should be Forbidden')
+            else:
+                self.fail("STA should get IP address.")
+        else:
+            self.fail("Association should be successful.")
+
+    def assoc_psk2_netForbidden_5g(self):
+
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] != '':
+                ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL2, self.__class__.__name__)
+                self.assertFalse(ret, msg='STA Access to website should be Forbidden')
+            else:
+                self.fail("STA should get IP address.")
+        else:
+            self.fail("Association should be successful.")
+
 
 class AP_MIXEDPSK_NET_WHITELIST(TestCase):
     @classmethod
@@ -19563,21 +19643,21 @@ class AP_MIXEDPSK_NET_WHITELIST(TestCase):
 
         self.dut.close()
 
-    def assoc_psk2_sta_in_whitelist_2g(self):
+    def assoc_psk2_in_whitelist_2g(self):
+
+        option = {
+                    'mac': self.staMac,
+                    'mode': 'white',
+                    'opt': '0',
+                    'url': v.CHECK_ACCESS_URL2.split("//")[1],
+                    }
+        api.setParentCtrlUrl(self.dut, self.__class__.__name__, **option)
 
         res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
 
         if res2gConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-                option = {
-                    'mac': self.staMac,
-                    'mode': 'white',
-                    'opt': '0',
-                    'url': v.CHECK_ACCESS_URL2.split("//")[1],
-                    }
-                api.setParentCtrlUrl(self.dut, self.__class__.__name__, **option)
-
                 ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL2, self.__class__.__name__)
 
                 option = {
@@ -19593,20 +19673,21 @@ class AP_MIXEDPSK_NET_WHITELIST(TestCase):
         else:
             self.fail("Association should be successful.")
 
-    def assoc_psk2_sta_in_whitelist_5g(self):
+    def assoc_psk2_in_whitelist_5g(self):
+
+        option = {
+                    'mac': self.staMac,
+                    'mode': 'white',
+                    'opt': '0',
+                    'url': v.CHECK_ACCESS_URL2.split("//")[1],
+                    }
+        api.setParentCtrlUrl(self.dut, self.__class__.__name__, **option)
 
         res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
 
         if res5gConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-                option = {
-                    'mac': self.staMac,
-                    'mode': 'white',
-                    'opt': '0',
-                    'url': v.CHECK_ACCESS_URL2.split("//")[1],
-                    }
-                api.setParentCtrlUrl(self.dut, self.__class__.__name__, **option)
 
                 ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL2, self.__class__.__name__)
 
@@ -19623,9 +19704,7 @@ class AP_MIXEDPSK_NET_WHITELIST(TestCase):
         else:
             self.fail("Association should be successful.")
 
-
-
-    def assoc_psk2_sta_outof_whitelist_2g(self):
+    def assoc_psk2_outof_whitelist_2g(self):
 
         res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
 
@@ -19639,7 +19718,7 @@ class AP_MIXEDPSK_NET_WHITELIST(TestCase):
         else:
             self.fail("Association should be successful.")
 
-    def assoc_psk2_sta_outof_whitelist_5g(self):
+    def assoc_psk2_outof_whitelist_5g(self):
 
         res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
 
@@ -19856,22 +19935,21 @@ class AP_MIXEDPSK_NET_BLACKLIST(TestCase):
 
         self.dut.close()
 
-    def assoc_psk2_sta_in_blacklist_2g(self):
+    def assoc_psk2_in_blacklist_2g(self):
+
+        option = {
+                    'mac': self.staMac,
+                    'mode': 'black',
+                    'opt': '0',
+                    'url': v.CHECK_ACCESS_URL2.split("//")[1],
+                }
+        api.setParentCtrlUrl(self.dut, self.__class__.__name__, **option)
 
         res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
 
         if res2gConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-
-                option = {
-                    'mac': self.staMac,
-                    'mode': 'black',
-                    'opt': '0',
-                    'url': v.CHECK_ACCESS_URL2.split("//")[1],
-                }
-                api.setParentCtrlUrl(self.dut, self.__class__.__name__, **option)
-
                 ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL2, self.__class__.__name__)
 
                 option = {
@@ -19887,22 +19965,21 @@ class AP_MIXEDPSK_NET_BLACKLIST(TestCase):
         else:
             self.fail("Association should be successful.")
 
-    def assoc_psk2_sta_in_blacklist_5g(self):
+    def assoc_psk2_in_blacklist_5g(self):
+
+        option = {
+                    'mac': self.staMac,
+                    'mode': 'black',
+                    'opt': '0',
+                    'url': v.CHECK_ACCESS_URL2.split("//")[1],
+                }
+        api.setParentCtrlUrl(self.dut, self.__class__.__name__, **option)
 
         res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
 
         if res5gConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-
-                option = {
-                    'mac': self.staMac,
-                    'mode': 'black',
-                    'opt': '0',
-                    'url': v.CHECK_ACCESS_URL2.split("//")[1],
-                }
-                api.setParentCtrlUrl(self.dut, self.__class__.__name__, **option)
-
                 ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL2, self.__class__.__name__)
 
                 option = {
@@ -19919,8 +19996,7 @@ class AP_MIXEDPSK_NET_BLACKLIST(TestCase):
             self.fail("Association should be successful.")
 
 
-
-    def assoc_psk2_sta_outof_blacklist_2g(self):
+    def assoc_psk2_outof_blacklist_2g(self):
 
         res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
 
@@ -19934,7 +20010,7 @@ class AP_MIXEDPSK_NET_BLACKLIST(TestCase):
         else:
             self.fail("Association should be successful.")
 
-    def assoc_psk2_sta_outof_blacklist_5g(self):
+    def assoc_psk2_outof_blacklist_5g(self):
 
         res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
 

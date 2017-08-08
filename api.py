@@ -878,6 +878,23 @@ def setWebAccessOpt(terminal, logname, **kwargs):
     api = '/cgi-bin/luci/;stok=token/api/misystem/web_access_opt'
     return setCheck(terminal, logname, api, **option)
 
+def setNetMacFilter(terminal, logname, **kwargs):
+    """
+    mac MAC地址 "C4:6A:B7:48:02:A7"
+    wan "1" or "0" 外网访问能力
+    lan "1" or "0" 内网数据访问能力，如samba，dlna
+    admin "1" or "0" "访问管理页面的能力"
+
+    return:
+       "code": 0 非0则出问题并包含 “msg”字段
+    """
+    option = {
+        'mac': '',
+        'wan': 1
+    }
+    api = '/cgi-bin/luci/;stok=token/api/xqsystem/set_mac_filter'
+    option.update(kwargs)
+    return setCheck(terminal, logname, api, **option)
 
 def setNetAccessCtrl(terminal, logname, **kwargs):
     """
