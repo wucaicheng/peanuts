@@ -748,6 +748,10 @@ treeQosApi = [
         # 'assoc_psk_sta_speedtest_guest',
         # 'assoc_tkippsk2_sta_speedtest_guest',
         # 'assoc_tkippsk_sta_speedtest_guest',
+    ],
+    'AP_QOS_ROUTERSELF',
+    [
+        'routerSelf_speedtest'
     ]
 ]
 

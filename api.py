@@ -820,7 +820,8 @@ def setQosGuest2(terminal, logname, **kwargs):
     "code":0}
     """
     option = {
-        'percent': 1
+        'percent': 0.6,
+        'percent_up': 0.6,
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/misystem/qos_guest'
@@ -845,15 +846,16 @@ def setQosRouterSelf(terminal, logname, **kwargs):
     "code":0}
     """
     option = {
-        'percent': 1
+        'percent': 0.9,
+        'percent_up': 0.9,
     }
     option.update(kwargs)
-    api = '/cgi-bin/luci/;stok=token/api/misystem/qos_guest'
+    api = '/cgi-bin/luci/;stok=token/api/misystem/qos_xq'
     ret = setGet(terminal, logname, api, **option)
     if ret is not None:
         if ret['code'] is 0:
-            ret['guest']['down'] = ret['guest']['down']/8 # change from kb/s to KB/s
-            ret['guest']['up'] = ret['guest']['up']/8
+            ret['local']['down'] = ret['local']['down']/1024 # change from kb/s to Mb/s
+            ret['local']['up'] = ret['local']['up']/1024
             return ret
     return None
 

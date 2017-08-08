@@ -8538,6 +8538,7 @@ class AP_QOS_GUEST_MIXEDPSK(TestCase):
     @classmethod
     def tearDownClass(self):
 
+        api.setQosGuest2(self.dut, self.__name__)
         optionQosSwitch = {
             'on': 0
         }
@@ -8629,14 +8630,11 @@ class AP_QOS_ROUTERSELF(TestCase):
         self.dut = api.HttpClient()
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
-        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
         if ret2 is False:
-            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
-        if ret3 is False:
             raise Exception("Connection is failed. please check your remote settings.")
 
         api.setQosBand(self.dut, self.__name__)
@@ -8647,39 +8645,34 @@ class AP_QOS_ROUTERSELF(TestCase):
             'percent_up': 0.05,
         }
 
-        self.guestQos = api.setQosGuest2(self.dut, self.__name__, **optionRouterSelf)
+        self.routerSelfQos = api.setQosRouterSelf(self.dut, self.__name__, **optionRouterSelf)
 
     @classmethod
     def tearDownClass(self):
 
+        api.setQosRouterSelf(self.dut, self.__name__)
         optionQosSwitch = {
             'on': 0
         }
-
         api.setQosSwitch(self.dut, self.__name__, **optionQosSwitch)
-
 
         self.dut.close()
         self.dut2.close()
 
-    def assoc_psk2_sta_speedtest_guest(self):
+    def routerSelf_speedtest(self):
 
-        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.GUEST_SSID, v.KEY, "guest", self.__class__.__name__)
-        if res2gConn:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
-                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], self.guestQos['guest']['down'] * 1.5,
-                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
-                                         speedTestRes['down'], self.guestQos['guest']['down']))
-                self.assertLessEqual(speedTestRes['up'], self.guestQos['guest']['up'] * 1.5,
-                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (
-                                         speedTestRes['up'], self.guestQos['guest']['up']))
+        xqSpeedDown = getRouterSpeedtest(self.dut2, "down", self.__class__.__name__)
+        xqSpeedUp = getRouterSpeedtest(self.dut2, "up", self.__class__.__name__)
+
+        if xqSpeedDown == None or xqSpeedUp == None:
+            self.fail(msg='RouterSelf Speedtest failed')
         else:
-            self.assertTrue(res2gConn, "Association wasnot successful.")
-
+            self.assertLessEqual(xqSpeedDown, self.routerSelfQos['local']['down'] * 1.2,
+                            "RouterSelf Downlink rate %s Mb/s exceed maxdown %s Mb/s" % (
+                            xqSpeedDown, self.routerSelfQos['local']['down']))
+            self.assertLessEqual(xqSpeedUp, self.routerSelfQos['local']['up'] * 1.2,
+                            "RouterSelf Uplink rate %s Mb/s exceed maxup %s Mb/s" % (
+                            xqSpeedUp, self.routerSelfQos['local']['up']))
 
 class AP_WIRELESS_RELAY_CLEAR_CHAN(TestCase):
     @classmethod
