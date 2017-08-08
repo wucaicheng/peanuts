@@ -1942,19 +1942,20 @@ def getRouterSpeedtest(terminal, intf, logname):
     commandDic1 = {"down": "download_speedtest",
                    "up": "upload_speedtest", }
 
-    result = 0
     command = commandDic1.get(intf)
     ret = setGet(terminal, command, logname)
     if isinstance(ret, list):
         for line in ret:
-            m = re.search('avg rx:.*?(\d*.?\d*)Mbit', line)
-            n = re.search('avg tx:.*?(\d*.?\d*)Mbit', line)
-            if m:
-                result = m.group(1)
-                return float(result)
-            if n:
-                result = n.group(1)
-                return float(result)
+            if intf == 'down':
+                m = re.search('avg rx:.*?(\d*.?\d*)Mbit', line)
+                if m:
+                    result = m.group(1)
+                    return float(result)
+            if intf == 'up':
+                n = re.search('avg tx:.*?(\d*.?\d*)Mbit', line)
+                if n:
+                    result = n.group(1)
+                    return float(result)
 
     return None
 
