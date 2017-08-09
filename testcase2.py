@@ -2277,14 +2277,17 @@ class AP_MIXEDPSK_CHAN(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
-
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+        if ret3 is False:
+            raise Exception("SSH/Telnet connection is failed. please check your remote settings.")
 
         self.channel2 = generateRandomChannel(v.CHANNEL_2_ALL)
         self.channel5 = generateRandomChannel(v.CHANNEL_5_ALL)
@@ -2319,8 +2322,9 @@ class AP_MIXEDPSK_CHAN(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
         self.dut.close()
+        self.dut2.close()
 
-    def assoc_psk2_sta_2g(self):
+    def assoc_router_ping_psk2_2g(self):
 
         res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
@@ -2328,14 +2332,14 @@ class AP_MIXEDPSK_CHAN(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got. Channel = %s' % self.channel2)
             else:
-                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
-                                                  self.__class__.__name__)
+                resPingPercent = getPingStatus(self.dut2, result['ip'], v.PING_BIG_COUNT,
+                                                  self.__class__.__name__, v.PING_BIG_SIZE)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
+                                        "Router Ping Sta with BigSizePacket Failed.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful. Channel = %s" % self.channel2)
 
-    def assoc_psk2_sta_5g(self):
+    def assoc_router_ping_psk2_5g(self):
 
         res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
@@ -2343,10 +2347,10 @@ class AP_MIXEDPSK_CHAN(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got. Channel = %s' % self.channel5)
             else:
-                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
-                                                  self.__class__.__name__)
+                resPingPercent = getPingStatus(self.dut2, result['ip'], v.PING_BIG_COUNT,
+                                                  self.__class__.__name__, v.PING_BIG_SIZE)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
+                                        "Router Ping Sta with BigSizePacket Failed.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful. Channel = %s" % self.channel5)
 

@@ -565,7 +565,7 @@ def getApclii0Conn(terminal, logname):
     return result
 
 
-def getPingStatus(terminal, target, count, logname):
+def getPingStatus(terminal, target, count, logname, size=56):
     # """
     # root@XiaoQiang:~# ping 192.168.31.1 -c 5
     # PING 192.168.31.1 (192.168.31.1) 56(84) bytes of data.
@@ -579,7 +579,7 @@ def getPingStatus(terminal, target, count, logname):
     # 5 packets transmitted, 5 received, 0% packet loss, time 3997ms
     # rtt min/avg/max/mdev = 0.097/0.123/0.197/0.037 ms
     # """
-    command = 'ping -c ' + str(count) + ' ' + target
+    command = 'ping -c ' + str(count) + ' -s ' + str(size) + ' ' + target
     ret = setGet(terminal, command, logname)
     result = {}
     for line in ret:

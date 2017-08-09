@@ -102,11 +102,11 @@ treeBasicApi = [
     ],
     'AP_MIXEDPSK_CHAN',
     [
-        'assoc_psk2_sta_2g',
+        'assoc_router_ping_psk2_2g',
         'assoc_psk_sta_2g',
         'assoc_tkippsk2_sta_2g',
         'assoc_tkippsk_sta_2g',
-        'assoc_psk2_sta_5g',
+        'assoc_router_ping_psk2_5g',
         'assoc_psk_sta_5g',
         'assoc_tkippsk2_sta_5g',
         'assoc_tkippsk_sta_5g',
