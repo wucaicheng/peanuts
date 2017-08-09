@@ -478,6 +478,8 @@ treeInternetAccessApi = [
     [
         'assoc_psk2_netForbidden_2g',
         'assoc_psk2_netForbidden_5g',
+        'assoc_psk2_netForbidden_off_2g',
+        'assoc_psk2_netForbidden_off_5g'
     ],
     'AP_MIXEDPSK_NET_WHITELIST',
     [

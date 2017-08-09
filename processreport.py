@@ -11,7 +11,7 @@ from openpyxl import Workbook, load_workbook
 # from openpyxl.cell import column_index_from_string    ##openpyxl version2.3
 from openpyxl.utils import column_index_from_string
 import shutil
-
+import var as v
 from var import *
 import data
 
@@ -877,22 +877,40 @@ class GetFailedDetail(threading.Thread):
     def run(self):
         self.running = True
         f = open(self.reportName)
-        for line in f:
-            if not line.isspace():
-                m = re.search('The Last Time:', line)
-                if m:
-                    while self.fileNotEnd:
-                        line1 = next(f)
-                        if not line1.isspace():
-                            m1 = re.search('^=*=$', line1)
-                            m2 = re.search('.*FAIL$', line1)
-                            m3 = re.search('.*ERROR$', line1)
-                            if m1:
-                                self.fileNotEnd = False
-                            if m2:
-                                self.result.append(m2.group())
-                            if m3:
-                                self.result.append(m3.group())
+        if v.FAIL_RETRY == 0:
+            for line in f:
+                if not line.isspace():
+                    m = re.search('TestSuite Execution Begin:', line)
+                    if m:
+                        while self.fileNotEnd:
+                            line1 = next(f)
+                            if not line1.isspace():
+                                m1 = re.search('^=*=$', line1)
+                                m2 = re.search('.*FAIL$', line1)
+                                m3 = re.search('.*ERROR$', line1)
+                                if m1:
+                                    self.fileNotEnd = False
+                                if m2:
+                                    self.result.append(m2.group())
+                                if m3:
+                                    self.result.append(m3.group())
+        else:
+            for line in f:
+                if not line.isspace():
+                    m = re.search('The Last Time:', line)
+                    if m:
+                        while self.fileNotEnd:
+                            line1 = next(f)
+                            if not line1.isspace():
+                                m1 = re.search('^=*=$', line1)
+                                m2 = re.search('.*FAIL$', line1)
+                                m3 = re.search('.*ERROR$', line1)
+                                if m1:
+                                    self.fileNotEnd = False
+                                if m2:
+                                    self.result.append(m2.group())
+                                if m3:
+                                    self.result.append(m3.group())
         f.close()
         self.stop()
 

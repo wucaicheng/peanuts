@@ -19547,7 +19547,11 @@ class AP_MIXEDPSK_NET_FORBIDDEN(TestCase):
     @classmethod
     def tearDownClass(self):
 
-        api.setNetMacFilter(self.dut, self.__name__)
+        option = {
+            'mac': self.staMac,
+            'wan': '1'
+        }
+        api.setNetMacFilter(self.dut, self.__name__, **option)
         option2g = {
             'wifiIndex': 1,
             'on': 0,
@@ -19584,6 +19588,54 @@ class AP_MIXEDPSK_NET_FORBIDDEN(TestCase):
             if result['ip'] != '':
                 ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL2, self.__class__.__name__)
                 self.assertFalse(ret, msg='STA Access to website should be Forbidden')
+            else:
+                self.fail("STA should get IP address.")
+        else:
+            self.fail("Association should be successful.")
+
+    def assoc_psk2_netForbidden_off_2g(self):
+
+        option = {
+            'mac': self.staMac,
+            'wan': '1'
+        }
+        api.setNetMacFilter(self.dut, self.__class__.__name__, **option)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] != '':
+                ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL2, self.__class__.__name__)
+                option = {
+                    'mac': self.staMac,
+                    'wan': '0'
+                }
+                api.setNetMacFilter(self.dut, self.__class__.__name__, **option)
+                self.assertTrue(ret, msg='STA Access to website should NOT be Forbidden')
+            else:
+                self.fail("STA should get IP address.")
+        else:
+            self.fail("Association should be successful.")
+
+    def assoc_psk2_netForbidden_off_5g(self):
+
+        option = {
+            'mac': self.staMac,
+            'wan': '1'
+        }
+        api.setNetMacFilter(self.dut, self.__class__.__name__, **option)
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] != '':
+                ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL2, self.__class__.__name__)
+                option = {
+                    'mac': self.staMac,
+                    'wan': '0'
+                }
+                api.setNetMacFilter(self.dut, self.__class__.__name__, **option)
+                self.assertFalse(ret, msg='STA Access to website should NOT be Forbidden')
             else:
                 self.fail("STA should get IP address.")
         else:
@@ -20240,9 +20292,9 @@ class AP_MIXEDPSK_NET_CUTOFF_LIMITED(TestCase):
         if res2gConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-                for url in iter(v.CHECK_ACCESS_URL_LIST):
-                    ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
-                    self.assertFalse(ret, msg='STA should not browser website when net cutoff.')
+                # for url in iter(v.CHECK_ACCESS_URL_LIST):
+                ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL2, self.__class__.__name__)
+                self.assertFalse(ret, msg='STA should not browser website when net cutoff.')
             else:
                 self.fail("STA should get IP address.")
         else:
@@ -20250,21 +20302,22 @@ class AP_MIXEDPSK_NET_CUTOFF_LIMITED(TestCase):
 
     def assoc_psk2_sta_ctrloff_2g(self):
 
+        option = {
+            'mac': self.staMac,
+            'mode': 'none',
+            'enable': '1',
+        }
+        api.setNetAccessCtrl(self.dut, self.__class__.__name__, **option)
+
         res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
 
         if res2gConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-                option = {
-                    'mac': self.staMac,
-                    'enable': '0',
-                }
-                api.setNetAccessCtrl(self.dut, self.__class__.__name__, **option)
-
-                for url in iter(v.CHECK_ACCESS_URL_LIST):
-                    ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
-                    if ret is False:
-                        break
+                # for url in iter(v.CHECK_ACCESS_URL_LIST):
+                ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL2, self.__class__.__name__)
+                    # if ret is False:
+                    #     break
                 option = {
                     'mac': self.staMac,
                     'mode': 'limited',
@@ -20284,9 +20337,9 @@ class AP_MIXEDPSK_NET_CUTOFF_LIMITED(TestCase):
         if res5gConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-                for url in iter(v.CHECK_ACCESS_URL_LIST):
-                    ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
-                    self.assertFalse(ret, msg='STA should not browser website when net cutoff.')
+                # for url in iter(v.CHECK_ACCESS_URL_LIST):
+                ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL2, self.__class__.__name__)
+                self.assertFalse(ret, msg='STA should not browser website when net cutoff.')
             else:
                 self.fail("STA should get IP address.")
         else:
@@ -20294,21 +20347,23 @@ class AP_MIXEDPSK_NET_CUTOFF_LIMITED(TestCase):
 
     def assoc_psk2_sta_ctrloff_5g(self):
 
+        option = {
+            'mac': self.staMac,
+            'mode': 'none',
+            'enable': '1',
+        }
+        api.setNetAccessCtrl(self.dut, self.__class__.__name__, **option)
+
         res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
 
         if res5gConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-                option = {
-                    'mac': self.staMac,
-                    'enable': '0',
-                }
-                api.setNetAccessCtrl(self.dut, self.__class__.__name__, **option)
 
-                for url in iter(v.CHECK_ACCESS_URL_LIST):
-                    ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
-                    if ret is False:
-                        break
+                # for url in iter(v.CHECK_ACCESS_URL_LIST):
+                ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL2, self.__class__.__name__)
+                    # if ret is False:
+                    #     break
                 option = {
                     'mac': self.staMac,
                     'mode': 'limited',
