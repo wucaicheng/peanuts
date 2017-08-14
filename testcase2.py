@@ -8671,10 +8671,10 @@ class AP_QOS_ROUTERSELF(TestCase):
         if xqSpeedDown == None or xqSpeedUp == None:
             self.fail(msg='RouterSelf Speedtest failed')
         else:
-            self.assertLessEqual(xqSpeedDown, self.routerSelfQos['local']['down'] * 1.2,
+            self.assertLessEqual(xqSpeedDown, self.routerSelfQos['local']['down'] * 1.5,
                             "RouterSelf Downlink rate %s Mb/s exceed maxdown %s Mb/s" % (
                             xqSpeedDown, self.routerSelfQos['local']['down']))
-            self.assertLessEqual(xqSpeedUp, self.routerSelfQos['local']['up'] * 1.2,
+            self.assertLessEqual(xqSpeedUp, self.routerSelfQos['local']['up'] * 1.5,
                             "RouterSelf Uplink rate %s Mb/s exceed maxup %s Mb/s" % (
                             xqSpeedUp, self.routerSelfQos['local']['up']))
 
@@ -19635,7 +19635,7 @@ class AP_MIXEDPSK_NET_FORBIDDEN(TestCase):
                     'wan': '0'
                 }
                 api.setNetMacFilter(self.dut, self.__class__.__name__, **option)
-                self.assertFalse(ret, msg='STA Access to website should NOT be Forbidden')
+                self.assertTrue(ret, msg='STA Access to website should NOT be Forbidden')
             else:
                 self.fail("STA should get IP address.")
         else:
