@@ -782,6 +782,7 @@ class GetTestModule(threading.Thread):
         self.moduleDict = {
             'treeBasicApi': '基础功能',
             'treeGuestWifiApi': '访客网络',
+            'treeWpsApi': 'WPS',
             'treeBSDApi': '双频合一',
             'treeMUMIMOApi': 'MU_MIMO',
             'treeWireRelayApi': '有线中继',

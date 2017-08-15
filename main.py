@@ -523,6 +523,7 @@ class TestSuitePage(wx.Panel):
         self.root = self.tree.AddRoot('Test Cases', ct_type=1)
         self.rootBasic = self.tree.AppendItem(self.root, 'Wifi Basic', ct_type=1)
         self.rootGuestWifi = self.tree.AppendItem(self.root, 'Guest Wifi', ct_type=1)
+        self.rootWps = self.tree.AppendItem(self.root, 'WPS', ct_type=1)
         self.rootBSD = self.tree.AppendItem(self.root, 'BSD', ct_type=1)
         self.rootMUMIMO = self.tree.AppendItem(self.root, 'MU-MIMO', ct_type=1)
         self.rootAccessControlApi = self.tree.AppendItem(self.root, 'Access Control', ct_type=1)
@@ -544,6 +545,7 @@ class TestSuitePage(wx.Panel):
 
         self.AddTreeNodes(self.rootBasic, data.treeBasicApi)
         self.AddTreeNodes(self.rootGuestWifi, data.treeGuestWifiApi)
+        self.AddTreeNodes(self.rootWps, data.treeWpsApi)
         self.AddTreeNodes(self.rootBSD, data.treeBSDApi)
         self.AddTreeNodes(self.rootMUMIMO, data.treeMUMIMOApi)
         self.AddTreeNodes(self.rootAccessControlApi, data.treeAccessControlApi)

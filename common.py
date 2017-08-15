@@ -1501,6 +1501,17 @@ def setAdbStaConn(device, logname, **kwargs):
             return True
     return False
 
+def setAdbWps(device, logname):
+
+    command = "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_wps_sta -w com.peanutswifi.test/com.peanutswifi.MyTestRunner"
+
+    ret = setAdbShell(device, command, logname)
+    t.sleep(2)
+    for line in ret:
+        m = re.search('OK ', line)
+        if m is not None:
+            return True
+    return False
 
 def setAdbScanSsidNoExist(device, ssid, radio, logname):
     if radio is "2g":

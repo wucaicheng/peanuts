@@ -106,6 +106,66 @@ class AP_CLEAR_CHAN(TestCase):
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
+class AP_WPS(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': 'miwifi_wps',
+            'encryption': 'mixed-psk',
+            'pwd': '12345678'
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': 'miwifi_wps_5G',
+            'encryption': 'mixed-psk',
+            'pwd': '12345678'
+        }
+
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+        api.setWpsOn(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        api.setWpsOff(self.dut, self.__name__)
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_wps(self):
+
+        wpsConn = setAdbWps(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+        if wpsConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='WPS STA got no ip address.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(wpsConn, "WPS Connection Failed.")
 
 class AP_CLEAR_LOW(TestCase):
     @classmethod
@@ -8671,10 +8731,10 @@ class AP_QOS_ROUTERSELF(TestCase):
         if xqSpeedDown == None or xqSpeedUp == None:
             self.fail(msg='RouterSelf Speedtest failed')
         else:
-            self.assertLessEqual(xqSpeedDown, self.routerSelfQos['local']['down'] * 1.2,
+            self.assertLessEqual(xqSpeedDown, self.routerSelfQos['local']['down'] * 1.5,
                             "RouterSelf Downlink rate %s Mb/s exceed maxdown %s Mb/s" % (
                             xqSpeedDown, self.routerSelfQos['local']['down']))
-            self.assertLessEqual(xqSpeedUp, self.routerSelfQos['local']['up'] * 1.2,
+            self.assertLessEqual(xqSpeedUp, self.routerSelfQos['local']['up'] * 1.5,
                             "RouterSelf Uplink rate %s Mb/s exceed maxup %s Mb/s" % (
                             xqSpeedUp, self.routerSelfQos['local']['up']))
 
@@ -19635,7 +19695,7 @@ class AP_MIXEDPSK_NET_FORBIDDEN(TestCase):
                     'wan': '0'
                 }
                 api.setNetMacFilter(self.dut, self.__class__.__name__, **option)
-                self.assertFalse(ret, msg='STA Access to website should NOT be Forbidden')
+                self.assertTrue(ret, msg='STA Access to website should NOT be Forbidden')
             else:
                 self.fail("STA should get IP address.")
         else:

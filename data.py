@@ -160,6 +160,13 @@ treeBasicApi = [
     ],
 ]
 
+treeWpsApi = [
+    'AP_WPS',
+    [
+        'assoc_wps'
+    ]
+]
+
 treeGuestWifiApi = [
     'AP_GUEST_CLEAR',
     [

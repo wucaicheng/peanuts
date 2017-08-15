@@ -415,6 +415,20 @@ def setMU_MIMO(terminal, logname, **kwargs):
     t.sleep(30)
     return ret
 
+def setWpsOn(terminal, logname):
+
+    api = '/cgi-bin/luci/;stok=token/api/xqsystem/wps'
+    ret = setCheck(terminal, logname, api)
+    # t.sleep(30)
+    return ret
+
+def setWpsOff(terminal, logname):
+
+    api = '/cgi-bin/luci/;stok=token/api/xqsystem/wps_cancel'
+    ret = setCheck(terminal, logname, api)
+    # t.sleep(30)
+    return ret
+
 def setAllWifi(terminal, logname, **kwargs):
     """
     bsd (0/1)
