@@ -429,6 +429,15 @@ def setWpsOff(terminal, logname):
     # t.sleep(30)
     return ret
 
+def checkWpsStatus(terminal, logname):
+
+    api = '/cgi-bin/luci/;stok=token/api/xqsystem/wps_status'
+    ret = setGet(terminal, logname, api)
+    if ret is not None:
+        if ret['code'] is 0:
+            return ret
+    return None
+
 def setAllWifi(terminal, logname, **kwargs):
     """
     bsd (0/1)

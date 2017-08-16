@@ -154,6 +154,11 @@ class AP_WPS(TestCase):
 
     def assoc_wps(self):
 
+        wpsStatus = api.checkWpsStatus(self.dut, self.__class__.__name__)
+        if wpsStatus['status'] == None:
+            self.fail(msg='Cannot Open WPS')
+        self.assertEqual(wpsStatus['status'], 1, 'Cannot Open WPS')
+
         wpsConn = setAdbWps(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         if wpsConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
