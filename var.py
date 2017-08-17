@@ -47,6 +47,19 @@ ANDROID_SERIAL_NUM = ''
 ANDROID_MODEL = ''
 STA_COUNT = "1"
 
+# uci show | grep -i network.wan.ifname
+WAN_IFNAME = {
+    "R1D": '',
+    "R2D": '',
+    "R1CM": '',
+    "R3": 'eth0.2',
+    "R1CL": '',
+    "R3L": '',
+    "R3P": 'eth1',
+    "R3D": '',
+    "R3A": 'eth0.2',
+    "R3G": 'eth1'
+}
 # -------------pc telnet------------------#
 PC_USERNAME = 'jac-pc2'
 PC_PWD = '12345678'

@@ -5188,6 +5188,60 @@ class AP_MUMIMO(TestCase):
         }
         api.setMU_MIMO(self.dut, self.__class__.__name__, **option2)
 
+class AP_RELAY_CHECK(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("SSH/Telnet connection is failed. please check your remote settings.")
+
+        api.setLanAp(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+
+        api.setDisableLanAp(self.dut, self.__name__)
+        self.dut.close()
+
+    def wan_network_notExist(self):
+
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def wan_port_belong_brlan(self):
+
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
+
+
+
 
 class AP_RELAY_CLEAR_CHAN(TestCase):
     @classmethod

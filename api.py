@@ -616,7 +616,7 @@ def setLanAp(terminal, logname, **kwargs):
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_lan_ap'
-    t.sleep(60)
+    # t.sleep(60)
     result = setGet(terminal, logname, api, **option)
     t.sleep(60)
     if result is not None:
@@ -634,7 +634,7 @@ def setLanAp(terminal, logname, **kwargs):
 
 def setDisableLanAp(terminal, logname):
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/disable_lan_ap'
-    t.sleep(60)
+    # t.sleep(60)
     result = setGet(terminal, logname, api)
     t.sleep(60)
     if result is not None:
