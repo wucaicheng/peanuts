@@ -49,14 +49,14 @@ STA_COUNT = "1"
 
 # uci show | grep -i network.wan.ifname
 WAN_IFNAME = {
-    "R1D": '',
-    "R2D": '',
-    "R1CM": '',
+    "R1D": 'eth0.2',
+    "R2D": 'eth0.2',
+    "R1CM": 'eth0.2',
     "R3": 'eth0.2',
-    "R1CL": '',
-    "R3L": '',
+    "R1CL": 'eth0.2',
+    "R3L": 'eth0.2',
     "R3P": 'eth1',
-    "R3D": '',
+    "R3D": 'eth0',
     "R3A": 'eth0.2',
     "R3G": 'eth1'
 }
