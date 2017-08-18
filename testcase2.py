@@ -5584,6 +5584,12 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
         self.dut.close()
         self.dut2.close()
 
+    def wan_port_belong_brlan(self):
+
+        wanIfname = v.WAN_IFNAME.get(v.DUT_MODULE)
+        wanInBrlan = wanIfInBrlan(self.dut, wanIfname, self.__class__.__name__)
+        self.assertTrue(wanInBrlan, "wan port isnot in br-lan.")
+
     def autochan_txpower_2g(self):
 
         option2g = {

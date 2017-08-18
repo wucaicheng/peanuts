@@ -1970,6 +1970,17 @@ def getRouterSpeedtest(terminal, intf, logname):
 
     return None
 
+def wanIfInBrlan(terminal, wanIf, logname):
+
+    command = 'brctl show | awk \'NR>1{printf "%s_fj\\n",$NF}\''
+    wan_intf = wanIf + '_fj'
+    ret = setGet(terminal, command, logname)
+    if isinstance(ret, list):
+        for line in ret:
+            m = re.search(wan_intf, line)
+            if m:
+                return True
+    return False
 
 
 
