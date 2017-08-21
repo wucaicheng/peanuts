@@ -5188,60 +5188,6 @@ class AP_MUMIMO(TestCase):
         }
         api.setMU_MIMO(self.dut, self.__class__.__name__, **option2)
 
-class AP_RELAY_CHECK(TestCase):
-    @classmethod
-    def setUpClass(self):
-        self.dut = api.HttpClient()
-        self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
-
-        if ret1 is False:
-            raise Exception("Http connection is failed. please check your remote settings.")
-
-        if ret2 is False:
-            raise Exception("SSH/Telnet connection is failed. please check your remote settings.")
-
-        api.setLanAp(self.dut, self.__name__)
-
-    @classmethod
-    def tearDownClass(self):
-
-        api.setDisableLanAp(self.dut, self.__name__)
-        self.dut.close()
-
-    def wan_network_notExist(self):
-
-        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-        if res2gConn:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
-                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
-                                                  self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(res2gConn, "Association wasnot successful.")
-
-    def wan_port_belong_brlan(self):
-
-        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-        if res5gConn:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
-                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
-                                                  self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(res5gConn, "Association wasnot successful.")
-
-
-
 
 class AP_RELAY_CLEAR_CHAN(TestCase):
     @classmethod
@@ -5551,13 +5497,48 @@ class AP_RELAY_CLEAR_HIGH(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
-class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
+class AP_RELAY_CHECK(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut2 = api.HttpClient()
         ret2 = self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
         if ret2 is False:
             raise Exception('Connection is failed for httpclient. please check your remote settings.')
+
+        self.option2g = {
+            'wifiIndex': 1,
+            'on': "1",
+            'ssid': v.SSID,
+            'pwd': v.KEY,
+            'encryption': 'mixed-psk',
+            'channel': v.CHANNEL11,
+            'bandwidth': '20',
+            'hidden': "0",
+            'txpwr': 'max'
+        }
+
+        self.option5g = {
+            'wifiIndex': 2,
+            'on': "1",
+            'ssid': v.SSID_5G,
+            'pwd': v.KEY,
+            'encryption': 'psk2',
+            'channel': v.CHANNEL149,
+            'bandwidth': '40',
+            'hidden': "0",
+            'txpwr': 'min'
+        }
+
+        self.optionGuest = {
+            'wifiIndex': 3,
+            'on': "1",
+            'ssid': v.GUEST_SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut2, self.__name__, **self.option2g)
+        api.setWifi(self.dut2, self.__name__, **self.option5g)
+        api.setWifi(self.dut2, self.__name__, **self.optionGuest)
 
         api.setLanAp(self.dut2, self.__name__)
 
@@ -5597,7 +5578,25 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "WireRelayRouter Ping internet Failed.")
 
-    def autochan_txpower_2g(self):
+    def wifi_config_check_2g(self):
+
+        self.relay2g = api.getWifiDetailDic(self.dut2, self.__class__.__name__, "2g")
+
+        self.assertDictEqual(self.relay2g, self.option2g,
+                             msg="Normal router module switch over to wire relay module, wifi config should not be changed.")
+
+    def wifi_config_check_5g(self):
+
+        self.relay5g = api.getWifiDetailDic(self.dut2, self.__class__.__name__, "5g")
+        self.assertDictEqual(self.relay5g, self.option5g,
+                             msg="Normal router module switch over to wire relay module, wifi config should not be changed.")
+
+    def wifi_config_check_guest(self):
+
+        self.relayGuest = api.getWifiDetailDic(self.dut2, self.__class__.__name__, "guest")
+        self.assertDictEqual(self.relayGuest, {}, msg="Wire relay module should not support guest wifi")
+
+    def autochan_txpower_min_2g(self):
 
         option2g = {
             'wifiIndex': 1,
@@ -5616,47 +5615,47 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
         else:
             self.fail("Txpower isnot correct.")
 
-    def autochan_txpower_5g(self):
+    def autochan_txpower_mid_5g(self):
 
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'txpwr': 'min',
+            'txpwr': 'mid',
         }
 
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
 
-        minPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 1.015
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 1.015
 
         if minPower <= power <= maxPower:
             pass
         else:
             self.fail("Txpower isnot correct.")
 
-    def chan1_txpower_2g(self):
+    def chan1_txpower_max_2g(self):
 
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
             'channel': v.CHANNEL1,
-            'txpwr': 'min',
+            'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
 
-        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
 
         if minPower <= power <= maxPower:
             pass
         else:
             self.fail("Txpower isnot correct.")
 
-    def chan6_txpower_2g(self):
+    def chan6_txpower_min_2g(self):
 
         option2g = {
             'wifiIndex': 1,
@@ -5676,47 +5675,47 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
         else:
             self.fail("Txpower isnot correct.")
 
-    def chan11_txpower_2g(self):
+    def chan11_txpower_mid_2g(self):
 
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
             'channel': v.CHANNEL11,
-            'txpwr': 'min',
+            'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
 
-        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
 
         if minPower <= power <= maxPower:
             pass
         else:
             self.fail("Txpower isnot correct.")
 
-    def chan13_txpower_2g(self):
+    def chan13_txpower_max_2g(self):
 
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
             'channel': v.CHANNEL13,
-            'txpwr': 'min',
+            'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
 
-        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
 
         if minPower <= power <= maxPower:
             pass
         else:
             self.fail("Txpower isnot correct.")
 
-    def chan36_txpower_5g(self):
+    def chan36_txpower_min_5g(self):
 
         option5g = {
             'wifiIndex': 2,
@@ -5736,47 +5735,47 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
         else:
             self.fail("Txpower isnot correct.")
 
-    def chan52_txpower_5g(self):
+    def chan52_txpower_mid_5g(self):
 
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
             'channel': v.CHANNEL52,
-            'txpwr': 'min',
+            'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
 
-        minPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 1.015
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 1.015
 
         if minPower <= power <= maxPower:
             pass
         else:
             self.fail("Txpower isnot correct.")
 
-    def chan149_txpower_5g(self):
+    def chan149_txpower_max_5g(self):
 
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
             'channel': v.CHANNEL149,
-            'txpwr': 'min',
+            'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
 
-        minPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 1.015
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 1.015
 
         if minPower <= power <= maxPower:
             pass
         else:
             self.fail("Txpower isnot correct.")
 
-    def chan165_txpower_5g(self):
+    def chan165_txpower_min_5g(self):
 
         option5g = {
             'wifiIndex': 2,
@@ -5795,6 +5794,38 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             pass
         else:
             self.fail("Txpower isnot correct.")
+
+    def chanselection_2g(self):
+        count = 0
+        chan2g = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+        }
+        while count < 5:
+            api.setWifi(self.dut, self.__class__.__name__, **option2g)
+            channel = api.getWifiChannel(self.dut, '2g', self.__class__.__name__)
+            if channel not in chan2g:
+                self.fail("Current auto-selected channel isnot between 1 and 11.")
+            else:
+                count += 1
+
+    def chanselection_5g(self):
+        count = 0
+        chan5g = [149, 153, 157, 161]
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+        }
+        while count < 5:
+            api.setWifi(self.dut, self.__class__.__name__, **option5g)
+            channel = api.getWifiChannel(self.dut, '5g', self.__class__.__name__)
+            if channel not in chan5g:
+                self.fail("Current auto-selected channel isnot between 149 and 161.")
+            else:
+                count += 1
 
 
 class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
