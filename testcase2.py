@@ -5189,7 +5189,7 @@ class AP_MUMIMO(TestCase):
         api.setMU_MIMO(self.dut, self.__class__.__name__, **option2)
 
 
-class AP_RELAY_CLEAR_CHAN(TestCase):
+class AP_RELAY_STA_ONLINE(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
@@ -5203,21 +5203,6 @@ class AP_RELAY_CLEAR_CHAN(TestCase):
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
-
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'encryption': 'none',
-            'channel': v.CHANNEL11,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'ssid': v.SSID_5G,
-            'encryption': 'none',
-            'channel': v.CHANNEL149,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
 
     @classmethod
     def tearDownClass(self):
@@ -5235,8 +5220,15 @@ class AP_RELAY_CLEAR_CHAN(TestCase):
         api.setDisableLanAp(self.dut, self.__name__)
         self.dut.close()
 
-    def assoc_clear_sta_2g(self):
+    def assoc_clear_sta_chan1_2g(self):
 
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'channel': v.CHANNEL1,
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
         res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
@@ -5250,9 +5242,375 @@ class AP_RELAY_CLEAR_CHAN(TestCase):
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
-    def assoc_clear_sta_5g(self):
+    def assoc_clear_sta_chan36_5g(self):
 
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'channel': v.CHANNEL36,
+        }
+
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
         res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
+
+    def assoc_psk2_sta_chan6_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+            'channel': v.CHANNEL6,
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
+
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_psk2_sta_chan52_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+            'channel': v.CHANNEL52,
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
+
+    def assoc_mixed_sta_chan11_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+            'channel': v.CHANNEL11
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
+
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_mixed_sta_chan149_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+            'channel': v.CHANNEL149
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
+
+    def assoc_mixed_bw40_sta_chan165_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL165,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
+
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
+
+    def assoc_mixed_bw40_sta_chan13_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL13,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+            'bandwidth': '40'
+        }
+
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_mixed_bw20_sta_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
+
+    def assoc_mixed_sta_ssidspec_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SPECIAL_SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
+
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "spec", "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got. SSID = %s' % v.SPECIAL_SSID)
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful. SSID = %s" % v.SPECIAL_SSID)
+
+    def assoc_mixed_sta_ssidspec_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SPECIAL_SSID_5G,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "spec", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got. SSID = %s' % v.SPECIAL_SSID)
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful. SSID = %s" % v.SPECIAL_SSID)
+
+    def assoc_mixed_sta_keyspec_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.SPECIAL_KEY
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
+
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__, key="spec")
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got. KEY = %s' % v.SPECIAL_KEY)
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful. KEY = %s" % v.SPECIAL_KEY)
+
+    def assoc_mixed_sta_keyspec_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'mixed-psk',
+            'pwd': v.SPECIAL_KEY
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__, key="spec")
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got. KEY = %s' % v.SPECIAL_KEY)
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful. KEY = %s" % v.SPECIAL_KEY)
+
+    def assoc_psk2_sta_ssidchinese_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.CHINESE_SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
+
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "chinese", "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got. SSID = %s' % v.CHINESE_SSID)
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful. SSID = %s" % v.CHINESE_SSID)
+
+    def assoc_psk2_sta_ssidchinese_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.CHINESE_SSID_5G,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "chinese", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got. SSID = %s' % v.CHINESE_SSID)
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful. SSID = %s" % v.CHINESE_SSID)
+
+    def assoc_ssidhide_sta_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+            'hidden': 1,
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
+
+        ret2g = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+        if ret2g is False:
+            self.fail(msg='2.4g wifi is not hidden..')
+
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_ssidhide_sta_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+            'hidden': 1,
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
+
+        ret5g = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
+        if ret5g is False:
+            self.fail(msg='5g wifi is not hidden..')
+
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
@@ -5497,7 +5855,7 @@ class AP_RELAY_CLEAR_HIGH(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
-class AP_RELAY_CHECK(TestCase):
+class AP_RELAY_CONFIG_CHECK(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut2 = api.HttpClient()
@@ -8186,7 +8544,7 @@ class AP_RELAY_BSD_SSIDHIDE(TestCase):
             self.fail(msg='ssid should be hidden when bsd is on')
 
 
-class AP_RELAY_CONFIG_CHECK(TestCase):
+class AP_RELAY_WIFI_CHECK(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
