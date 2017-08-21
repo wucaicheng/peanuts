@@ -126,6 +126,7 @@ PING_COUNT = 5
 PING_BIG_SIZE = 60000
 PING_BIG_COUNT = 20
 PING_TARGET = 'www.baidu.com'
+PING_TARGET_WITHOUT_DNS = '114.114.114.114'
 CHECK_ACCESS_URL = "http://miwifi.com/cgi-bin/luci/web"
 CHECK_ACCESS_URL2 = "https://m.baidu.com"
 CHECK_ACCESS_URL3 = "http://www.sohu.com"

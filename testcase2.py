@@ -5590,6 +5590,13 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
         wanInBrlan = wanIfInBrlan(self.dut, wanIfname, self.__class__.__name__)
         self.assertTrue(wanInBrlan, "wan port isnot in br-lan.")
 
+    def wire_relay_ping_internet(self):
+
+        resPingPercent = getPingStatus(self.dut, v.PING_TARGET_WITHOUT_DNS, v.PING_COUNT,
+                                                  self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "WireRelayRouter Ping internet Failed.")
+
     def autochan_txpower_2g(self):
 
         option2g = {
