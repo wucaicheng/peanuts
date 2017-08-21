@@ -5220,7 +5220,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         api.setDisableLanAp(self.dut, self.__name__)
         self.dut.close()
 
-    def assoc_clear_sta_chan1_2g(self):
+    def assoc_clear_chan1_2g(self):
 
         option2g = {
             'wifiIndex': 1,
@@ -5242,7 +5242,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
-    def assoc_clear_sta_chan36_5g(self):
+    def assoc_clear_chan36_5g(self):
 
         option5g = {
             'wifiIndex': 2,
@@ -5265,7 +5265,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
-    def assoc_psk2_sta_chan6_2g(self):
+    def assoc_psk2_chan6_2g(self):
 
         option2g = {
             'wifiIndex': 1,
@@ -5289,7 +5289,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
-    def assoc_psk2_sta_chan52_5g(self):
+    def assoc_psk2_chan52_5g(self):
 
         option5g = {
             'wifiIndex': 2,
@@ -5312,7 +5312,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
-    def assoc_mixed_sta_chan11_2g(self):
+    def assoc_mixed_chan11_2g(self):
 
         option2g = {
             'wifiIndex': 1,
@@ -5336,7 +5336,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
-    def assoc_mixed_sta_chan149_5g(self):
+    def assoc_mixed_chan149_5g(self):
 
         option5g = {
             'wifiIndex': 2,
@@ -5359,7 +5359,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
-    def assoc_mixed_bw40_sta_chan165_5g(self):
+    def assoc_mixed_bw40_chan165_5g(self):
 
         option5g = {
             'wifiIndex': 2,
@@ -5384,7 +5384,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
-    def assoc_mixed_bw40_sta_chan13_2g(self):
+    def assoc_mixed_bw40_chan13_2g(self):
 
         option2g = {
             'wifiIndex': 1,
@@ -5409,7 +5409,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
-    def assoc_mixed_bw20_sta_5g(self):
+    def assoc_mixed_bw20_chan0_5g(self):
 
         option5g = {
             'wifiIndex': 2,
@@ -5432,7 +5432,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
-    def assoc_mixed_sta_ssidspec_2g(self):
+    def assoc_mixed_ssidspec_2g(self):
 
         option2g = {
             'wifiIndex': 1,
@@ -5455,7 +5455,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res2gConn, "Association wasnot successful. SSID = %s" % v.SPECIAL_SSID)
 
-    def assoc_mixed_sta_ssidspec_5g(self):
+    def assoc_mixed_ssidspec_5g(self):
 
         option5g = {
             'wifiIndex': 2,
@@ -5477,7 +5477,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res5gConn, "Association wasnot successful. SSID = %s" % v.SPECIAL_SSID)
 
-    def assoc_mixed_sta_keyspec_2g(self):
+    def assoc_mixed_keyspec_2g(self):
 
         option2g = {
             'wifiIndex': 1,
@@ -5500,7 +5500,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res2gConn, "Association wasnot successful. KEY = %s" % v.SPECIAL_KEY)
 
-    def assoc_mixed_sta_keyspec_5g(self):
+    def assoc_mixed_keyspec_5g(self):
 
         option5g = {
             'wifiIndex': 2,
@@ -5522,7 +5522,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res2gConn, "Association wasnot successful. KEY = %s" % v.SPECIAL_KEY)
 
-    def assoc_psk2_sta_ssidchinese_2g(self):
+    def assoc_mixed_ssidchinese_2g(self):
 
         option2g = {
             'wifiIndex': 1,
@@ -5545,7 +5545,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res2gConn, "Association wasnot successful. SSID = %s" % v.CHINESE_SSID)
 
-    def assoc_psk2_sta_ssidchinese_5g(self):
+    def assoc_mixed_ssidchinese_5g(self):
 
         option5g = {
             'wifiIndex': 2,
@@ -5567,7 +5567,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res5gConn, "Association wasnot successful. SSID = %s" % v.CHINESE_SSID)
 
-    def assoc_ssidhide_sta_2g(self):
+    def assoc_ssidhide_2g(self):
 
         option2g = {
             'wifiIndex': 1,
@@ -5595,7 +5595,7 @@ class AP_RELAY_STA_ONLINE(TestCase):
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
-    def assoc_ssidhide_sta_5g(self):
+    def assoc_ssidhide_5g(self):
 
         option5g = {
             'wifiIndex': 2,
@@ -6003,6 +6003,13 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+
+        chan_actually = getWlanChannel(self.dut, "2g", self.__class__.__name__)
+        if int(eval(v.CHANNEL1)) == chan_actually:
+            pass
+        else:
+            self.fail("Channel 1 Setup failed.")
+
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
 
         minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
@@ -6023,6 +6030,13 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+
+        chan_actually = getWlanChannel(self.dut, "2g", self.__class__.__name__)
+        if int(eval(v.CHANNEL6)) == chan_actually:
+            pass
+        else:
+            self.fail("Channel 6 Setup failed.")
+
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
 
         minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
@@ -6043,6 +6057,13 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+
+        chan_actually = getWlanChannel(self.dut, "2g", self.__class__.__name__)
+        if int(eval(v.CHANNEL11)) == chan_actually:
+            pass
+        else:
+            self.fail("Channel 11 Setup failed.")
+
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
 
         minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
@@ -6063,6 +6084,13 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+
+        chan_actually = getWlanChannel(self.dut, "2g", self.__class__.__name__)
+        if int(eval(v.CHANNEL13)) == chan_actually:
+            pass
+        else:
+            self.fail("Channel 13 Setup failed.")
+
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
 
         minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
@@ -6083,6 +6111,13 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+
+        chan_actually = getWlanChannel(self.dut, "5g", self.__class__.__name__)
+        if int(eval(v.CHANNEL36)) == chan_actually:
+            pass
+        else:
+            self.fail("Channel 36 Setup failed.")
+
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
 
         minPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 0.985
@@ -6103,6 +6138,13 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+
+        chan_actually = getWlanChannel(self.dut, "5g", self.__class__.__name__)
+        if int(eval(v.CHANNEL52)) == chan_actually:
+            pass
+        else:
+            self.fail("Channel 52 Setup failed.")
+
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
 
         minPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 0.985
@@ -6123,6 +6165,13 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+
+        chan_actually = getWlanChannel(self.dut, "5g", self.__class__.__name__)
+        if int(eval(v.CHANNEL149)) == chan_actually:
+            pass
+        else:
+            self.fail("Channel 149 Setup failed.")
+
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
 
         minPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 0.985
@@ -6143,6 +6192,13 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+
+        chan_actually = getWlanChannel(self.dut, "5g", self.__class__.__name__)
+        if int(eval(v.CHANNEL165)) == chan_actually:
+            pass
+        else:
+            self.fail("Channel 165 Setup failed.")
+
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
 
         minPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 0.985
@@ -7913,7 +7969,7 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
-class AP_RELAY_MIXEDPSK_BSD(TestCase):
+class AP_RELAY_BSD(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
@@ -7955,80 +8011,43 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         self.dut.close()
 
     def assoc_psk2_near_field_sta(self):
-        count = 0
-        while count <= 1:
-            resConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if resConn and resConn2:
-                break
-            else:
-                resConn2 = False
-            count += 1
 
+        resConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         self.assertTrue(resConn, msg="Association wasnot successful.")
-        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
+        resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+        self.assertTrue(resConn2, msg="STA online Success, But doesnot associate with 5g")
+
+    def assoc_psk2_near_field_ssidhide(self):
+        option = {
+            'bsd': 1,
+            'ssid1': v.SSID,
+            'encryption1': 'mixed-psk',
+            'pwd1': v.KEY,
+            'hidden1': 1,
+        }
+        api.setAllWifi(self.dut, self.__name__, **option)
+
+        ret = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+        if ret is False:
+            self.fail(msg='ssid should be hidden when bsd is on')
+
+        resConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+        self.assertTrue(resConn, msg="Association wasnot successful.")
+
         result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
         resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
-    def assoc_psk_near_field_sta(self):
-        count = 0
-        while count <= 1:
-            resConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if resConn and resConn2:
-                break
-            else:
-                resConn2 = False
-            count += 1
-
-        self.assertTrue(resConn, msg="Association wasnot successful.")
-        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-        self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
-        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                "Ping responsed percent werenot good enough.")
-
-    def assoc_tkippsk2_near_field_sta(self):
-        count = 0
-        while count <= 1:
-            resConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if resConn and resConn2:
-                break
-            else:
-                resConn2 = False
-            count += 1
-
-        self.assertTrue(resConn, msg="Association wasnot successful.")
-        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-        self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
-        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                "Ping responsed percent werenot good enough.")
-
-    def assoc_tkippsk_near_field_sta(self):
-        count = 0
-        while count <= 1:
-            resConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if resConn and resConn2:
-                break
-            else:
-                resConn2 = False
-            count += 1
-
-        self.assertTrue(resConn, msg="Association wasnot successful.")
-        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-        self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
-        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                "Ping responsed percent werenot good enough.")
+        resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+        self.assertTrue(resConn2, msg="STA online Success, But doesnot associate with 5g")
 
 
 class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
