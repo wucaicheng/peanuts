@@ -2399,7 +2399,7 @@ class AP_MIXEDPSK_CHAN(TestCase):
             else:
                 resPingPercent = getPingStatus(self.dut2, result['ip'], v.PING_BIG_COUNT,
                                                   self.__class__.__name__, v.PING_BIG_SIZE)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_BIG_PERCENT_PASS,
                                         "Router Ping Sta with BigSizePacket Failed.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful. Channel = %s" % self.channel2)
@@ -2414,7 +2414,7 @@ class AP_MIXEDPSK_CHAN(TestCase):
             else:
                 resPingPercent = getPingStatus(self.dut2, result['ip'], v.PING_BIG_COUNT,
                                                   self.__class__.__name__, v.PING_BIG_SIZE)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_BIG_PERCENT_PASS,
                                         "Router Ping Sta with BigSizePacket Failed.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful. Channel = %s" % self.channel5)
@@ -6218,8 +6218,8 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
             'encryption': 'none',
         }
         while count < 5:
-            api.setWifi(self.dut, self.__class__.__name__, **option2g)
-            channel = api.getWifiChannel(self.dut, '2g', self.__class__.__name__)
+            api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+            channel = api.getWifiChannel(self.dut2, '2g', self.__class__.__name__)
             if channel not in chan2g:
                 self.fail("Current auto-selected channel isnot between 1 and 11.")
             else:
@@ -6234,8 +6234,8 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
             'encryption': 'none',
         }
         while count < 5:
-            api.setWifi(self.dut, self.__class__.__name__, **option5g)
-            channel = api.getWifiChannel(self.dut, '5g', self.__class__.__name__)
+            api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+            channel = api.getWifiChannel(self.dut2, '5g', self.__class__.__name__)
             if channel not in chan5g:
                 self.fail("Current auto-selected channel isnot between 149 and 161.")
             else:
@@ -8031,7 +8031,7 @@ class AP_RELAY_BSD(TestCase):
             'pwd1': v.KEY,
             'hidden1': 1,
         }
-        api.setAllWifi(self.dut, self.__name__, **option)
+        api.setAllWifi(self.dut, self.__class__.__name__, **option)
 
         ret = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if ret is False:
