@@ -8656,6 +8656,98 @@ class AP_RELAY_WIFI_CHECK(TestCase):
         self.assertDictEqual(self.routerGuest, self.optionGuest,
                              msg="Wire relay switch back to normal router module, guest wifi should be turned off.")
 
+class AP_RELAY_CONFIG_SYNC(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
+
+        self.dut2 = api.HttpClient()
+        ret3 = self.dut2.connect(host=v.HOST_UPPER, password=v.WEB_PWD_UPPER)
+        if ret3 is False:
+            raise Exception("Http connection To Upper Router is failed after setLanAp")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+
+        api.setDisableLanAp(self.dut, self.__name__)
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_psk2_near_field_sta(self):
+
+        resConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+        self.assertTrue(resConn, msg="Association wasnot successful.")
+
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
+        resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+        self.assertTrue(resConn2, msg="STA online Success, But doesnot associate with 5g")
+
+    def assoc_psk2_near_field_ssidhide(self):
+        option = {
+            'bsd': 1,
+            'ssid1': v.SSID,
+            'encryption1': 'mixed-psk',
+            'pwd1': v.KEY,
+            'hidden1': 1,
+        }
+        api.setAllWifi(self.dut, self.__class__.__name__, **option)
+
+        ret = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+        if ret is False:
+            self.fail(msg='ssid should be hidden when bsd is on')
+
+        resConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+        self.assertTrue(resConn, msg="Association wasnot successful.")
+
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
+
+        resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+        self.assertTrue(resConn2, msg="STA online Success, But doesnot associate with 5g")
+
+
 
 class AP_QOS_MIXEDPSK(TestCase):
     @classmethod

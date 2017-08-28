@@ -220,6 +220,39 @@ class GeneralPage(wx.Panel):
         staConnSizer.Add(staConnSizer3, 0, wx.LEFT, 2)
         staConnSizer.Add(self.staModel, 0, wx.LEFT | wx.TOP, 2 | 4)
 
+        # Upper layer router ctrl
+        ipLblUpper = wx.StaticText(self, -1, 'Router:')
+        self.ipUpper = wx.TextCtrl(self, -1, '')
+        self.ipUpper.SetValue(v.HOST_UPPER)
+        webPasswdLblUpper = wx.StaticText(self, -1, 'Web Password:')
+        self.webPasswdUpper = wx.TextCtrl(self, -1, '')
+        self.webPasswdUpper.SetValue(v.WEB_PWD_UPPER)
+        # Upper layer router box
+        connBoxUpper = wx.StaticBox(self, -1, 'Upper Layer Router', size=(580, -1))
+        connSizerUpper = wx.StaticBoxSizer(connBoxUpper, wx.HORIZONTAL)
+        # left column
+        connSizerUpper2 = wx.BoxSizer(wx.VERTICAL)
+        connSizerUpper2.Add(ipLblUpper, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+
+        connSizerUpper3 = wx.BoxSizer(wx.VERTICAL)
+        connSizerUpper3.Add(self.ipUpper, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+
+        # right column
+        connSizerUpper4 = wx.BoxSizer(wx.VERTICAL)
+        connSizerUpper4.Add(webPasswdLblUpper, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+
+        connSizerUpper5 = wx.BoxSizer(wx.VERTICAL)
+        connSizerUpper5.Add(self.webPasswdUpper, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+
+        connSizerUpper.Add(connSizerUpper2, 0, wx.LEFT, 23)
+        connSizerUpper.Add(connSizerUpper3, 0, wx.LEFT, 2)
+        connSizerUpper.Add(connSizerUpper4, 0, wx.LEFT, 10)
+        connSizerUpper.Add(connSizerUpper5, 0, wx.LEFT, 2)
+
         # PC connection ctrl
         pcIPLbl = wx.StaticText(self, -1, 'Host:')
         self.pcIP = wx.TextCtrl(self, -1, '')
@@ -259,6 +292,7 @@ class GeneralPage(wx.Panel):
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(connSizer, 0, wx.ALL, 10)
         mainSizer.Add(staConnSizer, 0, wx.LEFT | wx.BOTTOM, 10)
+        mainSizer.Add(connSizerUpper, 0, wx.LEFT, 10)
         mainSizer.Add(pcConnSizer, 0, wx.LEFT, 10)
         mainSizer.Add(btnSizer, 0, wx.TOP, 93)
 
@@ -364,9 +398,11 @@ class GeneralPage(wx.Panel):
         if v.DUT_MODULE is not None:
             v.HOST = self.ip.GetValue()
             v.HOST_ORIGINAL = self.ip.GetValue()
+            v.HOST_UPPER = self.ipUpper.GetValue()
             v.USR = self.shellUsr.GetValue()
             v.PASSWD = self.shellPasswd.GetValue()
             v.WEB_PWD = self.webPasswd.GetValue()
+            v.WEB_PWD_UPPER = self.webPasswdUpper.GetValue()
             v.PC_HOST = self.pcIP.GetValue()
             dutConn = threading.Thread(target=self.connectionCheckThread, kwargs={'connectiontype': v.CONNECTION_TYPE,
                                                                                   'ip': v.HOST, 'user': v.USR,
@@ -437,7 +473,7 @@ class MemoryTrackPage(wx.Panel):
 
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(optionalSizer, 0, wx.ALL, 10)
-        mainSizer.Add(btnSizer, 0, wx.TOP, 365)
+        mainSizer.Add(btnSizer, 0, wx.TOP, 420)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
@@ -508,7 +544,7 @@ class TestSuitePage(wx.Panel):
         wx.Window.__init__(self, parent, -1, style=wx.BORDER_STATIC)
         ##        wx.StaticText(self, -1, "Test suite", wx.Point(10, 10))
         ##        self.tree = wx.TreeCtrl(self, size = (340,330))
-        self.tree = CT.CustomTreeCtrl(self, size=(540, 403),
+        self.tree = CT.CustomTreeCtrl(self, size=(540, 450),
                                       style=
                                       wx.BORDER_SIMPLE
                                       | wx.WANTS_CHARS,
@@ -949,7 +985,7 @@ class TestSuitePage(wx.Panel):
 
 class Frame(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, title="Peanuts " + v.VER, pos=(300, 200), size=(610, 630), style=
+        wx.Frame.__init__(self, None, title="Peanuts " + v.VER, pos=(300, 200), size=(610, 700), style=
         wx.CAPTION
         | wx.CLOSE_BOX
         | wx.MINIMIZE_BOX

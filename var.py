@@ -13,6 +13,7 @@ SAVE_BTN_FLAG = False  # represent save button pressed or not
 DUT_MODULE_LIST = ['R1D', 'R1CM', 'R2D', "R1CL", "R3", "R3L", "R3P", "R3D", "PLW", "R3A", "R3G"]
 DUT_MODULE = DUT_MODULE_LIST[0]
 HOST = "192.168.31.1"
+HOST_UPPER = "192.168.100.1"
 HOST_ORIGINAL = ""
 USR = "root"
 PASSWD = "admin"
@@ -181,6 +182,7 @@ MEM_MONITOR_INTERVAL = 60
 # -------------api------------------#
 WEB_USERNAME = 'admin'
 WEB_PWD = '12345678'
+WEB_PWD_UPPER = '12345678'
 WEB_KEY = 'a2ffa5c9be07488bbb04a3a47d3c5f6a'
 IV = '64175472480004614961023454661220'
 # uci export account
