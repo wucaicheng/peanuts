@@ -353,7 +353,11 @@ treeWireRelayApi = [
         'assoc_psk2_near_field_sta',
         'assoc_psk2_near_field_ssidhide',
     ],
-
+    'AP_RELAY_CONFIG_SYNC',
+    [
+        'assoc_blacklist_sync',
+        'assoc_whitelist_sync'
+    ]
 ]
 
 

@@ -8681,15 +8681,10 @@ class AP_RELAY_CONFIG_SYNC(TestCase):
             'encryption': 'mixed-psk',
             'pwd': v.KEY
         }
-        option5g = {
-            'wifiIndex': 2,
-            'ssid': v.SSID_5G,
-            'encryption': 'mixed-psk',
-            'pwd': v.KEY
-        }
-
         api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
+
+        wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
+        self.staMac = wlanInfo["mac"].upper()
 
     @classmethod
     def tearDownClass(self):
@@ -8699,54 +8694,81 @@ class AP_RELAY_CONFIG_SYNC(TestCase):
             'wifiIndex': 1,
             'on': 0,
         }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
         api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
+
         self.dut.close()
         self.dut2.close()
 
-    def assoc_psk2_near_field_sta(self):
-
-        resConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-        self.assertTrue(resConn, msg="Association wasnot successful.")
-
-        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-        self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
-        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                "Ping responsed percent werenot good enough.")
-        resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-        self.assertTrue(resConn2, msg="STA online Success, But doesnot associate with 5g")
-
-    def assoc_psk2_near_field_ssidhide(self):
+    def assoc_blacklist_sync(self):
+        # sta in blacklist
         option = {
-            'bsd': 1,
-            'ssid1': v.SSID,
-            'encryption1': 'mixed-psk',
-            'pwd1': v.KEY,
-            'hidden1': 1,
+            'model': 0,
+            'mac': self.staMac,
+            'option': 0
         }
-        api.setAllWifi(self.dut, self.__class__.__name__, **option)
+        api.setEditDevice(self.dut2, self.__class__.__name__, **option)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+        # sta out of blacklist
+        option = {
+            'model': 0,
+            'mac': self.staMac,
+            'option': 1
+        }
+        api.setEditDevice(self.dut2, self.__class__.__name__, **option)
+        api.setWifiMacFilter(self.dut2, self.__class__.__name__)
+        res2gConn2 = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
-        ret = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-        if ret is False:
-            self.fail(msg='ssid should be hidden when bsd is on')
+        self.assertFalse(res2gConn, "Sta in Upper Router Blacklist, But Online wireRelay Router.")
+        self.assertTrue(res2gConn2, "Upper Router Blacklist Deleted, Sta Online wireRelay Router Failed.")
 
-        resConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-        self.assertTrue(resConn, msg="Association wasnot successful.")
+    def assoc_whitelist_sync(self):
+        # sta out of whitelist
+        option = {
+            'model': 1,
+            'mac': '11:22:33:44:55:66',
+            'option': 0
+        }
+        api.setEditDevice(self.dut2, self.__class__.__name__, **option)
+        # option2 = {
+        #     'model': 1,
+        #     'enable': 1
+        # }
+        # api.setWifiMacFilter(self.dut2, self.__class__.__name__, **option2)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
-        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-        self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
-        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                "Ping responsed percent werenot good enough.")
+        # sta in whitelist
+        option3 = {
+            'model': 1,
+            'mac': self.staMac,
+            'option': 0
+        }
+        api.setEditDevice(self.dut2, self.__class__.__name__, **option3)
+        # api.setWifiMacFilter(self.dut2, self.__class__.__name__, **option2)
+        res2gConn2 = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
-        resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-        self.assertTrue(resConn2, msg="STA online Success, But doesnot associate with 5g")
+        # delete and turnoff whitelist
+        option4 = {
+            'model': 1,
+            'mac': '11:22:33:44:55:66',
+            'option': 1
+        }
+        api.setEditDevice(self.dut2, self.__class__.__name__, **option4)
+        option5 = {
+            'model': 1,
+            'mac': self.staMac,
+            'option': 1
+        }
+        api.setEditDevice(self.dut2, self.__class__.__name__, **option5)
+        option6 = {
+            'model': 1,
+            'enable': 0
+        }
+        api.setWifiMacFilter(self.dut2, self.__class__.__name__, **option6)
+        res2gConn3 = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
+        self.assertFalse(res2gConn, "Sta not in Upper Router Whitelist, But Online wireRelay Router.")
+        self.assertTrue(res2gConn2, "Sta in Upper Router Whitelist, But Online wireRelay Router Failed.")
+        self.assertTrue(res2gConn3, "Upper Router Whitelist Turned off, Sta Online wireRelay Router Failed.")
 
 
 class AP_QOS_MIXEDPSK(TestCase):

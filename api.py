@@ -539,7 +539,9 @@ def setWifiMacFilter(terminal, logname, **kwargs):
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi_macfilter'
-    return setCheck(terminal, logname, api, **option)
+    ret = setCheck(terminal, logname, api, **option)
+    t.sleep(10)
+    return ret
 
 
 def setReboot(terminal, logname):
