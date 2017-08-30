@@ -5927,13 +5927,23 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
 
         wanIfname = v.WAN_IFNAME.get(v.DUT_MODULE)
         wanInBrlan = wanIfInBrlan(self.dut, wanIfname, self.__class__.__name__)
-        self.assertTrue(wanInBrlan, "wan port isnot in br-lan.")
+        if v.DUT_MODULE not in ["R3P", "R3G"]:
+            self.assertTrue(wanInBrlan, "wan port isnot in br-lan.")
+        else:
+            self.assertTrue(True)
+
+    def wire_relay_ping_UpperRouter(self):
+
+        resPingPercent = getPingStatus(self.dut, v.HOST_UPPER, v.PING_COUNT,
+                                                  self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], 80,
+                                        "WireRelayRouter Ping UpperRouter Failed.")
 
     def wire_relay_ping_internet(self):
 
         resPingPercent = getPingStatus(self.dut, v.PING_TARGET_WITHOUT_DNS, v.PING_COUNT,
                                                   self.__class__.__name__)
-        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+        self.assertGreaterEqual(resPingPercent['pass'], 80,
                                         "WireRelayRouter Ping internet Failed.")
 
     def wifi_config_check_2g(self):

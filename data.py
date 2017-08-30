@@ -311,6 +311,7 @@ treeWireRelayApi = [
     'AP_RELAY_CONFIG_CHECK',
     [
         'wan_port_belong_brlan',
+        'wire_relay_ping_UpperRouter',
         'wire_relay_ping_internet',
         'wifi_config_check_2g',
         'wifi_config_check_5g',

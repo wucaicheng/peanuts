@@ -87,7 +87,7 @@ class ShellClient(object):
             try:
                 self.ser = serial.Serial(port=v.SERIAL_PORT, baudrate=v.BAUDRATE, timeout=1)
                 # # turn off debug, quote cmd must use ' '
-                self.command('echo 0 > /proc/sys/kernel/printk')
+                # self.command('echo 0 > /proc/sys/kernel/printk')
                 return True
 
             except Exception, e:
@@ -186,7 +186,7 @@ class ShellClient(object):
             self.tn.close()
         elif self.connectionType == 3:
             # turn on debug, quote cmd must use ' '
-            self.command('echo 7 > /proc/sys/kernel/printk')
+            # self.command('echo 7 > /proc/sys/kernel/printk')
             self.ser.close()
         elif self.connectionType == 4:
             self.command('taskkill /F /IM cmd.exe')
@@ -1985,12 +1985,10 @@ def wanIfInBrlan(terminal, wanIf, logname):
 
 
 if __name__ == '__main__':
-    # client = ShellClient(1)
-    # ret = client.connect("10.237.143.13", "jac-pc2", "12345678")
-    # # print getPingStatus(client, "10.237.204.161", "5", "a")
-    # print setIperfFlow2(client, "10.237.204.161", "", "5", "a")
-    # # print client.command("iperf -c 10.237.204.161 -t 50 -r -w 2m -f m")
-    # client.close()
-    # pass
-    fj = chkOSPingAvailable('192.168.31.13', 3, 'fj')
-    print fj
+    client = ShellClient(3)
+    v.SERIAL_PORT = 'COM6'
+    ret = client.connect()
+    out = client.command('cat /etc/config/wireless')
+    print out
+
+
