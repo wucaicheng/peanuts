@@ -220,7 +220,7 @@ class GeneralPage(wx.Panel):
         staConnSizer.Add(staConnSizer3, 0, wx.LEFT, 2)
         staConnSizer.Add(self.staModel, 0, wx.LEFT | wx.TOP, 2 | 4)
 
-        # Upper layer router ctrl
+        #WireRelay Upper layer router ctrl
         ipLblUpper = wx.StaticText(self, -1, 'Router:')
         self.ipUpper = wx.TextCtrl(self, -1, '')
         self.ipUpper.SetValue(v.HOST_UPPER)
@@ -228,7 +228,7 @@ class GeneralPage(wx.Panel):
         self.webPasswdUpper = wx.TextCtrl(self, -1, '')
         self.webPasswdUpper.SetValue(v.WEB_PWD_UPPER)
         # Upper layer router box
-        connBoxUpper = wx.StaticBox(self, -1, 'Upper Layer Router', size=(580, -1))
+        connBoxUpper = wx.StaticBox(self, -1, 'WireRelay Upper Layer Router', size=(580, -1))
         connSizerUpper = wx.StaticBoxSizer(connBoxUpper, wx.HORIZONTAL)
         # left column
         connSizerUpper2 = wx.BoxSizer(wx.VERTICAL)
@@ -252,6 +252,39 @@ class GeneralPage(wx.Panel):
         connSizerUpper.Add(connSizerUpper3, 0, wx.LEFT, 2)
         connSizerUpper.Add(connSizerUpper4, 0, wx.LEFT, 10)
         connSizerUpper.Add(connSizerUpper5, 0, wx.LEFT, 2)
+
+        #WirelessRelay Upper layer router ctrl
+        ipLblUpperWireless = wx.StaticText(self, -1, 'Router:')
+        self.ipUpperWireless = wx.TextCtrl(self, -1, '')
+        self.ipUpperWireless.SetValue(v.HOST_UPPER_WIRELESS)
+        webPasswdLblUpperWireless = wx.StaticText(self, -1, 'Web Password:')
+        self.webPasswdUpperWireless = wx.TextCtrl(self, -1, '')
+        self.webPasswdUpperWireless.SetValue(v.WEB_PWD_UPPER_WIRELESS)
+        # Upper layer router box
+        connBoxUpperWireless = wx.StaticBox(self, -1, 'WirelessRelay Upper Layer Router', size=(580, -1))
+        connSizerUpperWireless = wx.StaticBoxSizer(connBoxUpperWireless, wx.HORIZONTAL)
+        # left column
+        connSizerUpperWireless2 = wx.BoxSizer(wx.VERTICAL)
+        connSizerUpperWireless2.Add(ipLblUpperWireless, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+
+        connSizerUpperWireless3 = wx.BoxSizer(wx.VERTICAL)
+        connSizerUpperWireless3.Add(self.ipUpperWireless, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+
+        # right column
+        connSizerUpperWireless4 = wx.BoxSizer(wx.VERTICAL)
+        connSizerUpperWireless4.Add(webPasswdLblUpperWireless, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+
+        connSizerUpperWireless5 = wx.BoxSizer(wx.VERTICAL)
+        connSizerUpperWireless5.Add(self.webPasswdUpperWireless, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+
+        connSizerUpperWireless.Add(connSizerUpperWireless2, 0, wx.LEFT, 23)
+        connSizerUpperWireless.Add(connSizerUpperWireless3, 0, wx.LEFT, 2)
+        connSizerUpperWireless.Add(connSizerUpperWireless4, 0, wx.LEFT, 10)
+        connSizerUpperWireless.Add(connSizerUpperWireless5, 0, wx.LEFT, 2)
 
         # PC connection ctrl
         pcIPLbl = wx.StaticText(self, -1, 'Host:')
@@ -293,6 +326,7 @@ class GeneralPage(wx.Panel):
         mainSizer.Add(connSizer, 0, wx.ALL, 10)
         mainSizer.Add(staConnSizer, 0, wx.LEFT | wx.BOTTOM, 10)
         mainSizer.Add(connSizerUpper, 0, wx.LEFT, 10)
+        mainSizer.Add(connSizerUpperWireless, 0, wx.LEFT, 10)
         mainSizer.Add(pcConnSizer, 0, wx.LEFT, 10)
         mainSizer.Add(btnSizer, 0, wx.TOP, 93)
 
@@ -399,10 +433,12 @@ class GeneralPage(wx.Panel):
             v.HOST = self.ip.GetValue()
             v.HOST_ORIGINAL = self.ip.GetValue()
             v.HOST_UPPER = self.ipUpper.GetValue()
+            v.HOST_UPPER_WIRELESS = self.ipUpperWireless.GetValue()
             v.USR = self.shellUsr.GetValue()
             v.PASSWD = self.shellPasswd.GetValue()
             v.WEB_PWD = self.webPasswd.GetValue()
             v.WEB_PWD_UPPER = self.webPasswdUpper.GetValue()
+            v.WEB_PWD_UPPER_WIRELESS = self.webPasswdUpperWireless.GetValue()
             v.PC_HOST = self.pcIP.GetValue()
             dutConn = threading.Thread(target=self.connectionCheckThread, kwargs={'connectiontype': v.CONNECTION_TYPE,
                                                                                   'ip': v.HOST, 'user': v.USR,
@@ -411,8 +447,8 @@ class GeneralPage(wx.Panel):
 
         if v.ANDROID_SERIAL_NUM is not None:
             v.STA_COUNT = self.staCount.GetValue()
-            dutConn = threading.Thread(target=self.adbDeviceCheckThread, args=(v.STA_COUNT,))
-            dutConn.start()
+            staConn = threading.Thread(target=self.adbDeviceCheckThread, args=(v.STA_COUNT,))
+            staConn.start()
             v.ANDROID_MODEL = co.getAdbDeviceModel(v.ANDROID_SERIAL_NUM)
             self.staModel.SetLabel(v.ANDROID_MODEL)
 
@@ -985,7 +1021,7 @@ class TestSuitePage(wx.Panel):
 
 class Frame(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, title="Peanuts " + v.VER, pos=(300, 200), size=(610, 700), style=
+        wx.Frame.__init__(self, None, title="Peanuts " + v.VER, pos=(300, 200), size=(610, 750), style=
         wx.CAPTION
         | wx.CLOSE_BOX
         | wx.MINIMIZE_BOX
