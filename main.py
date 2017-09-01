@@ -357,10 +357,10 @@ class GeneralPage(wx.Panel):
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(connSizer, 0, wx.ALL, 10)
         mainSizer.Add(staConnSizer, 0, wx.LEFT | wx.BOTTOM, 10)
-        mainSizer.Add(connSizerUpper, 0, wx.LEFT, 10)
-        mainSizer.Add(connSizerUpperWireless, 0, wx.LEFT, 10)
-        mainSizer.Add(pcConnSizer, 0, wx.LEFT, 10)
-        mainSizer.Add(btnSizer, 0, wx.TOP, 93)
+        mainSizer.Add(connSizerUpper, 0, wx.LEFT | wx.BOTTOM, 10)
+        mainSizer.Add(connSizerUpperWireless, 0, wx.LEFT | wx.BOTTOM, 10)
+        mainSizer.Add(pcConnSizer, 0, wx.LEFT | wx.BOTTOM, 10)
+        mainSizer.Add(btnSizer, 0, wx.TOP, 30)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
@@ -471,6 +471,10 @@ class GeneralPage(wx.Panel):
             v.WEB_PWD = self.webPasswd.GetValue()
             v.WEB_PWD_UPPER = self.webPasswdUpper.GetValue()
             v.WEB_PWD_UPPER_WIRELESS = self.webPasswdUpperWireless.GetValue()
+            v.WIRELESS_2G_RELAY_UPPER_SSID = self.wirelessRelay2gSSID.GetValue()
+            v.WIRELESS_5G_RELAY_UPPER_SSID = self.wirelessRelay5gSSID.GetValue()
+            v.WIRELESS_2G_RELAY_UPPER_PW = self.wirelessRelay2gPw.GetValue()
+            v.WIRELESS_5G_RELAY_UPPER_PW = self.wirelessRelay5gPw.GetValue()
             v.PC_HOST = self.pcIP.GetValue()
             dutConn = threading.Thread(target=self.connectionCheckThread, kwargs={'connectiontype': v.CONNECTION_TYPE,
                                                                                   'ip': v.HOST, 'user': v.USR,
@@ -541,7 +545,7 @@ class MemoryTrackPage(wx.Panel):
 
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(optionalSizer, 0, wx.ALL, 10)
-        mainSizer.Add(btnSizer, 0, wx.TOP, 480)
+        mainSizer.Add(btnSizer, 0, wx.TOP, 500)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
@@ -612,7 +616,7 @@ class TestSuitePage(wx.Panel):
         wx.Window.__init__(self, parent, -1, style=wx.BORDER_STATIC)
         ##        wx.StaticText(self, -1, "Test suite", wx.Point(10, 10))
         ##        self.tree = wx.TreeCtrl(self, size = (340,330))
-        self.tree = CT.CustomTreeCtrl(self, size=(540, 500),
+        self.tree = CT.CustomTreeCtrl(self, size=(540, 530),
                                       style=
                                       wx.BORDER_SIMPLE
                                       | wx.WANTS_CHARS,
@@ -1053,7 +1057,7 @@ class TestSuitePage(wx.Panel):
 
 class Frame(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, title="Peanuts " + v.VER, pos=(300, 200), size=(610, 750), style=
+        wx.Frame.__init__(self, None, title="Peanuts " + v.VER, pos=(300, 200), size=(610, 780), style=
         wx.CAPTION
         | wx.CLOSE_BOX
         | wx.MINIMIZE_BOX
