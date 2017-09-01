@@ -1213,14 +1213,19 @@ def getWifiList(terminal, logname):
     {
       "list":[
          {
-            "mac":"66:09:80:73:75:75",
-            "bandwidth":20,
-            "ssid":"Xiaomi_7572_VIP",
-            "channel":"6",
-            "xm":"",
-            "enctype":"NONE",
-            "encryption":"NONE",
-            "signal":"100"
+            "band":"5g",
+            "quality_max":0,
+            "ssid":"fjr3p_5G",
+            "encryption":"WPA2PSK",
+            "wsc_devicename":"XiaoMiRouter",
+            "bssid":"F0:B4:29:E9:6E:2D",
+            "wsc_modelname":"R3P",
+            "wsc_configstatus":2,
+            "channel":52,
+            "enctype":"AES",
+            "mode":"Unknown",
+            "signal":100,
+            "quality":0
          },
          ],
       "code":0

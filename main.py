@@ -261,12 +261,20 @@ class GeneralPage(wx.Panel):
         self.webPasswdUpperWireless = wx.TextCtrl(self, -1, '')
         self.webPasswdUpperWireless.SetValue(v.WEB_PWD_UPPER_WIRELESS)
 
-        WirelessRelay2g = wx.StaticText(self, -1, '2.4G SSID')
+        WirelessRelay2gSSIDLbl = wx.StaticText(self, -1, '2.4G SSID')
         self.wirelessRelay2gSSID = wx.TextCtrl(self, -1, '')
         self.wirelessRelay2gSSID.SetValue(v.WIRELESS_2G_RELAY_UPPER_SSID)
-        WirelessRelay5g = wx.StaticText(self, -1, '5G SSID:')
+        WirelessRelay5gSSIDLbl = wx.StaticText(self, -1, '5G SSID:')
         self.wirelessRelay5gSSID = wx.TextCtrl(self, -1, '')
         self.wirelessRelay5gSSID.SetValue(v.WIRELESS_5G_RELAY_UPPER_SSID)
+
+        WirelessRelay2gPwLbl = wx.StaticText(self, -1, '2.4G Password')
+        self.wirelessRelay2gPw = wx.TextCtrl(self, -1, '')
+        self.wirelessRelay2gPw.SetValue(v.WIRELESS_2G_RELAY_UPPER_PW)
+        WirelessRelay5gPwLbl = wx.StaticText(self, -1, '5G Password:')
+        self.wirelessRelay5gPw = wx.TextCtrl(self, -1, '')
+        self.wirelessRelay5gPw.SetValue(v.WIRELESS_5G_RELAY_UPPER_PW)
+
         # Upper layer router box
         connBoxUpperWireless = wx.StaticBox(self, -1, 'WirelessRelay Upper Layer Router', size=(580, -1))
         connSizerUpperWireless = wx.StaticBoxSizer(connBoxUpperWireless, wx.HORIZONTAL)
@@ -274,7 +282,9 @@ class GeneralPage(wx.Panel):
         connSizerUpperWireless2 = wx.BoxSizer(wx.VERTICAL)
         connSizerUpperWireless2.Add(ipLblUpperWireless, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        connSizerUpperWireless2.Add(WirelessRelay2g, 0,
+        connSizerUpperWireless2.Add(WirelessRelay2gSSIDLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+        connSizerUpperWireless2.Add(WirelessRelay5gSSIDLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
 
         connSizerUpperWireless3 = wx.BoxSizer(wx.VERTICAL)
@@ -282,21 +292,28 @@ class GeneralPage(wx.Panel):
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
         connSizerUpperWireless3.Add(self.wirelessRelay2gSSID, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        connSizerUpperWireless3.Add(self.wirelessRelay5gSSID, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+
 
         # right column
         connSizerUpperWireless4 = wx.BoxSizer(wx.VERTICAL)
         connSizerUpperWireless4.Add(webPasswdLblUpperWireless, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        connSizerUpperWireless4.Add(WirelessRelay5g, 0,
+        connSizerUpperWireless4.Add(WirelessRelay2gPwLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+        connSizerUpperWireless4.Add(WirelessRelay5gPwLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
 
         connSizerUpperWireless5 = wx.BoxSizer(wx.VERTICAL)
         connSizerUpperWireless5.Add(self.webPasswdUpperWireless, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
-        connSizerUpperWireless5.Add(self.wirelessRelay5gSSID, 0,
+        connSizerUpperWireless5.Add(self.wirelessRelay2gPw, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        connSizerUpperWireless5.Add(self.wirelessRelay5gPw, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
 
-        connSizerUpperWireless.Add(connSizerUpperWireless2, 0, wx.LEFT, 23)
+        connSizerUpperWireless.Add(connSizerUpperWireless2, 0, wx.LEFT, 12)
         connSizerUpperWireless.Add(connSizerUpperWireless3, 0, wx.LEFT, 2)
         connSizerUpperWireless.Add(connSizerUpperWireless4, 0, wx.LEFT, 10)
         connSizerUpperWireless.Add(connSizerUpperWireless5, 0, wx.LEFT, 2)
