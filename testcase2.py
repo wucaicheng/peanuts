@@ -11646,52 +11646,57 @@ class AP_WIRELESS_RELAY_SCAN(TestCase):
         if ret is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': 'peanuts',
+            'encryption': 'mixed-psk',
+            'pwd': '12345678'
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': 'peanuts_5g',
+            'encryption': 'mixed-psk',
+            'pwd': '12345678'
+        }
+
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
     @classmethod
     def tearDownClass(self):
 
         self.dut.close()
         
 
-    def scan_radio_on_2g(self):
-
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'encryption': 'mixed-psk',
-            'pwd': v.KEY
-        }
-
-        api.setWifi(self.dut, self.__class__.__name__, **option2g)
+    def check_2g_wirelessRelaySsid_in_scanList(self):
 
         option = {
-            'ssid': v.ROOT_AP_SSID,
+            'ssid': v.WIRELESS_2G_RELAY_UPPER_SSID,
         }
 
         res, wifiInfo = api.chkWifiInfo(self.dut, self.__class__.__name__, **option)
 
         if res is False:
-            self.fail(msg="Scan wifi list should be successful when 2.4g radio on.")
+            self.fail(msg="2.4G WirelessRelay UpperLayer SSID isnot in ScanList")
+        #update v.WIRELESS_2G_RELAY_UPPER_OPTION
+        for item in v.WIRELESS_2G_RELAY_UPPER_OPTION.keys():
+            if item in wifiInfo.keys():
+                v.WIRELESS_2G_RELAY_UPPER_OPTION[item] = wifiInfo[item]
 
-        result = api.setWifiAp(self.dut, self.__class__.__name__, **wifiInfo)
+        # result = api.setWifiAp(self.dut, self.__class__.__name__, **wifiInfo)
+        #
+        # self.assertEqual(result['code'], 0,
+        #                  msg='Switching to wireless relay module should be successful using wifi info scaned')
+        #
+        # api.setDisableAp(self.dut, self.__class__.__name__)
+        #
+        # option2g = {
+        #     'wifiIndex': 1,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
-        self.assertEqual(result['code'], 0,
-                         msg='Switching to wireless relay module should be successful using wifi info scaned')
-
-        api.setDisableAp(self.dut, self.__class__.__name__)
-
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__class__.__name__, **option2g)
-
-    def scan_radio_off_2g(self):
-
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__class__.__name__, **option2g)
+    def check_5g_wirelessRelaySsid_in_scanList(self):
 
         option = {
             'ssid': v.ROOT_AP_SSID,

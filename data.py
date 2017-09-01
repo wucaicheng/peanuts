@@ -454,8 +454,8 @@ treeAccessControlApi = [
 treeWirelessRelayApi = [
     'AP_WIRELESS_RELAY_SCAN',
     [
-        'scan_radio_on_2g',
-        'scan_radio_off_2g'
+        'check_2g_wirelessRelaySsid_in_scanList',
+        'check_5g_wirelessRelaySsid_in_scanList'
     ],
     'AP_WIRELESS_RELAY_CLEAR_CHAN',
     [
@@ -615,7 +615,13 @@ treeWirelessRelayApi = [
     ],
 ]
 
-
+tree5gWirelessRelayApi = [
+    'AP_WIRELESS_RELAY_SCAN',
+    [
+        'check_2g_wirelessRelaySsid_in_scanList',
+        'check_5g_wirelessRelaySsid_in_scanList'
+    ],
+]
 treeQosApi = [
     'AP_QOS_MIXEDPSK',
     [

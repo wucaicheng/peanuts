@@ -1557,35 +1557,46 @@ def chkWifiInfo(terminal, logname, **kwargs):
     {
       "list":[
          {
-            "mac":"66:09:80:73:75:75",
-            "bandwidth":20,
-            "ssid":"Xiaomi_7572_VIP",
-            "channel":"6",
-            "xm":"",
-            "enctype":"NONE",
-            "encryption":"NONE",
-            "signal":"100"
+            "band":"5g",
+            "quality_max":0,
+            "ssid":"fjr3p_5G",
+            "encryption":"WPA2PSK",
+            "wsc_devicename":"XiaoMiRouter",
+            "bssid":"F0:B4:29:E9:6E:2D",
+            "wsc_modelname":"R3P",
+            "wsc_configstatus":2,
+            "channel":52,
+            "enctype":"AES",
+            "mode":"Unknown",
+            "signal":100,
+            "quality":0
          },
          ],
       "code":0
     }
     """
     option = {
-        "mac":"", # 8C:BE:BE:10:05:B0
-        "bandwidth":20,
-        "ssid":"", # mandatory
-        "channel":"",
-        "xm":"", # R3
-        "enctype":"", #TKIPAES
-        "encryption":"", #WPA2PSK
-        "signal":""
+        "band":"",
+        "quality_max":0,
+        "ssid":"",
+        "encryption":"WPA2PSK",
+        "wsc_devicename":"XiaoMiRouter",
+        "bssid":"",
+        "wsc_modelname":"",
+        "wsc_configstatus":2,
+        "channel":0,
+        "enctype":"AES",
+        "mode":"Unknown",
+        "signal":100,
+        "quality":0
     }
     option.update(kwargs)
     ret = getWifiList(terminal, logname)
-    wifiList = ret['list']
-    for index in xrange(len(wifiList)):
-        if option['ssid'] == wifiList[index]['ssid']:
-            return True, wifiList[index]
+    if ret is not None:
+        wifiList = ret['list']
+        for index in xrange(len(wifiList)):
+            if option['ssid'] == wifiList[index]['ssid']:
+                return True, wifiList[index]
     return False, []
 
 
