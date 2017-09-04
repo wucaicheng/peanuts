@@ -9507,6 +9507,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
         #     'nencryption': 'mixed-psk',
         #     'npassword': v.KEY,
         # }
+        print v.WIRELESS_2G_RELAY_UPPER_OPTION
         api.setWifiAp(self.dut, self.__name__, **v.WIRELESS_2G_RELAY_UPPER_OPTION)
 
     @classmethod
@@ -9522,7 +9523,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'channel': self.channel2,
             'encryption': 'mixed-psk',
             'pwd': v.KEY
         }
