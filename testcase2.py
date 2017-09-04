@@ -9496,18 +9496,18 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
-        option = {
-            'ssid': v.ROOT_AP_SSID,
-            # 'encryption': 'WPA2PSK',
-            # 'enctype': 'TKIPAES',
-            'password': v.ROOT_AP_PWD,
-            # 'channel': v.ROOT_AP_CHANNEL,
-            # 'bandwidth': '20',
-            'nssid': v.WIRELESS_RELAY_SSID,
-            'nencryption': 'mixed-psk',
-            'npassword': v.KEY,
-        }
-        api.setWifiAp(self.dut, self.__name__, **option)
+        # option = {
+        #     'ssid': v.ROOT_AP_SSID,
+        #     # 'encryption': 'WPA2PSK',
+        #     # 'enctype': 'TKIPAES',
+        #     'password': v.ROOT_AP_PWD,
+        #     # 'channel': v.ROOT_AP_CHANNEL,
+        #     # 'bandwidth': '20',
+        #     'nssid': v.WIRELESS_RELAY_SSID,
+        #     'nencryption': 'mixed-psk',
+        #     'npassword': v.KEY,
+        # }
+        api.setWifiAp(self.dut, self.__name__, **v.WIRELESS_2G_RELAY_UPPER_OPTION)
 
     @classmethod
     def tearDownClass(self):
@@ -9518,7 +9518,35 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID, v.KEY, "2g", self.__class__.__name__)
+        ####
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': self.channel2,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+        # option5g = {
+        #     'wifiIndex': 2,
+        #     'ssid': v.SSID_5G,
+        #     'channel': self.channel5,
+        #     'encryption': 'mixed-psk',
+        #     'pwd': v.KEY
+        # }
+
+        api.setWifi(self.dut, self.__name__, **option2g)
+        # api.setWifi(self.dut, self.__name__, **option5g)
+
+
+
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+
+
+        #/////
+
+
+
+        # res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
@@ -11699,20 +11727,17 @@ class AP_WIRELESS_RELAY_SCAN(TestCase):
     def check_5g_wirelessRelaySsid_in_scanList(self):
 
         option = {
-            'ssid': v.ROOT_AP_SSID,
+            'ssid': v.WIRELESS_5G_RELAY_UPPER_SSID,
         }
 
         res, wifiInfo = api.chkWifiInfo(self.dut, self.__class__.__name__, **option)
 
         if res is False:
-            self.fail(msg="Scan wifi list should be successful when 2.4g radio off.")
-
-        result = api.setWifiAp(self.dut, self.__class__.__name__, **wifiInfo)
-
-        self.assertEqual(result['code'], 0,
-                         msg='Switching to wireless relay module should be successful using wifi info scaned')
-
-        api.setDisableAp(self.dut, self.__class__.__name__)
+            self.fail(msg="5G WirelessRelay UpperLayer SSID isnot in ScanList")
+        #update v.WIRELESS_2G_RELAY_UPPER_OPTION
+        for item in v.WIRELESS_5G_RELAY_UPPER_OPTION.keys():
+            if item in wifiInfo.keys():
+                v.WIRELESS_5G_RELAY_UPPER_OPTION[item] = wifiInfo[item]
 
 
 class AP_WIRELESS_RELAY_PSK2_LOW_TXPOWER(TestCase):

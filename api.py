@@ -655,18 +655,12 @@ def setDisableLanAp(terminal, logname):
 
 def setWifiAp(terminal, logname, **kwargs):
     option = {
-        'ssid': v.ROOT_AP_SSID,
-        # 'encryption': 'WPA2PSK',
-        # 'enctype': 'TKIPAES',
-        'password': v.ROOT_AP_PWD,
-        # 'channel': v.ROOT_AP_CHANNEL,
-        # 'bandwidth': '20',
-        'nssid': v.ROOT_AP_SSID,
-        'nencryption': 'none',
+        'ssid': '',
+        'password': '',
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi_ap'
-    t.sleep(60)
+    # t.sleep(60)
     result = setGet(terminal, logname, api, **option)
     t.sleep(60)
     if result is not None:
@@ -678,7 +672,7 @@ def setWifiAp(terminal, logname, **kwargs):
 
 def setDisableAp(terminal, logname):
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/disable_ap'
-    t.sleep(60)
+    # t.sleep(60)
     result = setGet(terminal, logname, api)
     t.sleep(60)
     if result is not None:
@@ -1576,19 +1570,19 @@ def chkWifiInfo(terminal, logname, **kwargs):
     }
     """
     option = {
-        "band":"",
-        "quality_max":0,
-        "ssid":"",
-        "encryption":"WPA2PSK",
-        "wsc_devicename":"XiaoMiRouter",
-        "bssid":"",
-        "wsc_modelname":"",
-        "wsc_configstatus":2,
-        "channel":0,
-        "enctype":"AES",
-        "mode":"Unknown",
-        "signal":100,
-        "quality":0
+        "band": "",
+        "quality_max": 0,
+        "ssid": "",
+        "encryption": "WPA2PSK",
+        "wsc_devicename": "XiaoMiRouter",
+        "bssid": "",
+        "wsc_modelname": "",
+        "wsc_configstatus": 2,
+        "channel": 0,
+        "enctype": "AES",
+        "mode": "Unknown",
+        "signal": 100,
+        "quality": 0
     }
     option.update(kwargs)
     ret = getWifiList(terminal, logname)
@@ -1597,7 +1591,7 @@ def chkWifiInfo(terminal, logname, **kwargs):
         for index in xrange(len(wifiList)):
             if option['ssid'] == wifiList[index]['ssid']:
                 return True, wifiList[index]
-    return False, []
+    return False, {}
 
 
 if __name__ == '__main__':
