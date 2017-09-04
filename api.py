@@ -1585,13 +1585,24 @@ def chkWifiInfo(terminal, logname, **kwargs):
         "quality": 0
     }
     option.update(kwargs)
-    ret = getWifiList(terminal, logname)
-    if ret is not None:
-        wifiList = ret['list']
-        for index in xrange(len(wifiList)):
-            if option['ssid'] == wifiList[index]['ssid']:
-                return True, wifiList[index]
-    return False, {}
+    def chkInLoop(terminal, logname, option):
+        ret = getWifiList(terminal, logname)
+        if ret is not None:
+            wifiList = ret['list']
+            for index in xrange(len(wifiList)):
+                if option['ssid'] == wifiList[index]['ssid']:
+                    return True, wifiList[index]
+        return False, {}
+
+    loop = 0
+    resBoolean, resDict = chkInLoop(terminal, logname, option)
+    while resBoolean is False and loop < 3:
+        loop += 1
+        t.sleep(5)
+        resBoolean, resDict = chkInLoop(terminal, logname, option)
+
+    return resBoolean, resDict
+
 
 
 if __name__ == '__main__':

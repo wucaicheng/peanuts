@@ -22,22 +22,22 @@ WIRELESS_2G_RELAY_UPPER_SSID = 'miwifi'
 WIRELESS_2G_RELAY_UPPER_PW = '12345678'
 WIRELESS_5G_RELAY_UPPER_SSID = 'miwifi_5G'
 WIRELESS_5G_RELAY_UPPER_PW = '12345678'
-WIRELESS_2G_RELAY_UPPER_OPTION = {
-    'ssid': WIRELESS_2G_RELAY_UPPER_SSID,
-    'encryption': '',
-    'enctype': '',
-    'password': WIRELESS_2G_RELAY_UPPER_PW,
-    'channel': '',
-    'band': ''
-}
-WIRELESS_5G_RELAY_UPPER_OPTION = {
-    'ssid': WIRELESS_5G_RELAY_UPPER_SSID,
-    'encryption': '',
-    'enctype': '',
-    'password': WIRELESS_5G_RELAY_UPPER_PW,
-    'channel': '',
-    'band': ''
-}
+# WIRELESS_2G_RELAY_UPPER_OPTION = {
+#     'ssid': '',
+#     'encryption': '',
+#     'enctype': '',
+#     'password': '',
+#     'channel': '',
+#     'band': ''
+# }
+# WIRELESS_5G_RELAY_UPPER_OPTION = {
+#     'ssid': '',
+#     'encryption': '',
+#     'enctype': '',
+#     'password': '',
+#     'channel': '',
+#     'band': ''
+# }
 
 R1CM_MAX_RATE_2G = {'20': 144, '40': 300}
 R1CM_MAX_RATE_5G = {'20': 173, '40': 400, '80': 867}

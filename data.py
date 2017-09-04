@@ -452,10 +452,14 @@ treeAccessControlApi = [
 
 
 treeWirelessRelayApi = [
-    'AP_WIRELESS_RELAY_SCAN',
+    'AP_WIRELESS_RELAY_SCANLIST',
     [
-        'check_2g_wirelessRelaySsid_in_scanList',
-        'check_5g_wirelessRelaySsid_in_scanList'
+        'fengjiang1',
+        'check_5g_scanList'
+    ],
+    'AP_WIRELESS_RELAY_SCANLIST2',
+    [
+        'fengjiang1'
     ],
     'AP_WIRELESS_RELAY_CLEAR_CHAN',
     [

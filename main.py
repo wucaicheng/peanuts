@@ -475,6 +475,10 @@ class GeneralPage(wx.Panel):
             v.WIRELESS_5G_RELAY_UPPER_SSID = self.wirelessRelay5gSSID.GetValue()
             v.WIRELESS_2G_RELAY_UPPER_PW = self.wirelessRelay2gPw.GetValue()
             v.WIRELESS_5G_RELAY_UPPER_PW = self.wirelessRelay5gPw.GetValue()
+            # v.WIRELESS_2G_RELAY_UPPER_OPTION['ssid'] = self.wirelessRelay2gSSID.GetValue()
+            # v.WIRELESS_2G_RELAY_UPPER_OPTION['password'] = self.wirelessRelay2gPw.GetValue()
+            # v.WIRELESS_5G_RELAY_UPPER_OPTION['ssid'] = self.wirelessRelay5gSSID.GetValue()
+            # v.WIRELESS_5G_RELAY_UPPER_OPTION['password'] = self.wirelessRelay5gPw.GetValue()
             v.PC_HOST = self.pcIP.GetValue()
             dutConn = threading.Thread(target=self.connectionCheckThread, kwargs={'connectiontype': v.CONNECTION_TYPE,
                                                                                   'ip': v.HOST, 'user': v.USR,
@@ -748,7 +752,7 @@ class TestSuitePage(wx.Panel):
         for (i, j) in cases.items():
             if len(j) == 0:
                 del cases[i]
-        #print cases
+        # print cases
         return cases
 
     def TextTestRunnerFailCheck(self, jobID, abortEvent, testcase, count):

@@ -11666,7 +11666,93 @@ class AP_WIRELESS_RELAY_CONFIG_CHECK(TestCase):
                              msg="Wireless relay switch back to normal router module, guest wifi should be turned off.")
 
 
-class AP_WIRELESS_RELAY_SCAN(TestCase):
+class AP_WIRELESS_RELAY_SCANLIST(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        if ret is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': 'peanuts',
+            'encryption': 'mixed-psk',
+            'pwd': '12345678'
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': 'peanuts_5g',
+            'encryption': 'mixed-psk',
+            'pwd': '12345678'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+        self.UpperOption = {
+            'ssid': v.WIRELESS_2G_RELAY_UPPER_SSID,
+            'encryption': '',
+            'enctype': '',
+            'password': v.WIRELESS_2G_RELAY_UPPER_PW,
+            'channel': '',
+            'band': ''
+        }
+        res, wifiInfo = api.chkWifiInfo(self.dut, self.__class__.__name__, **self.UpperOption)
+        if res is False:
+            raise Exception('SSID isnot in ScanList, Break')
+        for item in self.UpperOption.keys():
+            if item in wifiInfo.keys():
+                self.UpperOption[item] = wifiInfo[item]
+
+
+
+
+
+
+
+    @classmethod
+    def tearDownClass(self):
+
+        self.dut.close()
+        
+
+    def fengjiang1(self):
+
+
+
+        #update v.WIRELESS_2G_RELAY_UPPER_OPTION
+
+        print v.WIRELESS_2G_RELAY_UPPER_OPTION
+        # result = api.setWifiAp(self.dut, self.__class__.__name__, **wifiInfo)
+        #
+        # self.assertEqual(result['code'], 0,
+        #                  msg='Switching to wireless relay module should be successful using wifi info scaned')
+        #
+        # api.setDisableAp(self.dut, self.__class__.__name__)
+        #
+        # option2g = {
+        #     'wifiIndex': 1,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__class__.__name__, **option2g)
+
+    def check_5g_scanList(self):
+
+        option = {
+            'ssid': v.WIRELESS_5G_RELAY_UPPER_SSID,
+        }
+
+        res, wifiInfo = api.chkWifiInfo(self.dut, self.__class__.__name__, **option)
+
+        if res is False:
+            self.fail(msg="5G WirelessRelay UpperLayer SSID isnot in ScanList")
+        #update v.WIRELESS_2G_RELAY_UPPER_OPTION
+        for item in v.WIRELESS_5G_RELAY_UPPER_OPTION.keys():
+            if item in wifiInfo.keys():
+                v.WIRELESS_5G_RELAY_UPPER_OPTION[item] = wifiInfo[item]
+        print v.WIRELESS_5G_RELAY_UPPER_OPTION
+################################################
+class AP_WIRELESS_RELAY_SCANLIST2(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
@@ -11694,9 +11780,9 @@ class AP_WIRELESS_RELAY_SCAN(TestCase):
     def tearDownClass(self):
 
         self.dut.close()
-        
 
-    def check_2g_wirelessRelaySsid_in_scanList(self):
+
+    def fengjiang1(self):
 
         option = {
             'ssid': v.WIRELESS_2G_RELAY_UPPER_SSID,
@@ -11710,7 +11796,8 @@ class AP_WIRELESS_RELAY_SCAN(TestCase):
         for item in v.WIRELESS_2G_RELAY_UPPER_OPTION.keys():
             if item in wifiInfo.keys():
                 v.WIRELESS_2G_RELAY_UPPER_OPTION[item] = wifiInfo[item]
-
+        print v.WIRELESS_2G_RELAY_UPPER_OPTION
+        self.assertTrue(True)
         # result = api.setWifiAp(self.dut, self.__class__.__name__, **wifiInfo)
         #
         # self.assertEqual(result['code'], 0,
@@ -11724,22 +11811,8 @@ class AP_WIRELESS_RELAY_SCAN(TestCase):
         # }
         # api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
-    def check_5g_wirelessRelaySsid_in_scanList(self):
 
-        option = {
-            'ssid': v.WIRELESS_5G_RELAY_UPPER_SSID,
-        }
-
-        res, wifiInfo = api.chkWifiInfo(self.dut, self.__class__.__name__, **option)
-
-        if res is False:
-            self.fail(msg="5G WirelessRelay UpperLayer SSID isnot in ScanList")
-        #update v.WIRELESS_2G_RELAY_UPPER_OPTION
-        for item in v.WIRELESS_5G_RELAY_UPPER_OPTION.keys():
-            if item in wifiInfo.keys():
-                v.WIRELESS_5G_RELAY_UPPER_OPTION[item] = wifiInfo[item]
-
-
+#######################################
 class AP_WIRELESS_RELAY_PSK2_LOW_TXPOWER(TestCase):
     @classmethod
     def setUpClass(self):
