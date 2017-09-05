@@ -889,16 +889,26 @@ class GetFailedDetail(threading.Thread):
                             if not line1.isspace():
                                 m1 = re.search('^=*=$', line1)
                                 m2 = re.search('.*FAIL$', line1)
-                                m3 = re.search('.*ERROR$', line1)
+                                # m3 = re.search('.*ERROR$', line1)
                                 if m1:
                                     self.fileNotEnd = False
                                 if m2:
                                     self.result.append(m2.group())
-                                if m3:
-                                    self.result.append(m3.group())
+                    n = re.search('^ERROR:.*', line)
+                    if n:
+                        self.result.append(n.group())
+                    o = re.search('^Exception:.*', line)
+                    if o:
+                        self.result.append('--------' + o.group())
         else:
             for line in f:
                 if not line.isspace():
+                    n = re.search('^ERROR:.*', line)
+                    if n:
+                        self.result.append(n.group())
+                    o = re.search('^Exception:.*', line)
+                    if o:
+                        self.result.append('--------' + o.group())
                     m = re.search('The Last Time:', line)
                     if m:
                         while self.fileNotEnd:
@@ -906,13 +916,11 @@ class GetFailedDetail(threading.Thread):
                             if not line1.isspace():
                                 m1 = re.search('^=*=$', line1)
                                 m2 = re.search('.*FAIL$', line1)
-                                m3 = re.search('.*ERROR$', line1)
+                                # m3 = re.search('.*ERROR$', line1)
                                 if m1:
                                     self.fileNotEnd = False
                                 if m2:
                                     self.result.append(m2.group())
-                                if m3:
-                                    self.result.append(m3.group())
         f.close()
         self.stop()
 
