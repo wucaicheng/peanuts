@@ -9507,7 +9507,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
         #     'nencryption': 'mixed-psk',
         #     'npassword': v.KEY,
         # }
-        print v.WIRELESS_2G_RELAY_UPPER_OPTION
         api.setWifiAp(self.dut, self.__name__, **v.WIRELESS_2G_RELAY_UPPER_OPTION)
 
     @classmethod
@@ -11674,20 +11673,40 @@ class AP_WIRELESS_RELAY_2G(TestCase):
         if ret is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
-        option2g = {
+        self.option2g = {
             'wifiIndex': 1,
-            'ssid': 'peanuts',
+            'on': "1",
+            'ssid': v.SSID,
+            'pwd': v.KEY,
             'encryption': 'mixed-psk',
-            'pwd': '12345678'
+            'channel': v.CHANNEL11,
+            'bandwidth': '20',
+            'hidden': "0",
+            'txpwr': 'min'
         }
-        option5g = {
+
+        self.option5g = {
             'wifiIndex': 2,
-            'ssid': 'peanuts_5g',
-            'encryption': 'mixed-psk',
-            'pwd': '12345678'
+            'on': "1",
+            'ssid': v.SSID_5G,
+            'pwd': v.KEY,
+            'encryption': 'psk2',
+            'channel': v.CHANNEL149,
+            'bandwidth': '40',
+            'hidden': "0",
+            'txpwr': 'max'
         }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
+
+        self.optionGuest = {
+            'wifiIndex': 3,
+            'on': "1",
+            'ssid': v.GUEST_SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **self.option2g)
+        api.setWifi(self.dut, self.__name__, **self.option5g)
+        api.setWifi(self.dut, self.__name__, **self.optionGuest)
 
         self.UpperOption = {
             'ssid': v.WIRELESS_2G_RELAY_UPPER_SSID,
@@ -11697,23 +11716,24 @@ class AP_WIRELESS_RELAY_2G(TestCase):
             'channel': '',
             'band': ''
         }
-        res, wifiInfo = api.chkWifiInfo(self.dut, self.__class__.__name__, **self.UpperOption)
+        res, wifiInfo = api.chkWifiInfo(self.dut, self.__name__, **self.UpperOption)
         if res is False:
-            raise Exception('SSID isnot in ScanList, WirelessRelay TestCase Break')
+            raise Exception('UpperRouter SSID isnot in ScanList, WirelessRelay TestCase Break')
 
         for item in self.UpperOption.keys():
             if item in wifiInfo.keys():
                 self.UpperOption[item] = wifiInfo[item]
 
-        self.result = api.setWifiAp(self.dut, self.__class__.__name__, **self.UpperOption)
-
-
-
-
+        self.result = api.setWifiAp(self.dut, self.__name__, **self.UpperOption)
+        if self.result is None:
+            raise Exception('Connect to specified wifi return None, Break')
+        if self.result['code'] != 0:
+            raise Exception('Failed to connect to specified wifi, Please check your password')
 
     @classmethod
     def tearDownClass(self):
 
+        api.setDisableAp(self.dut, self.__name__)
         option2g = {
             'wifiIndex': 1,
             'on': 0,
@@ -11727,42 +11747,62 @@ class AP_WIRELESS_RELAY_2G(TestCase):
         self.dut.close()
         
 
-    def WirelessRelay_switchCheck_2g(self):
-
-
-
+    def wifiRelay_switchCheck_2g(self):
 
         self.assertEqual(self.result['code'], 0,
                          msg='Switching to 2g wireless relay failed')
 
-
-
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': 'hahahahaha',
-            'encryption': 'mixed-psk',
-            'pwd': 'zzzzzzzz'
-        }
-        api.setWifi(self.dut, self.__class__.__name__, **option2g)
-
-
         api.setDisableAp(self.dut, self.__class__.__name__)
 
-    def check_5g_scanList(self):
+    def config_check_5g(self):
+        relayConf5g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "5g")
+        self.assertDictEqual(relayConf5g, self.option5g,
+                             msg="Switch to 2.4g Wireless relay ,5g wifi config should not changed.")
 
-        option = {
-            'ssid': v.WIRELESS_5G_RELAY_UPPER_SSID,
-        }
+    def config_check_guest(self):
 
-        res, wifiInfo = api.chkWifiInfo(self.dut, self.__class__.__name__, **option)
+        relayConfGuest = api.getWifiDetailDic(self.dut, self.__class__.__name__, "guest")
+        self.assertDictEqual(relayConfGuest, {}, msg="2.4g Wireless relay module should not support guest wifi")
 
-        if res is False:
-            self.fail(msg="5G WirelessRelay UpperLayer SSID isnot in ScanList")
-        #update v.WIRELESS_2G_RELAY_UPPER_OPTION
-        for item in v.WIRELESS_5G_RELAY_UPPER_OPTION.keys():
-            if item in wifiInfo.keys():
-                v.WIRELESS_5G_RELAY_UPPER_OPTION[item] = wifiInfo[item]
-        print v.WIRELESS_5G_RELAY_UPPER_OPTION
+    def config_check_2g(self):
+        routerConf2g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "2g")
+        self.assertEqual(routerConf2g['on'], self.option2g['on'],
+                             msg="Switch to 2.4g Wireless relay ,2g wifi is down.")
+        self.assertEqual(routerConf2g['txpwr'], 'max',
+                             msg="Switch to 2.4g Wireless relay ,2g wifi txpower isnot max.")
+        self.assertEqual(routerConf2g['ssid'], self.option2g['ssid'],
+                             msg="Switch to 2.4g Wireless relay ,2g wifi ssid changed.")
+
+    def assoc_mixed_2g(self):
+
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_mixed_5g(self):
+
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
+
 
 class AP_WIRELESS_RELAY_PSK2_LOW_TXPOWER(TestCase):
     @classmethod

@@ -662,8 +662,8 @@ def setWifiAp(terminal, logname, **kwargs):
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi_ap'
     # t.sleep(60)
     result = setGet(terminal, logname, api, **option)
-    t.sleep(60)
-    if result is not None:
+    t.sleep(70)
+    if result is not None and result['code'] == 0:
         v.HOST = result['ip']
         terminal.connect(host=v.HOST, password=v.WEB_PWD)
         return result
@@ -674,7 +674,7 @@ def setDisableAp(terminal, logname):
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/disable_ap'
     # t.sleep(60)
     result = setGet(terminal, logname, api)
-    t.sleep(60)
+    t.sleep(70)
     if result is not None:
         # v.HOST = result['lanip']
         v.HOST = v.HOST_ORIGINAL
@@ -1106,8 +1106,8 @@ def getWifiDetailAll(terminal, logname):
                'password': "11111111"
              }
            ],
- 'code': 0
-}
+    'code': 0
+    }
     '''
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/wifi_detail_all'
     ret = setGet(terminal, logname, api)
@@ -1170,7 +1170,7 @@ def getWifiDetailDic(terminal, logname, intf):
             infoDicIntf = eval(infoDic.get(intf))
         except Exception, e:
             infoDicIntf = {}
-        if "password"  in infoDicIntf.keys():
+        if "password" in infoDicIntf.keys():
             resultDic["pwd"] = infoDicIntf.get("password")
         if intf == "guest":
             if "enabled" in infoDicIntf.keys():
