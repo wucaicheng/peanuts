@@ -1590,7 +1590,7 @@ def chkWifiInfo(terminal, logname, **kwargs):
         if ret is not None:
             wifiList = ret['list']
             for index in xrange(len(wifiList)):
-                if option['ssid'] == wifiList[index]['ssid']:
+                if option['ssid'] == wifiList[index]['ssid'].decode('utf-8'):
                     return True, wifiList[index]
         return False, {}
 
