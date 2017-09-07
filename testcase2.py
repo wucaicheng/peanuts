@@ -11773,8 +11773,10 @@ class AP_WIRELESS_RELAY_2G(TestCase):
                              msg="Switch to 2.4g Wireless relay ,2g wifi txpower isnot max.")
         self.assertEqual(routerConf2g['ssid'], self.option2g['ssid'],
                              msg="Switch to 2.4g Wireless relay ,2g wifi ssid changed.")
+        self.assertEqual(routerConf2g['encryption'], self.option2g['encryption'],
+                             msg="Switch to 2.4g Wireless relay ,2g wifi encryption changed.")
 
-    def assoc_mixed_2g(self):
+    def assoc_wifiRelay_2g(self):
 
         res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
@@ -11789,7 +11791,7 @@ class AP_WIRELESS_RELAY_2G(TestCase):
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
-    def assoc_mixed_5g(self):
+    def assoc_wifiRelay_5g(self):
 
         res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
@@ -11803,6 +11805,183 @@ class AP_WIRELESS_RELAY_2G(TestCase):
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
+
+    def assoc_ch36Clr_txMin_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'channel': v.CHANNEL36,
+            'txpwr': 'min',
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
+
+        chan_actually = getWlanChannel(self.dut2, "5g", self.__class__.__name__)
+        if int(eval(v.CHANNEL36)) == chan_actually:
+            pass
+        else:
+            self.fail("Channel 36 Setup failed.")
+
+        power = getWlanTxPower(self.dut2, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
+
+    def assoc_ch52Psk2BW40_txMid_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+            'channel': v.CHANNEL52,
+            'txpwr': 'mid',
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
+
+        chan_actually = getWlanChannel(self.dut2, "5g", self.__class__.__name__)
+        if int(eval(v.CHANNEL52)) == chan_actually:
+            pass
+        else:
+            self.fail("Channel 52 Setup failed.")
+
+        power = getWlanTxPower(self.dut2, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
+
+    def assoc_ch165Mixd_txMax_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+            'channel': v.CHANNEL165,
+            'txpwr': 'max',
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
+
+        chan_actually = getWlanChannel(self.dut2, "5g", self.__class__.__name__)
+        if int(eval(v.CHANNEL165)) == chan_actually:
+            pass
+        else:
+            self.fail("Channel 165 Setup failed.")
+
+        power = getWlanTxPower(self.dut2, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
+
+    def chan1_txpower_max_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'channel': v.CHANNEL1,
+            'txpwr': 'max',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+
+        chan_actually = getWlanChannel(self.dut, "2g", self.__class__.__name__)
+        if int(eval(v.CHANNEL1)) == chan_actually:
+            pass
+        else:
+            self.fail("Channel 1 Setup failed.")
+
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan6_txpower_min_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'channel': v.CHANNEL6,
+            'txpwr': 'min',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+
+        chan_actually = getWlanChannel(self.dut, "2g", self.__class__.__name__)
+        if int(eval(v.CHANNEL6)) == chan_actually:
+            pass
+        else:
+            self.fail("Channel 6 Setup failed.")
+
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
 
 class AP_WIRELESS_RELAY_PSK2_LOW_TXPOWER(TestCase):
