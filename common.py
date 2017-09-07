@@ -1982,6 +1982,22 @@ def wanIfInBrlan(terminal, wanIf, logname):
                 return True
     return False
 
+def getWifiRelayStatus(terminal, intf, logname):
+    commandDic1 = {"2g": "iwpriv apcli0 Connstatus",
+                   "5g": "iwpriv apclii0 Connstatus", }
+    commandDic2 = {
+        "2g": v.WIRELESS_2G_RELAY_UPPER_SSID,
+        "5g": v.WIRELESS_5G_RELAY_UPPER_SSID
+    }
+
+    command = commandDic1.get(intf)
+    ret = setGet(terminal, command, logname)
+    if isinstance(ret, list):
+        for line in ret:
+            m = re.search(commandDic2[intf], line)
+            if m:
+                return True
+    return False
 
 
 if __name__ == '__main__':

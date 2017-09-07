@@ -5907,6 +5907,7 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
 
     @classmethod
     def tearDownClass(self):
+        self.dut.close()
         option2g = {
             'wifiIndex': 1,
             'on': 0,
@@ -5917,10 +5918,7 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
         }
         api.setWifi(self.dut2, self.__name__, **option2g)
         api.setWifi(self.dut2, self.__name__, **option5g)
-
         api.setDisableLanAp(self.dut2, self.__name__)
-
-        self.dut.close()
         self.dut2.close()
 
     def wan_port_belong_brlan(self):
@@ -11730,9 +11728,15 @@ class AP_WIRELESS_RELAY_2G(TestCase):
         if self.result['code'] != 0:
             raise Exception('Failed to connect to specified wifi, Please check your password')
 
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret1 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+        if ret1 is False:
+            raise Exception('Connection is failed for shell after setWifiAp.')
+
     @classmethod
     def tearDownClass(self):
 
+        self.dut2.close()
         api.setDisableAp(self.dut, self.__name__)
         option2g = {
             'wifiIndex': 1,
@@ -11745,14 +11749,11 @@ class AP_WIRELESS_RELAY_2G(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
         self.dut.close()
-        
 
     def wifiRelay_switchCheck_2g(self):
 
-        self.assertEqual(self.result['code'], 0,
-                         msg='Switching to 2g wireless relay failed')
-
-        api.setDisableAp(self.dut, self.__class__.__name__)
+        apcli0 = getWifiRelayStatus(self.dut2, "2g", self.__class__.__name__)
+        self.assertTrue(apcli0, 'The device is in wireless relay mode, but the connection to the parent wifi fails')
 
     def config_check_5g(self):
         relayConf5g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "5g")
@@ -11762,7 +11763,7 @@ class AP_WIRELESS_RELAY_2G(TestCase):
     def config_check_guest(self):
 
         relayConfGuest = api.getWifiDetailDic(self.dut, self.__class__.__name__, "guest")
-        self.assertDictEqual(relayConfGuest, {}, msg="2.4g Wireless relay module should not support guest wifi")
+        self.assertDictEqual(relayConfGuest, {}, msg="2.4g Wireless relay mode should not support guest wifi")
 
     def config_check_2g(self):
         routerConf2g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "2g")
