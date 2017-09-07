@@ -11776,7 +11776,7 @@ class AP_WIRELESS_RELAY_2G(TestCase):
         self.assertEqual(routerConf2g['encryption'], self.option2g['encryption'],
                              msg="Switch to 2.4g Wireless relay ,2g wifi encryption changed.")
 
-    def assoc_wifiRelay_2g(self):
+    def assoc_mixd_2g(self):
 
         res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
@@ -11791,7 +11791,7 @@ class AP_WIRELESS_RELAY_2G(TestCase):
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
-    def assoc_wifiRelay_5g(self):
+    def assoc_ch149Psk2_5g(self):
 
         res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
@@ -11929,59 +11929,60 @@ class AP_WIRELESS_RELAY_2G(TestCase):
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
-    def chan1_txpower_max_2g(self):
-
+    def assoc_ssidSpecHide_2g(self):
         option2g = {
             'wifiIndex': 1,
-            'ssid': v.SSID,
-            'encryption': 'none',
-            'channel': v.CHANNEL1,
-            'txpwr': 'max',
+            'ssid': v.SPECIAL_SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+            'hidden': 1
         }
-        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
+        ret2g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.SPECIAL_SSID, self.__class__.__name__)
+        if ret2g is False:
+            self.fail(msg='2.4g wifi is not hidden.')
 
-        chan_actually = getWlanChannel(self.dut, "2g", self.__class__.__name__)
-        if int(eval(v.CHANNEL1)) == chan_actually:
-            pass
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "spec", "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got. SSID = %s' % v.SPECIAL_SSID)
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
-            self.fail("Channel 1 Setup failed.")
+            self.assertTrue(res2gConn, "Association Special&Hidden SSID failed. SSID = %s" % v.SPECIAL_SSID)
 
-        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
 
-        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
-        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
-
-        if minPower <= power <= maxPower:
-            pass
-        else:
-            self.fail("Txpower isnot correct.")
-
-    def chan6_txpower_min_2g(self):
-
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'encryption': 'none',
-            'channel': v.CHANNEL6,
-            'txpwr': 'min',
+    def assoc_ssidChineseHide_5g(self):
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.CHINESE_SSID_5G,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+            'hidden': 1
         }
-        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
-        chan_actually = getWlanChannel(self.dut, "2g", self.__class__.__name__)
-        if int(eval(v.CHANNEL6)) == chan_actually:
-            pass
+        ret5g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.CHINESE_SSID_5G, self.__class__.__name__)
+        if ret5g is False:
+            self.fail(msg='5g wifi is not hidden..')
+
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "chinese", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got. SSID = %s' % v.CHINESE_SSID)
+            else:
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
-            self.fail("Channel 6 Setup failed.")
+            self.assertTrue(res5gConn, "Association Chinese&Hidden SSID failed. SSID = %s" % v.CHINESE_SSID)
 
-        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-
-        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
-        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
-
-        if minPower <= power <= maxPower:
-            pass
-        else:
-            self.fail("Txpower isnot correct.")
 
 
 class AP_WIRELESS_RELAY_PSK2_LOW_TXPOWER(TestCase):

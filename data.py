@@ -458,8 +458,13 @@ treeWirelessRelayApi = [
         'config_check_5g',
         'config_check_guest',
         'config_check_2g',
-        'assoc_mixed_2g',
-        'assoc_mixed_5g',
+        'assoc_mixd_2g',
+        'assoc_ch149Psk2_5g',
+        'assoc_ch36Clr_txMin_5g',
+        'assoc_ch52Psk2BW40_txMid_5g',
+        'assoc_ch165Mixd_txMax_5g',
+        'assoc_ssidSpecHide_2g',
+        'assoc_ssidChineseHide_5g'
     ],
     'AP_WIRELESS_RELAY_SCANLIST2',
     [
