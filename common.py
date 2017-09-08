@@ -1994,7 +1994,8 @@ def getWifiRelayStatus(terminal, intf, logname):
     ret = setGet(terminal, command, logname)
     if isinstance(ret, list):
         for line in ret:
-            m = re.search(commandDic2[intf], line)
+            line1 = unicode(line, "utf-8")
+            m = re.search(commandDic2[intf], line1)
             if m:
                 return True
     return False

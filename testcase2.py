@@ -11670,6 +11670,9 @@ class AP_WIRELESS_RELAY_2G(TestCase):
         ret = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         if ret is False:
             raise Exception("Http connection is failed. please check your remote settings.")
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         self.option2g = {
             'wifiIndex': 1,
@@ -11982,7 +11985,6 @@ class AP_WIRELESS_RELAY_2G(TestCase):
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association Chinese&Hidden SSID failed. SSID = %s" % v.CHINESE_SSID)
-
 
 
 class AP_WIRELESS_RELAY_PSK2_LOW_TXPOWER(TestCase):
