@@ -5908,6 +5908,7 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
     @classmethod
     def tearDownClass(self):
         self.dut.close()
+        api.setDisableLanAp(self.dut2, self.__name__)
         option2g = {
             'wifiIndex': 1,
             'on': 0,
@@ -5918,7 +5919,6 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
         }
         api.setWifi(self.dut2, self.__name__, **option2g)
         api.setWifi(self.dut2, self.__name__, **option5g)
-        api.setDisableLanAp(self.dut2, self.__name__)
         self.dut2.close()
 
     def wan_port_belong_brlan(self):
@@ -5932,14 +5932,14 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
 
     def wire_relay_ping_UpperRouter(self):
 
-        resPingPercent = getPingStatus(self.dut, v.HOST_UPPER, v.PING_COUNT,
+        resPingPercent = getPingStatus(self.dut, str(v.HOST_UPPER), v.PING_COUNT,
                                                   self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], 80,
                                         "WireRelayRouter Ping UpperRouter Failed.")
 
     def wire_relay_ping_internet(self):
 
-        resPingPercent = getPingStatus(self.dut, v.PING_TARGET_WITHOUT_DNS, v.PING_COUNT,
+        resPingPercent = getPingStatus(self.dut, str(v.PING_TARGET_WITHOUT_DNS), v.PING_COUNT,
                                                   self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], 80,
                                         "WireRelayRouter Ping internet Failed.")
