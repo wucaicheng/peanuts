@@ -28,7 +28,7 @@ class ShellClient(object):
             self.client.set_missing_host_key_policy(pm.AutoAddPolicy())
             if not os.path.exists(v.TEST_SUITE_LOG_PATH):
                 os.makedirs(v.TEST_SUITE_LOG_PATH)
-            # paramiko.util.log_to_file(v.SSH_LOG_PATH)
+            paramiko.util.log_to_file(v.SSH_LOG_PATH)
             try:
                 if password is not None:
                     self.client.connect(host, username=userid, password=password)
