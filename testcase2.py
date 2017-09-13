@@ -11772,12 +11772,18 @@ class AP_WIRELESS_RELAY_2G(TestCase):
         routerConf2g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "2g")
         self.assertEqual(routerConf2g['on'], self.option2g['on'],
                              msg="Switch to 2.4g Wireless relay ,2g wifi is down.")
-        self.assertEqual(routerConf2g['txpwr'], 'max',
-                             msg="Switch to 2.4g Wireless relay ,2g wifi txpower isnot max.")
         self.assertEqual(routerConf2g['ssid'], self.option2g['ssid'],
                              msg="Switch to 2.4g Wireless relay ,2g wifi ssid changed.")
         self.assertEqual(routerConf2g['encryption'], self.option2g['encryption'],
                              msg="Switch to 2.4g Wireless relay ,2g wifi encryption changed.")
+
+        power = getWlanTxPower(self.dut2, "2g", self.__class__.__name__)
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Switch to 2.4g Wireless relay ,2g wifi txpower isnot max.")
 
     def assoc_mixd_2g(self):
 

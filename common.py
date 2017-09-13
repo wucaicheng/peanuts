@@ -28,7 +28,7 @@ class ShellClient(object):
             self.client.set_missing_host_key_policy(pm.AutoAddPolicy())
             if not os.path.exists(v.TEST_SUITE_LOG_PATH):
                 os.makedirs(v.TEST_SUITE_LOG_PATH)
-            paramiko.util.log_to_file(v.SSH_LOG_PATH)
+            # paramiko.util.log_to_file(v.SSH_LOG_PATH)
             try:
                 if password is not None:
                     self.client.connect(host, username=userid, password=password)
@@ -40,6 +40,8 @@ class ShellClient(object):
                 return False
 
         elif self.connectionType == 2:  # represent telnet, return line contents\r\n
+            if not os.path.exists(v.TEST_SUITE_LOG_PATH):
+                os.makedirs(v.TEST_SUITE_LOG_PATH)
             self.hostname = host.encode("utf-8")
             self.username = userid.encode("utf-8")
             self.password = password.encode("utf-8")
@@ -62,6 +64,8 @@ class ShellClient(object):
                 print 'telnet connection is failed. please check your remote settings.'
                 return False
         elif self.connectionType == 4:  # represent windows telnet, press enter \r\n, return line contents\n
+            if not os.path.exists(v.TEST_SUITE_LOG_PATH):
+                os.makedirs(v.TEST_SUITE_LOG_PATH)
             self.hostname = host.encode("utf-8")
             self.username = userid.encode("utf-8")
             self.password = password.encode("utf-8")
@@ -84,6 +88,8 @@ class ShellClient(object):
                 print 'telnet connection is failed. please check your remote settings.'
                 return False
         elif self.connectionType == 3: # represent serial
+            if not os.path.exists(v.TEST_SUITE_LOG_PATH):
+                os.makedirs(v.TEST_SUITE_LOG_PATH)
             try:
                 self.ser = serial.Serial(port=v.SERIAL_PORT, baudrate=v.BAUDRATE, timeout=1)
                 # # turn off debug, quote cmd must use ' '
@@ -429,8 +435,8 @@ def setGet(terminal, command, logname):
 
 
 def setAdbShell(device, command, logname):
-    if not os.path.exists(v.TEST_SUITE_LOG_PATH):
-        os.makedirs(v.TEST_SUITE_LOG_PATH)
+    # if not os.path.exists(v.TEST_SUITE_LOG_PATH):
+    #     os.makedirs(v.TEST_SUITE_LOG_PATH)
     if device != "":
         adb = "adb " + "-s " + device + " shell "
     else:
