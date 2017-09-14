@@ -478,7 +478,7 @@ tree5gWirelessRelayApi = [
         'assoc_afterModeChange_2g',
         'assoc_afterModeChange_5g',
         'assoc_ch1Clr_txMin_2g',
-        'assoc_ch3Psk2BW40_txMid_2g',
+        'assoc_ch6Psk2BW40_txMid_2g',
         'assoc_ch13keySpec_txMax_2g',
         'assoc_ssidSpecHide_5g',
         'assoc_ssidChineseHide_2g',

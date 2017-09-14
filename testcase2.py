@@ -123,13 +123,15 @@ class AP_WPS(TestCase):
             'wifiIndex': 1,
             'ssid': 'miwifi_wps',
             'encryption': 'mixed-psk',
-            'pwd': '12345678'
+            'pwd': '12345678',
+            'channel': v.CHANNEL13
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': 'miwifi_wps_5G',
             'encryption': 'mixed-psk',
-            'pwd': '12345678'
+            'pwd': '12345678',
+            'channel': v.CHANNEL36
         }
 
         api.setWifi(self.dut, self.__name__, **option2g)
@@ -10848,24 +10850,24 @@ class AP_WIRELESS_RELAY_5G(TestCase):
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
-    def assoc_ch3Psk2BW40_txMid_2g(self):
+    def assoc_ch6Psk2BW40_txMid_2g(self):
 
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'psk2',
             'pwd': v.KEY,
-            'channel': v.CHANNEL3,
+            'channel': v.CHANNEL6,
             'txpwr': 'mid',
             'bandwidth': '40'
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
         chan_actually = getWlanChannel(self.dut2, "2g", self.__class__.__name__)
-        if int(eval(v.CHANNEL3)) == chan_actually:
+        if int(eval(v.CHANNEL6)) == chan_actually:
             pass
         else:
-            self.fail("Channel 3 Setup failed.")
+            self.fail("Channel 6 Setup failed.")
 
         power = getWlanTxPower(self.dut2, "2g", self.__class__.__name__)
 
