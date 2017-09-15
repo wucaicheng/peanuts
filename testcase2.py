@@ -6,6 +6,7 @@ from common import *
 from common2 import *
 import var as v
 import data
+import time as t
 
 
 class AP_CLEAR_CHAN(TestCase):
@@ -9196,12 +9197,12 @@ class AP_QOS_GUEST_MIXEDPSK(TestCase):
         api.setQosBand(self.dut, self.__name__)
         api.setQosSwitch(self.dut, self.__name__)
 
-        optionGuest = {
+        optionGuestQos = {
             'percent': 0.02,
             'percent_up': 0.02,
         }
 
-        self.guestQos = api.setQosGuest2(self.dut, self.__name__, **optionGuest)
+        self.guestQos = api.setQosGuest2(self.dut, self.__name__, **optionGuestQos)
 
     @classmethod
     def tearDownClass(self):
@@ -10485,7 +10486,7 @@ class AP_WIRELESS_RELAY_2G(TestCase):
             'txpwr': 'min',
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
-
+        t.sleep(30)
         chan_actually = getWlanChannel(self.dut2, "5g", self.__class__.__name__)
         if int(eval(v.CHANNEL36)) == chan_actually:
             pass
@@ -10527,7 +10528,7 @@ class AP_WIRELESS_RELAY_2G(TestCase):
             'bandwidth': '40'
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
-
+        t.sleep(30)
         chan_actually = getWlanChannel(self.dut2, "5g", self.__class__.__name__)
         if int(eval(v.CHANNEL52)) == chan_actually:
             pass
@@ -10568,7 +10569,7 @@ class AP_WIRELESS_RELAY_2G(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
-
+        t.sleep(30)
         chan_actually = getWlanChannel(self.dut2, "5g", self.__class__.__name__)
         if int(eval(v.CHANNEL165)) == chan_actually:
             pass
@@ -10607,6 +10608,7 @@ class AP_WIRELESS_RELAY_2G(TestCase):
             'hidden': 1
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
+        t.sleep(30)
         ret2g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.SPECIAL_SSID, self.__class__.__name__)
         if ret2g is False:
             self.fail(msg='2.4g wifi is not hidden.')
@@ -10633,7 +10635,7 @@ class AP_WIRELESS_RELAY_2G(TestCase):
             'hidden': 1
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
-
+        t.sleep(30)
         ret5g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.CHINESE_SSID_5G, self.__class__.__name__)
         if ret5g is False:
             self.fail(msg='5g wifi is not hidden..')
@@ -10820,7 +10822,7 @@ class AP_WIRELESS_RELAY_5G(TestCase):
             'txpwr': 'min',
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
-
+        t.sleep(30)
         chan_actually = getWlanChannel(self.dut2, "2g", self.__class__.__name__)
         if int(eval(v.CHANNEL1)) == chan_actually:
             pass
@@ -10862,7 +10864,7 @@ class AP_WIRELESS_RELAY_5G(TestCase):
             'bandwidth': '40'
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
-
+        t.sleep(30)
         chan_actually = getWlanChannel(self.dut2, "2g", self.__class__.__name__)
         if int(eval(v.CHANNEL6)) == chan_actually:
             pass
@@ -10903,7 +10905,7 @@ class AP_WIRELESS_RELAY_5G(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
-
+        t.sleep(30)
         chan_actually = getWlanChannel(self.dut2, "2g", self.__class__.__name__)
         if int(eval(v.CHANNEL13)) == chan_actually:
             pass
@@ -10943,6 +10945,7 @@ class AP_WIRELESS_RELAY_5G(TestCase):
             'hidden': 1
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
+        t.sleep(30)
         ret5g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.SPECIAL_SSID_5G, self.__class__.__name__)
         if ret5g is False:
             self.fail(msg='5g wifi is not hidden.')
@@ -10969,7 +10972,7 @@ class AP_WIRELESS_RELAY_5G(TestCase):
             'hidden': 1
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
-
+        t.sleep(30)
         ret2g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.CHINESE_SSID, self.__class__.__name__)
         if ret2g is False:
             self.fail(msg='2g wifi is not hidden..')

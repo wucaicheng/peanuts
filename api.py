@@ -662,7 +662,7 @@ def setWifiAp(terminal, logname, **kwargs):
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi_ap'
     # t.sleep(60)
     result = setGet(terminal, logname, api, **option)
-    t.sleep(60)
+    t.sleep(80)
     if result is not None and result['code'] == 0:
         v.HOST = result['ip']
         terminal.connect(host=v.HOST, password=v.WEB_PWD)
@@ -674,7 +674,7 @@ def setDisableAp(terminal, logname):
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/disable_ap'
     # t.sleep(60)
     result = setGet(terminal, logname, api)
-    t.sleep(60)
+    t.sleep(70)
     if result is not None:
         # v.HOST = result['lanip']
         v.HOST = v.HOST_ORIGINAL
@@ -692,7 +692,9 @@ def setQosSwitch(terminal, logname, **kwargs):
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/misystem/qos_switch'
-    return setCheck(terminal, logname, api, **option)
+    ret = setCheck(terminal, logname, api, **option)
+    t.sleep(10)
+    return ret
 
 def setQosBand(terminal, logname, **kwargs):
     """
@@ -707,7 +709,9 @@ def setQosBand(terminal, logname, **kwargs):
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/misystem/set_band'
-    return setCheck(terminal, logname, api, **option)
+    ret = setCheck(terminal, logname, api, **option)
+    t.sleep(10)
+    return ret
 
 
 # ======================abandoned==============================
@@ -783,7 +787,9 @@ def setMACQoSInfo(terminal, logname, **kwargs):
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/misystem/qos_set_dev_info'
-    return setCheck(terminal, logname, api, **option)
+    ret = setCheck(terminal, logname, api, **option)
+    t.sleep(10)
+    return ret
 
 def setMACQosOff(terminal, logname, **kwargs):
     """
@@ -845,6 +851,7 @@ def setQosGuest2(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/misystem/qos_guest'
     ret = setGet(terminal, logname, api, **option)
+    t.sleep(10)
     if ret is not None:
         if ret['code'] is 0:
             ret['guest']['down'] = ret['guest']['down']/8 # change from kb/s to KB/s
@@ -871,6 +878,7 @@ def setQosRouterSelf(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/misystem/qos_xq'
     ret = setGet(terminal, logname, api, **option)
+    t.sleep(10)
     if ret is not None:
         if ret['code'] is 0:
             ret['local']['down'] = ret['local']['down']/1024 # change from kb/s to Mb/s
