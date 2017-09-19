@@ -2006,6 +2006,12 @@ def getWifiRelayStatus(terminal, intf, logname):
                 return True
     return False
 
+def shutdownWan(terminal, wanIf, logname):
+
+    command = 'ifconfig ' + wanIf + ' down'
+    setGet(terminal, command, logname)
+    t.sleep(5)
+    return True
 
 if __name__ == '__main__':
     client = ShellClient(2)

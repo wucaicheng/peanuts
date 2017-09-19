@@ -10386,6 +10386,13 @@ class AP_WIRELESS_RELAY_2G(TestCase):
             if item in wifiInfo.keys():
                 self.UpperOption[item] = wifiInfo[item]
 
+        dut3 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = dut3.connect(v.HOST, v.USR, v.PASSWD)
+        if ret3 is False:
+            raise Exception('Connection is failed for shell.')
+        shutdownWan(dut3, v.WAN_IFNAME.get(v.DUT_MODULE), self.__name__)
+        dut3.close()
+
         self.result = api.setWifiAp(self.dut, self.__name__, **self.UpperOption)
         if self.result is None:
             raise Exception('Connect to specified wifi return None, Break')
@@ -10486,7 +10493,7 @@ class AP_WIRELESS_RELAY_2G(TestCase):
             'txpwr': 'min',
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
-        t.sleep(30)
+        t.sleep(20)
         chan_actually = getWlanChannel(self.dut2, "5g", self.__class__.__name__)
         if int(eval(v.CHANNEL36)) == chan_actually:
             pass
@@ -10528,7 +10535,7 @@ class AP_WIRELESS_RELAY_2G(TestCase):
             'bandwidth': '40'
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
-        t.sleep(30)
+        t.sleep(20)
         chan_actually = getWlanChannel(self.dut2, "5g", self.__class__.__name__)
         if int(eval(v.CHANNEL52)) == chan_actually:
             pass
@@ -10569,7 +10576,7 @@ class AP_WIRELESS_RELAY_2G(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
-        t.sleep(30)
+        t.sleep(20)
         chan_actually = getWlanChannel(self.dut2, "5g", self.__class__.__name__)
         if int(eval(v.CHANNEL165)) == chan_actually:
             pass
@@ -10608,7 +10615,7 @@ class AP_WIRELESS_RELAY_2G(TestCase):
             'hidden': 1
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
-        t.sleep(30)
+        t.sleep(20)
         ret2g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.SPECIAL_SSID, self.__class__.__name__)
         if ret2g is False:
             self.fail(msg='2.4g wifi is not hidden.')
@@ -10635,7 +10642,7 @@ class AP_WIRELESS_RELAY_2G(TestCase):
             'hidden': 1
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
-        t.sleep(30)
+        t.sleep(20)
         ret5g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.CHINESE_SSID_5G, self.__class__.__name__)
         if ret5g is False:
             self.fail(msg='5g wifi is not hidden..')
@@ -10715,6 +10722,13 @@ class AP_WIRELESS_RELAY_5G(TestCase):
         for item in self.UpperOption.keys():
             if item in wifiInfo.keys():
                 self.UpperOption[item] = wifiInfo[item]
+
+        dut3 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = dut3.connect(v.HOST, v.USR, v.PASSWD)
+        if ret3 is False:
+            raise Exception('Connection is failed for shell.')
+        shutdownWan(dut3, v.WAN_IFNAME.get(v.DUT_MODULE), self.__name__)
+        dut3.close()
 
         self.result = api.setWifiAp(self.dut, self.__name__, **self.UpperOption)
         if self.result is None:
@@ -10822,7 +10836,7 @@ class AP_WIRELESS_RELAY_5G(TestCase):
             'txpwr': 'min',
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
-        t.sleep(30)
+        t.sleep(10)
         chan_actually = getWlanChannel(self.dut2, "2g", self.__class__.__name__)
         if int(eval(v.CHANNEL1)) == chan_actually:
             pass
@@ -10864,7 +10878,7 @@ class AP_WIRELESS_RELAY_5G(TestCase):
             'bandwidth': '40'
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
-        t.sleep(30)
+        t.sleep(10)
         chan_actually = getWlanChannel(self.dut2, "2g", self.__class__.__name__)
         if int(eval(v.CHANNEL6)) == chan_actually:
             pass
@@ -10905,7 +10919,7 @@ class AP_WIRELESS_RELAY_5G(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
-        t.sleep(30)
+        t.sleep(10)
         chan_actually = getWlanChannel(self.dut2, "2g", self.__class__.__name__)
         if int(eval(v.CHANNEL13)) == chan_actually:
             pass
@@ -10945,7 +10959,7 @@ class AP_WIRELESS_RELAY_5G(TestCase):
             'hidden': 1
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
-        t.sleep(30)
+        t.sleep(10)
         ret5g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.SPECIAL_SSID_5G, self.__class__.__name__)
         if ret5g is False:
             self.fail(msg='5g wifi is not hidden.')
@@ -10972,7 +10986,7 @@ class AP_WIRELESS_RELAY_5G(TestCase):
             'hidden': 1
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
-        t.sleep(30)
+        t.sleep(10)
         ret2g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.CHINESE_SSID, self.__class__.__name__)
         if ret2g is False:
             self.fail(msg='2g wifi is not hidden..')
