@@ -10342,7 +10342,7 @@ class AP_WIRELESS_RELAY_2G(TestCase):
             'pwd': v.KEY,
             'encryption': 'mixed-psk',
             'channel': v.CHANNEL11,
-            'bandwidth': '20',
+            'bandwidth': '40',
             'hidden': "0",
             'txpwr': 'min'
         }
