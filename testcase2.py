@@ -20231,6 +20231,79 @@ class AP_CHECK(TestCase):
             count += 1
             self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
 
+class STA_CHECK(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = ShellClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        self.dut2 = api.HttpClient()
+        ret2 = self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
+
+        if ret1 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        option = {
+            'bsd': 1,
+            'ssid1': 'aiCheckAfterApReboot',
+            'encryption1': 'mixed-psk',
+            'pwd1': '12345678',
+        }
+        api.setAllWifi(self.dut2, self.__name__, **option)
+
+    @classmethod
+    def tearDownClass(self):
+        pass
+
+    def check_sta_after_apReboot(self):
+        count = 0
+        while count <= v.AP_REBOOT_COUNT:
+            setReboot(self.dut, self.__class__.__name__)
+            t.sleep(90)
+            while 1:
+                try:
+                    self.dut = ShellClient(v.CONNECTION_TYPE)
+                    ret = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+                    if ret is True:
+                        chkCount = 0
+                        while 1:
+                            if chkCount < 20:
+                                result = chkBootingUpFinished(self.dut, self.__class__.__name__)
+                                if result is True:
+                                    break
+                                else:
+                                    chkCount += 1
+                                    t.sleep(10)
+                            else:
+                                self.fail(msg='reboot is failed')
+                        break
+                    else:
+                        t.sleep(10)
+                except Exception, e:
+                    raise e
+
+            t.sleep(10)
+            self.check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC, self.__class__.__name__)
+            self.check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC, self.__class__.__name__)
+
+            if self.check2g is False and self.check5g is False:
+                loop = 0
+                while loop < 30:
+                    t.sleep(10)
+                    self.check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC, self.__class__.__name__)
+                    self.check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC, self.__class__.__name__)
+                    loop += 1
+                    if self.check2g is True or self.check5g is True:
+                        break
+
+            if self.check2g is False and self.check5g is False:
+                self.fail(msg='After AP Reboot, Specified Sta Online Failed within 5 minutes')
+
+            count += 1
+
 
 if __name__ == '__main__':
     v.HOST = "192.168.31.1"

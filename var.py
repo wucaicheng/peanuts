@@ -239,6 +239,10 @@ MAIL_XLSX = TEST_SUITE_LOG_PATH + "Memory_Tracking.xlsx"
 MAIL_THROUGHPUT_XLSX_ORIGINAL = "throughput.xlsx"
 MAIL_THROUGHPUT_XLSX = TEST_SUITE_LOG_PATH + MAIL_THROUGHPUT_XLSX_ORIGINAL
 
+# ----------------------check-------------------
+CHECK_STA_MAC = '0C:1D:AF:9F:DD:21'
+AP_REBOOT_COUNT = 800
+
 
 if __name__ == '__main__':
     print R1CM_MAX_RATE_2G['20']
