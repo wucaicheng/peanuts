@@ -20300,7 +20300,7 @@ class STA_CHECK(TestCase):
                         break
 
             if self.check2g is False and self.check5g is False:
-                self.fail(msg='After AP %d times Reboot, Specified Sta Online Failed within 5 minutes' % count)
+                self.fail(msg='After AP %d times Reboot, Specified Sta Online Failed within 5 minutes' % count+1)
 
             count += 1
 
