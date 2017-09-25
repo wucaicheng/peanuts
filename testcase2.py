@@ -20246,13 +20246,13 @@ class STA_CHECK(TestCase):
         if ret2 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
-        option = {
-            'bsd': 1,
-            'ssid1': 'aiCheckAfterApReboot',
-            'encryption1': 'mixed-psk',
-            'pwd1': '12345678',
-        }
-        api.setAllWifi(self.dut2, self.__name__, **option)
+        # option = {
+        #     'bsd': 1,
+        #     'ssid1': 'aiCheckAfterApReboot',
+        #     'encryption1': 'mixed-psk',
+        #     'pwd1': '12345678',
+        # }
+        # api.setAllWifi(self.dut2, self.__name__, **option)
 
     @classmethod
     def tearDownClass(self):
