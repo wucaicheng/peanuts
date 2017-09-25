@@ -1103,6 +1103,10 @@ treeOthersApi = [
         'check_ap_reboot_lastestpower',
         'check_ap_upgrade_lastestpower',
         'check_ap_reset_lastestpower',
+    ],
+    'STA_CHECK',
+    [
+        'check_sta_after_apReboot'
     ]
 ]
 

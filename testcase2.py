@@ -20260,7 +20260,7 @@ class STA_CHECK(TestCase):
 
     def check_sta_after_apReboot(self):
         count = 0
-        while count <= v.AP_REBOOT_COUNT:
+        while count <= int(v.AP_REBOOT_COUNT):
             setReboot(self.dut, self.__class__.__name__)
             t.sleep(90)
             while 1:

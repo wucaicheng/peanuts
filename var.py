@@ -241,7 +241,7 @@ MAIL_THROUGHPUT_XLSX = TEST_SUITE_LOG_PATH + MAIL_THROUGHPUT_XLSX_ORIGINAL
 
 # ----------------------check-------------------
 CHECK_STA_MAC = '0C:1D:AF:9F:DD:21'
-AP_REBOOT_COUNT = 800
+AP_REBOOT_COUNT = '800'
 
 
 if __name__ == '__main__':
