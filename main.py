@@ -60,6 +60,10 @@ class ToolBook(wx.Toolbook):
                 self.AddPage(page2, tool, imageId=imageIdGenerator.next())
 
             elif tool == v.TOOL_LIST[2]:
+                page3 = MemoryTrackPage(self)
+                self.AddPage(page3, tool, imageId=imageIdGenerator.next())
+
+            elif tool == v.TOOL_LIST[3]:
                 page4 = TestSuitePage(self)
                 self.AddPage(page4, tool, imageId=imageIdGenerator.next())
 

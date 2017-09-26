@@ -4,7 +4,7 @@ import os
 
 VER = '3.9.9'
 
-TOOL_LIST = ["General", "Memory Tracking", "Test Suite"]
+TOOL_LIST = ["General", "Option", "Memory Tracking", "Test Suite"]
 
 # ----------------General-----------------
 
