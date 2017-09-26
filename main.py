@@ -56,7 +56,7 @@ class ToolBook(wx.Toolbook):
                 self.AddPage(page1, tool, imageId=imageIdGenerator.next())
 
             elif tool == v.TOOL_LIST[1]:
-                page2 = MemoryTrackPage(self)
+                page2 = OptionPage(self)
                 self.AddPage(page2, tool, imageId=imageIdGenerator.next())
 
             elif tool == v.TOOL_LIST[2]:
@@ -322,70 +322,12 @@ class GeneralPage(wx.Panel):
         connSizerUpperWireless.Add(connSizerUpperWireless4, 0, wx.LEFT, 10)
         connSizerUpperWireless.Add(connSizerUpperWireless5, 0, wx.LEFT, 2)
 
-        # PC connection ctrl
-        pcIPLbl = wx.StaticText(self, -1, 'Host:')
-        self.pcIP = wx.TextCtrl(self, -1, '')
-        self.pcIP.SetValue(v.PC_HOST)
-
-        pcUsrLbl = wx.StaticText(self, -1, 'User:')
-        self.pcUsr = wx.TextCtrl(self, -1, '')
-        self.pcUsr.SetValue(v.PC_USERNAME)
-
-        pcPasswdLbl = wx.StaticText(self, -1, 'Password:')
-        self.pcPasswd = wx.TextCtrl(self, -1, '')
-        self.pcPasswd.SetValue(v.PC_PWD)
-
-        staCheckLbl = wx.StaticText(self, -1, 'STA MAC:')
-        self.staCheck = wx.TextCtrl(self, -1, '')
-        self.staCheck.SetValue(v.CHECK_STA_MAC)
-
-        apRebootCountLbl = wx.StaticText(self, -1, 'AP Reboot Count:')
-        self.apRebootCount = wx.TextCtrl(self, -1, '')
-        self.apRebootCount.SetValue(v.AP_REBOOT_COUNT)
-
-        # PC connection box
-        pcConnBox = wx.StaticBox(self, -1, 'PC', size=(580, -1))
-        pcConnSizer = wx.StaticBoxSizer(pcConnBox, wx.HORIZONTAL)
-
-        pcConnSizer2 = wx.BoxSizer(wx.VERTICAL)
-        pcConnSizer2.Add(pcIPLbl, 0,
-                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        pcConnSizer2.Add(pcUsrLbl, 0,
-                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        pcConnSizer2.Add(pcPasswdLbl, 0,
-                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT | wx.BOTTOM, 10)
-
-        pcConnSizer3 = wx.BoxSizer(wx.VERTICAL)
-        pcConnSizer3.Add(self.pcIP, 0,
-                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
-        pcConnSizer3.Add(self.pcUsr, 0,
-                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
-        pcConnSizer3.Add(self.pcPasswd, 0,
-                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
-
-        pcConnSizer4 = wx.BoxSizer(wx.VERTICAL)
-        pcConnSizer4.Add(staCheckLbl, 0,
-                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        pcConnSizer4.Add(apRebootCountLbl, 0,
-                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-
-        pcConnSizer5 = wx.BoxSizer(wx.VERTICAL)
-        pcConnSizer5.Add(self.staCheck, 0,
-                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
-        pcConnSizer5.Add(self.apRebootCount, 0,
-                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
-
-        pcConnSizer.Add(pcConnSizer2, 0, wx.LEFT, 5)
-        pcConnSizer.Add(pcConnSizer3, 0, wx.LEFT, 2)
-        pcConnSizer.Add(pcConnSizer4, 0, wx.LEFT, 10)
-        pcConnSizer.Add(pcConnSizer5, 0, wx.LEFT, 10)
-
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(connSizer, 0, wx.ALL, 10)
         mainSizer.Add(staConnSizer, 0, wx.LEFT | wx.BOTTOM, 10)
         mainSizer.Add(connSizerUpper, 0, wx.LEFT | wx.BOTTOM, 10)
         mainSizer.Add(connSizerUpperWireless, 0, wx.LEFT | wx.BOTTOM, 10)
-        mainSizer.Add(pcConnSizer, 0, wx.LEFT | wx.BOTTOM, 10)
+        # mainSizer.Add(pcConnSizer, 0, wx.LEFT | wx.BOTTOM, 10)
         mainSizer.Add(btnSizer, 0, wx.TOP, 30)
 
         self.SetSizer(mainSizer)
@@ -505,9 +447,9 @@ class GeneralPage(wx.Panel):
             # v.WIRELESS_2G_RELAY_UPPER_OPTION['password'] = self.wirelessRelay2gPw.GetValue()
             # v.WIRELESS_5G_RELAY_UPPER_OPTION['ssid'] = self.wirelessRelay5gSSID.GetValue()
             # v.WIRELESS_5G_RELAY_UPPER_OPTION['password'] = self.wirelessRelay5gPw.GetValue()
-            v.PC_HOST = self.pcIP.GetValue()
-            v.CHECK_STA_MAC = self.staCheck.GetValue()
-            v.AP_REBOOT_COUNT = self.apRebootCount.GetValue()
+            # v.PC_HOST = self.pcIP.GetValue()
+            # v.CHECK_STA_MAC = self.staCheck.GetValue()
+            # v.AP_REBOOT_COUNT = self.apRebootCount.GetValue()
             dutConn = threading.Thread(target=self.connectionCheckThread, kwargs={'connectiontype': v.CONNECTION_TYPE,
                                                                                   'ip': v.HOST, 'user': v.USR,
                                                                                   'password': v.PASSWD})
@@ -520,11 +462,134 @@ class GeneralPage(wx.Panel):
             v.ANDROID_MODEL = co.getAdbDeviceModel(v.ANDROID_SERIAL_NUM)
             self.staModel.SetLabel(v.ANDROID_MODEL)
 
+        # if len(v.PC_HOST) is not 0:
+        #     v.PC_USERNAME = self.pcUsr.GetValue()
+        #     v.PC_PWD = self.pcPasswd.GetValue()
+            # pcConn = threading.Thread(target=self.pcSshCheckThread, args=(v.PC_HOST, v.PC_USERNAME, v.PC_PWD))
+            # pcConn.start()
+
+    def EvtTextChange(self, event):
+        self.saveBtn.Enable(True)
+        v.SAVE_BTN_FLAG = False
+
+    def EvtClose(self, event):
+        frame.Close(True)
+
+
+class OptionPage(wx.Panel):
+    def __init__(self, parent):
+        wx.Window.__init__(self, parent, -1, style=wx.BORDER_STATIC)
+        wx.StaticText(self, -1, "Advanced Options", wx.Point(10, 10))
+        # change text event
+        self.Bind(wx.EVT_TEXT, self.EvtTextChange)
+        # btn ctrl n box
+        self.saveBtn = wx.Button(self, -1, 'Save')
+        self.cancelBtn = wx.Button(self, -1, 'Cancel')
+
+        self.Bind(wx.EVT_BUTTON, self.EvtSave, self.saveBtn)
+        self.Bind(wx.EVT_BUTTON, self.EvtClose, self.cancelBtn)
+
+        btnSizer = wx.BoxSizer(wx.HORIZONTAL)
+        btnSizer.Add(self.saveBtn, 0, wx.LEFT, 400)
+        btnSizer.Add(self.cancelBtn, 0, wx.LEFT, 15)
+
+        # PC connection ctrl
+        pcIPLbl = wx.StaticText(self, -1, 'Host:')
+        self.pcIP = wx.TextCtrl(self, -1, '')
+        self.pcIP.SetValue(v.PC_HOST)
+
+        pcUsrLbl = wx.StaticText(self, -1, 'User:')
+        self.pcUsr = wx.TextCtrl(self, -1, '')
+        self.pcUsr.SetValue(v.PC_USERNAME)
+
+        pcPasswdLbl = wx.StaticText(self, -1, 'Password:')
+        self.pcPasswd = wx.TextCtrl(self, -1, '')
+        self.pcPasswd.SetValue(v.PC_PWD)
+
+        # PC connection box
+        pcConnBox = wx.StaticBox(self, -1, 'PC outside WAN', size=(580, -1))
+        pcConnSizer = wx.StaticBoxSizer(pcConnBox, wx.HORIZONTAL)
+
+        pcConnSizer2 = wx.BoxSizer(wx.VERTICAL)
+        pcConnSizer2.Add(pcIPLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+        pcConnSizer2.Add(pcUsrLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+
+        pcConnSizer3 = wx.BoxSizer(wx.VERTICAL)
+        pcConnSizer3.Add(self.pcIP, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        pcConnSizer3.Add(self.pcUsr, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+
+        pcConnSizer4 = wx.BoxSizer(wx.VERTICAL)
+        pcConnSizer4.Add(pcPasswdLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT | wx.BOTTOM, 10)
+
+        pcConnSizer5 = wx.BoxSizer(wx.VERTICAL)
+        pcConnSizer5.Add(self.pcPasswd, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+
+        pcConnSizer.Add(pcConnSizer2, 0, wx.LEFT, 5)
+        pcConnSizer.Add(pcConnSizer3, 0, wx.LEFT, 2)
+        pcConnSizer.Add(pcConnSizer4, 0, wx.LEFT, 10)
+        pcConnSizer.Add(pcConnSizer5, 0, wx.LEFT, 10)
+
+        # check sta online box
+        stacheckBox = wx.StaticBox(self, -1, 'Check STA online', size=(580, -1))
+        stacheckSizer = wx.StaticBoxSizer(stacheckBox, wx.HORIZONTAL)
+
+        staCheckLbl = wx.StaticText(self, -1, 'STA1 MAC:')
+        self.staCheck = wx.TextCtrl(self, -1, '')
+        self.staCheck.SetValue(v.CHECK_STA_MAC)
+
+        staCheckLbl2 = wx.StaticText(self, -1, 'STA2 MAC:')
+        self.staCheck2 = wx.TextCtrl(self, -1, '')
+        self.staCheck2.SetValue(v.CHECK_STA_MAC2)
+
+        apRebootCountLbl = wx.StaticText(self, -1, 'AP Reboot Count:')
+        self.apRebootCount = wx.TextCtrl(self, -1, '')
+        self.apRebootCount.SetValue(v.AP_REBOOT_COUNT)
+
+        stacheckSizer2 = wx.BoxSizer(wx.VERTICAL)
+        stacheckSizer2.Add(staCheckLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+        stacheckSizer2.Add(staCheckLbl2, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+        stacheckSizer2.Add(apRebootCountLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+
+        stacheckSizer3 = wx.BoxSizer(wx.VERTICAL)
+        stacheckSizer3.Add(self.staCheck, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        stacheckSizer3.Add(self.staCheck2, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        stacheckSizer3.Add(self.apRebootCount, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+
+        stacheckSizer.Add(stacheckSizer2, 0, wx.LEFT, 5)
+        stacheckSizer.Add(stacheckSizer3, 0, wx.LEFT, 2)
+
+        mainSizer = wx.BoxSizer(wx.VERTICAL)
+        mainSizer.Add(pcConnSizer, 0, wx.ALL, 10)
+        mainSizer.Add(stacheckSizer, 0, wx.LEFT | wx.BOTTOM, 10)
+        mainSizer.Add(btnSizer, 0, wx.TOP, 30)
+
+        self.SetSizer(mainSizer)
+        mainSizer.Fit(self)
+        mainSizer.SetSizeHints(self)
+
+    def EvtSave(self, event):
+        self.saveBtn.Enable(False)
+
+        v.PC_HOST = self.pcIP.GetValue()
+        v.CHECK_STA_MAC = self.staCheck.GetValue()
+        v.CHECK_STA_MAC2 = self.staCheck2.GetValue()
+        v.AP_REBOOT_COUNT = self.apRebootCount.GetValue()
+
         if len(v.PC_HOST) is not 0:
             v.PC_USERNAME = self.pcUsr.GetValue()
             v.PC_PWD = self.pcPasswd.GetValue()
-            # pcConn = threading.Thread(target=self.pcSshCheckThread, args=(v.PC_HOST, v.PC_USERNAME, v.PC_PWD))
-            # pcConn.start()
 
     def EvtTextChange(self, event):
         self.saveBtn.Enable(True)
@@ -577,7 +642,7 @@ class MemoryTrackPage(wx.Panel):
 
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(optionalSizer, 0, wx.ALL, 10)
-        mainSizer.Add(btnSizer, 0, wx.TOP, 500)
+        mainSizer.Add(btnSizer, 0, wx.TOP, 400)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
@@ -648,7 +713,7 @@ class TestSuitePage(wx.Panel):
         wx.Window.__init__(self, parent, -1, style=wx.BORDER_STATIC)
         ##        wx.StaticText(self, -1, "Test suite", wx.Point(10, 10))
         ##        self.tree = wx.TreeCtrl(self, size = (340,330))
-        self.tree = CT.CustomTreeCtrl(self, size=(540, 530),
+        self.tree = CT.CustomTreeCtrl(self, size=(540, 470),
                                       style=
                                       wx.BORDER_SIMPLE
                                       | wx.WANTS_CHARS,
@@ -1091,7 +1156,7 @@ class TestSuitePage(wx.Panel):
 
 class Frame(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, title="Peanuts " + v.VER, pos=(300, 200), size=(610, 780), style=
+        wx.Frame.__init__(self, None, title="Peanuts " + v.VER, pos=(300, 200), size=(610, 700), style=
         wx.CAPTION
         | wx.CLOSE_BOX
         | wx.MINIMIZE_BOX
