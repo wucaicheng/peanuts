@@ -15,8 +15,8 @@ def sendMail(to_list, sub, content, attach1=None, attach2=None, attach3=None, pi
     msg = MIMEMultipart()   #创建一个实例
     msg['Subject'] = sub    #设置主题
     msg['From'] = me
-    msg['To'] = ";".join(to_list)
-
+    # msg['To'] = ";".join(to_list)
+    msg['To'] = to_list
     # attach1
     if attach1 is not None:
         # text 类型附件

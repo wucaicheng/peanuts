@@ -540,11 +540,11 @@ class OptionPage(wx.Panel):
         stacheckSizer = wx.StaticBoxSizer(stacheckBox, wx.HORIZONTAL)
 
         staCheckLbl = wx.StaticText(self, -1, 'STA1 MAC:')
-        self.staCheck = wx.TextCtrl(self, -1, '')
+        self.staCheck = wx.TextCtrl(self, -1, '', size=(140, -1))
         self.staCheck.SetValue(v.CHECK_STA_MAC)
 
         staCheckLbl2 = wx.StaticText(self, -1, 'STA2 MAC:')
-        self.staCheck2 = wx.TextCtrl(self, -1, '')
+        self.staCheck2 = wx.TextCtrl(self, -1, '', size=(140, -1))
         self.staCheck2.SetValue(v.CHECK_STA_MAC2)
 
         apRebootCountLbl = wx.StaticText(self, -1, 'AP Reboot Count:')
@@ -570,9 +570,28 @@ class OptionPage(wx.Panel):
         stacheckSizer.Add(stacheckSizer2, 0, wx.LEFT, 5)
         stacheckSizer.Add(stacheckSizer3, 0, wx.LEFT, 2)
 
+        # mail address
+        mailBox = wx.StaticBox(self, -1, 'Sent to Mailbox ', size=(580, -1))
+        mailBoxSizer = wx.StaticBoxSizer(mailBox, wx.HORIZONTAL)
+
+        mailboxLbl = wx.StaticText(self, -1, 'mailbox:')
+        self.mailbox = wx.TextCtrl(self, -1, '', size=(280, -1))
+        self.mailbox.SetValue(v.MAILTO_LIST)
+
+        mailBoxSizer2 = wx.BoxSizer(wx.VERTICAL)
+        mailBoxSizer2.Add(mailboxLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+
+        mailBoxSizer3 = wx.BoxSizer(wx.VERTICAL)
+        mailBoxSizer3.Add(self.mailbox, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        mailBoxSizer.Add(mailBoxSizer2, 0, wx.LEFT, 5)
+        mailBoxSizer.Add(mailBoxSizer3, 0, wx.LEFT, 2)
+
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(pcConnSizer, 0, wx.ALL, 10)
         mainSizer.Add(stacheckSizer, 0, wx.LEFT | wx.BOTTOM, 10)
+        mainSizer.Add(mailBoxSizer, 0, wx.LEFT | wx.BOTTOM, 10)
         mainSizer.Add(btnSizer, 0, wx.TOP, 30)
 
         self.SetSizer(mainSizer)
@@ -586,6 +605,7 @@ class OptionPage(wx.Panel):
         v.CHECK_STA_MAC = self.staCheck.GetValue()
         v.CHECK_STA_MAC2 = self.staCheck2.GetValue()
         v.AP_REBOOT_COUNT = self.apRebootCount.GetValue()
+        v.MAILTO_LIST = self.mailbox.GetValue()
 
         if len(v.PC_HOST) is not 0:
             v.PC_USERNAME = self.pcUsr.GetValue()

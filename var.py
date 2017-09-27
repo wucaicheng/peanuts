@@ -217,7 +217,7 @@ REPORT_TAG_RETRY = '----->Failed or Error TestCases Retry Times:'
 REPORT_TAG_END = '----->TestSuite Execution END'
 # -------------mail------------------#
 SEND_MAIL = 1
-MAILTO_LIST = ['miwifi-test-wifi@xiaomi.com']
+MAILTO_LIST = 'miwifi-test-wifi@xiaomi.com'
 MAIL_HOST = "mail.srv"  #设置服务器
 MAIL_USER = "robot"    #用户名
 MAIL_PASS = ""   #口令
