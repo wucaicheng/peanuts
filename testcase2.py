@@ -20286,58 +20286,77 @@ class STA_CHECK(TestCase):
                     raise e
 
             t.sleep(10)
-            self.check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC, self.__class__.__name__)
-            self.check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC, self.__class__.__name__)
-            self.sta2check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC2, self.__class__.__name__)
-            self.sta2check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC2, self.__class__.__name__)
 
-            allFailed = (self.check2g is False and self.check5g is False) and \
-                        (self.sta2check2g is False and self.sta2check5g is False)
-            sta1Failed = (self.check2g is False and self.check5g is False) and \
-                        (self.sta2check2g is True or self.sta2check5g is True)
-            sta2Failed = (self.check2g is True or self.check5g is True) and \
-                        (self.sta2check2g is False and self.sta2check5g is False)
+            if v.CHECK_STA_MAC2 == '':
+                self.check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC, self.__class__.__name__)
+                self.check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC, self.__class__.__name__)
 
-            if sta1Failed:
-                loop = 0
-                while loop < 30:
-                    t.sleep(10)
-                    self.check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC, self.__class__.__name__)
-                    self.check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC, self.__class__.__name__)
-                    loop += 1
-                    if self.check2g is True or self.check5g is True:
-                        break
+                if self.check2g is False and self.check5g is False:
+                    loop = 0
+                    while loop < 30:
+                        t.sleep(10)
+                        self.check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC, self.__class__.__name__)
+                        self.check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC, self.__class__.__name__)
+                        loop += 1
+                        if self.check2g is True or self.check5g is True:
+                            break
 
-            if sta2Failed:
-                loop = 0
-                while loop < 30:
-                    t.sleep(10)
-                    self.sta2check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC2, self.__class__.__name__)
-                    self.sta2check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC2, self.__class__.__name__)
-                    loop += 1
-                    if self.sta2check2g is True or self.sta2check5g is True:
-                        break
-
-            if allFailed:
-                loop = 0
-                while loop < 30:
-                    t.sleep(10)
-                    self.check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC, self.__class__.__name__)
-                    self.check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC, self.__class__.__name__)
-                    self.sta2check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC2, self.__class__.__name__)
-                    self.sta2check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC2, self.__class__.__name__)
-                    loop += 1
-                    if (self.check2g is True or self.check5g is True) and \
-                            (self.sta2check2g is True or self.sta2check5g is True):
-                        break
-
-            if self.check2g is False and self.check5g is False:
-                if self.sta2check2g is False and self.sta2check5g is False:
-                    self.fail(msg='After AP %d times Reboot, Specified 2 Stas Online Failed within 5 minutes' % count+1)
-                else:
+                if self.check2g is False and self.check5g is False:
                     self.fail(msg='After AP %d times Reboot, Specified Sta1 Online Failed within 5 minutes' % count+1)
-            if self.sta2check2g is False and self.sta2check5g is False:
-                self.fail(msg='After AP %d times Reboot, Specified Sta2 Online Failed within 5 minutes' % count+1)
+
+            else:
+                self.check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC, self.__class__.__name__)
+                self.check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC, self.__class__.__name__)
+                self.sta2check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC2, self.__class__.__name__)
+                self.sta2check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC2, self.__class__.__name__)
+
+                allFailed = (self.check2g is False and self.check5g is False) and \
+                        (self.sta2check2g is False and self.sta2check5g is False)
+                sta1Failed = (self.check2g is False and self.check5g is False) and \
+                        (self.sta2check2g is True or self.sta2check5g is True)
+                sta2Failed = (self.check2g is True or self.check5g is True) and \
+                        (self.sta2check2g is False and self.sta2check5g is False)
+
+                if sta1Failed:
+                    loop = 0
+                    while loop < 30:
+                        t.sleep(10)
+                        self.check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC, self.__class__.__name__)
+                        self.check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC, self.__class__.__name__)
+                        loop += 1
+                        if self.check2g is True or self.check5g is True:
+                            break
+
+                if sta2Failed:
+                    loop = 0
+                    while loop < 30:
+                        t.sleep(10)
+                        self.sta2check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC2, self.__class__.__name__)
+                        self.sta2check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC2, self.__class__.__name__)
+                        loop += 1
+                        if self.sta2check2g is True or self.sta2check5g is True:
+                            break
+
+                if allFailed:
+                    loop = 0
+                    while loop < 30:
+                        t.sleep(10)
+                        self.check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC, self.__class__.__name__)
+                        self.check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC, self.__class__.__name__)
+                        self.sta2check2g = chkStaOnline(self.dut, '2g', v.CHECK_STA_MAC2, self.__class__.__name__)
+                        self.sta2check5g = chkStaOnline(self.dut, '5g', v.CHECK_STA_MAC2, self.__class__.__name__)
+                        loop += 1
+                        if (self.check2g is True or self.check5g is True) and \
+                            (self.sta2check2g is True or self.sta2check5g is True):
+                            break
+
+                if self.check2g is False and self.check5g is False:
+                    if self.sta2check2g is False and self.sta2check5g is False:
+                        self.fail(msg='After AP %d times Reboot, Specified 2 Stas Online Failed within 5 minutes' % count+1)
+                    else:
+                        self.fail(msg='After AP %d times Reboot, Specified Sta1 Online Failed within 5 minutes' % count+1)
+                if self.sta2check2g is False and self.sta2check5g is False:
+                    self.fail(msg='After AP %d times Reboot, Specified Sta2 Online Failed within 5 minutes' % count+1)
 
             count += 1
 

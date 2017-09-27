@@ -593,7 +593,6 @@ class OptionPage(wx.Panel):
 
     def EvtTextChange(self, event):
         self.saveBtn.Enable(True)
-        v.SAVE_BTN_FLAG = False
 
     def EvtClose(self, event):
         frame.Close(True)
