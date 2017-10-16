@@ -252,5 +252,14 @@ PROTOCOL = PROTOCOL_LIST[0]
 PAIRS = '10'
 DURATION = '120'
 
+IXIA_STA_HOST = '192.168.2.3'
+IXIA_STA_USERNAME = 'mp'
+IXIA_STA_PWD = '12345678'
+
+THROUGHPUT_SSID = 'miwifi_throughput'
+THROUGHPUT_PW = '12345678'
+THROUGHPUT_SSID_5G = 'miwifi_throughput_5G'
+
+
 if __name__ == '__main__':
     print R1CM_MAX_RATE_2G['20']
