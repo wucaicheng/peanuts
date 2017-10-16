@@ -244,6 +244,13 @@ CHECK_STA_MAC = '0C:1D:AF:9F:DD:21'
 CHECK_STA_MAC2 = ''
 AP_REBOOT_COUNT = '800'
 
+# ------------------ixiachariot throughput-----------------
+SCRIPT_LIST = ['High_Performance_Throughput.scr', 'Throughput.scr']
+SCRIPT = SCRIPT_LIST[0]
+PROTOCOL_LIST = ['TCP', 'UDP']
+PROTOCOL = PROTOCOL_LIST[0]
+PAIRS = '10'
+DURATION = '120'
 
 if __name__ == '__main__':
     print R1CM_MAX_RATE_2G['20']

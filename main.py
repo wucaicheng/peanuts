@@ -588,10 +588,62 @@ class OptionPage(wx.Panel):
         mailBoxSizer.Add(mailBoxSizer2, 0, wx.LEFT, 5)
         mailBoxSizer.Add(mailBoxSizer3, 0, wx.LEFT, 2)
 
+        # ixiaChariot throughput
+        throughputBox = wx.StaticBox(self, -1, 'IxiaChariot Option', size=(580, -1))
+        throughputBoxSizer = wx.StaticBoxSizer(throughputBox, wx.HORIZONTAL)
+
+        scriptLbl = wx.StaticText(self, -1, 'Script:')
+        self.script = wx.Choice(self, -1, choices=v.SCRIPT_LIST)
+        self.script.SetSelection(0)
+        self.Bind(wx.EVT_CHOICE, self.EvtChoice, self.script)
+
+        protoLbl = wx.StaticText(self, -1, "Protocol:")
+        self.proto = wx.Choice(self, -1, choices=v.PROTOCOL_LIST)
+        self.proto.SetSelection(0)
+        self.Bind(wx.EVT_CHOICE, self.EvtChoice3, self.proto)
+
+        pairsLbl = wx.StaticText(self, -1, 'Pairs:')
+        self.pairs = wx.TextCtrl(self, -1, '')
+        self.pairs.SetValue(v.PAIRS)
+
+        durationLbl = wx.StaticText(self, -1, 'Duration:')
+        self.duration = wx.TextCtrl(self, -1, '')
+        self.duration.SetValue(v.DURATION)
+
+        throughputBoxSizer2 = wx.BoxSizer(wx.VERTICAL)
+        throughputBoxSizer2.Add(scriptLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+        throughputBoxSizer2.Add(pairsLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+
+        throughputBoxSizer3 = wx.BoxSizer(wx.VERTICAL)
+        throughputBoxSizer3.Add(self.script, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        throughputBoxSizer3.Add(self.pairs, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+
+        throughputBoxSizer4 = wx.BoxSizer(wx.VERTICAL)
+        throughputBoxSizer4.Add(protoLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+        throughputBoxSizer4.Add(durationLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+
+        throughputBoxSizer5 = wx.BoxSizer(wx.VERTICAL)
+        throughputBoxSizer5.Add(self.proto, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        throughputBoxSizer5.Add(self.duration, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+
+        throughputBoxSizer.Add(throughputBoxSizer2, 0, wx.LEFT, 5)
+        throughputBoxSizer.Add(throughputBoxSizer3, 0, wx.LEFT, 2)
+        throughputBoxSizer.Add(throughputBoxSizer4, 0, wx.LEFT, 10)
+        throughputBoxSizer.Add(throughputBoxSizer5, 0, wx.LEFT, 10)
+
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(pcConnSizer, 0, wx.ALL, 10)
         mainSizer.Add(stacheckSizer, 0, wx.LEFT | wx.BOTTOM, 10)
         mainSizer.Add(mailBoxSizer, 0, wx.LEFT | wx.BOTTOM, 10)
+        mainSizer.Add(throughputBoxSizer, 0, wx.LEFT | wx.BOTTOM, 10)
         mainSizer.Add(btnSizer, 0, wx.TOP, 30)
 
         self.SetSizer(mainSizer)
@@ -606,6 +658,8 @@ class OptionPage(wx.Panel):
         v.CHECK_STA_MAC2 = self.staCheck2.GetValue()
         v.AP_REBOOT_COUNT = self.apRebootCount.GetValue()
         v.MAILTO_LIST = self.mailbox.GetValue()
+        v.PAIRS = self.pairs.GetValue()
+        v.DURATION = self.duration.GetValue()
 
         if len(v.PC_HOST) is not 0:
             v.PC_USERNAME = self.pcUsr.GetValue()
@@ -613,6 +667,16 @@ class OptionPage(wx.Panel):
 
     def EvtTextChange(self, event):
         self.saveBtn.Enable(True)
+
+    def EvtChoice(self, event):
+        self.saveBtn.Enable(True)
+        # v.SAVE_BTN_FLAG = False
+        v.SCRIPT = event.GetString()
+
+    def EvtChoice3(self, event):
+        self.saveBtn.Enable(True)
+        # v.SAVE_BTN_FLAG = False
+        v.PROTOCOL = event.GetString()
 
     def EvtClose(self, event):
         frame.Close(True)
