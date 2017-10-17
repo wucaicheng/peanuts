@@ -249,17 +249,23 @@ SCRIPT_LIST = ['High_Performance_Throughput.scr', 'Throughput.scr']
 SCRIPT = SCRIPT_LIST[0]
 PROTOCOL_LIST = ['TCP', 'UDP']
 PROTOCOL = PROTOCOL_LIST[0]
-PAIRS = '10'
-DURATION = '120'
+PAIRS = 10
+DURATION = 120
 
 IXIA_STA_HOST = '192.168.2.3'
 IXIA_STA_USERNAME = 'mp'
 IXIA_STA_PWD = '12345678'
+IXIA_STA_IP = '192.168.31.3'
+IXIA_STA_PING_PERCENT_PASS = 80
 
 THROUGHPUT_SSID = 'miwifi_throughput'
 THROUGHPUT_PW = '12345678'
 THROUGHPUT_SSID_5G = 'miwifi_throughput_5G'
 
+IXIA_LAN_PC = '192.168.31.2'
+IXIA_WAN_PC = '192.168.1.2'
+
+IXIA_PATH = os.getcwd() + os.sep + "IxChariot_result" + os.sep
 
 if __name__ == '__main__':
     print R1CM_MAX_RATE_2G['20']

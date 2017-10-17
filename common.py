@@ -13,7 +13,7 @@ import random
 import serial
 import serial.tools.list_ports_windows
 import binascii
-
+from Tkinter import Tcl
 import var as v
 
 
@@ -133,7 +133,7 @@ class ShellClient(object):
                 cmd = cmd.decode("utf-8")
                 cmd = cmd.encode("utf-8")
             self.pc.write(cmd + "\r\n")
-            self.out = self.pc.read_until("telnet>", 200)
+            self.out = self.pc.read_until("C:\Users", 60)
             self.out = re.sub('\n', '\r\n', self.out)
             self.out = self.out.split("\n")
             del self.out[0]  # del command and :~#
@@ -2012,6 +2012,29 @@ def shutdownWan(terminal, wanIf, logname):
     setGet(terminal, command, logname)
     t.sleep(5)
     return True
+
+def setWindowsSta(terminal, ssid, operation, logname):
+
+    commandDic = {"conn": "netsh wlan connect name=%s interface=miwifi_throughput" % ssid,
+                   "disconn": "netsh wlan disconnect"}
+    command = commandDic.get(operation)
+    ret = setGet(terminal, command, logname)
+    for line in ret:
+        m = re.search('successfully', line)
+        if m:
+            return True
+    return False
+
+def runIxChariot(result_name):
+
+    result_path = v.IXIA_PATH + result_name
+    tcl = Tcl()
+    #a list args for tcl, [SIP, DIP, script, protocal, pairs, duration]
+    tcl.setvar('args', (v.IXIA_LAN_PC, v.IXIA_STA_IP, v.SCRIPT, v.PROTOCOL, v.PAIRS, v.DURATION, result_path))
+    ret = tcl.eval('source ixchariot.tcl')
+
+    return ret
+
 
 if __name__ == '__main__':
     client = ShellClient(2)

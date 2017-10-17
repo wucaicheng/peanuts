@@ -826,6 +826,7 @@ class TestSuitePage(wx.Panel):
         self.rootSpeedtest = self.tree.AppendItem(self.root, 'Ookla Speedtest', ct_type=1)
         self.rootStress = self.tree.AppendItem(self.root, 'Stress', ct_type=1)
         self.rootOthers = self.tree.AppendItem(self.root, 'Others', ct_type=1)
+        self.rootIxChariot = self.tree.AppendItem(self.root, 'IxChariotThroughput', ct_type=1)
 
         # self.rootAndroid = self.tree.AppendItem(self.root, 'Android', ct_type=1)
         # self.rootCheck = self.tree.AppendItem(self.root, 'Check', ct_type=1)
@@ -849,6 +850,7 @@ class TestSuitePage(wx.Panel):
         self.AddTreeNodes(self.rootSpeedtest, data.treeSpeedtestApi)
         self.AddTreeNodes(self.rootStress, data.treeStressApi)
         self.AddTreeNodes(self.rootOthers, data.treeOthersApi)
+        self.AddTreeNodes(self.rootIxChariot, data.treeIxChariotApi)
         self.tree.Expand(self.root)
         treeLbl = wx.StaticText(self, -1, 'Select cases supposed to excute:')
 

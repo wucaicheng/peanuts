@@ -20360,7 +20360,7 @@ class STA_CHECK(TestCase):
 
             count += 1
 
-class IxChariot_LanToWifi_2g_CHAN1_BW20(TestCase):
+class IxChariot_LanToWifi_2g_BW20_CHAN1(TestCase):
     @classmethod
     def setUpClass(self):
 
@@ -20373,7 +20373,6 @@ class IxChariot_LanToWifi_2g_CHAN1_BW20(TestCase):
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
-
         option2g = {
             'wifiIndex': 1,
             'ssid': v.THROUGHPUT_SSID,
@@ -20383,7 +20382,6 @@ class IxChariot_LanToWifi_2g_CHAN1_BW20(TestCase):
             'pwd': v.THROUGHPUT_PW,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
-        #self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -20395,33 +20393,25 @@ class IxChariot_LanToWifi_2g_CHAN1_BW20(TestCase):
         self.dut.close()
         self.pc.close()
 
-    def assoc_sta_throughput_2g(self):
-        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+    def tx_throughput(self):
 
+        res2gConn = setWindowsSta(self.pc, v.THROUGHPUT_SSID, 'conn', self.__class__.__name__)
         if res2gConn is True:
-            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            optionRedirect = {
-                "name": "iperf",
-                "proto": 1,
-                "sport": v.IPERF_PORT,
-                "ip": staStatus.get('ip'),
-                "dport": v.IPERF_PORT,
-            }
-            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
-            api.setRedirectApply(self.dut, self.__class__.__name__)
+            resPingPercent = getPingStatus(self.dut, v.IXIA_STA_IP, v.PING_COUNT,
+                                                  self.__class__.__name__)
+            self.assertGreaterEqual(resPingPercent['pass'], v.IXIA_STA_PING_PERCENT_PASS,
+                                    "Router Ping Sta wasnot good enough.")
 
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            lan_wifi = chkOSPingAvailable(v.IXIA_STA_IP, 5, self.__class__.__name__)
+            self.assertTrue(lan_wifi, "Lan ping Wifi Failed.")
 
-            optionRedirect = {
-                'port': v.IPERF_PORT
-            }
-            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
-            api.setRedirectApply(self.dut, self.__class__.__name__)
+            ixChariot_result_name = self.__class__.__name__ + "_tx.tst"
+            throughputResult = runIxChariot(ixChariot_result_name)
+            self.assertNotEqual(throughputResult, -1, "IxChariot Throughput Test Failed")
 
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+
+
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
