@@ -1152,7 +1152,7 @@ treeStressApi = [
 treeIxChariotApi = [
     "IxChariot_Lan2Wifi_2g_BW20_CHAN1",
     [
-        "tx_throughput",
+        "IxChariot_tx",
     ]
 ]
 # -------------------------------------------------------

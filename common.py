@@ -195,7 +195,7 @@ class ShellClient(object):
             self.command('echo 7 > /proc/sys/kernel/printk')
             self.ser.close()
         elif self.connectionType == 4:
-            self.command('taskkill /F /IM cmd.exe')
+            # self.command('taskkill /F /IM cmd.exe')
             self.pc.close()
 
 
@@ -2027,6 +2027,8 @@ def setWindowsSta(terminal, ssid, operation, logname):
 
 def runIxChariot(result_name):
 
+    if not os.path.exists(v.IXIA_PATH):
+        os.makedirs(v.IXIA_PATH)
     result_path = v.IXIA_PATH + result_name
     tcl = Tcl()
     #a list args for tcl, [SIP, DIP, script, protocal, pairs, duration]

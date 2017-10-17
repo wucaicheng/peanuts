@@ -20381,7 +20381,7 @@ class IxChariot_Lan2Wifi_2g_BW20_CHAN1(TestCase):
             'encryption': 'mixed-psk',
             'pwd': v.THROUGHPUT_PW,
         }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # api.setWifi(self.dut, self.__name__, **option2g)
 
     @classmethod
     def tearDownClass(self):
@@ -20393,7 +20393,7 @@ class IxChariot_Lan2Wifi_2g_BW20_CHAN1(TestCase):
         self.dut.close()
         self.pc.close()
 
-    def tx_throughput(self):
+    def IxChariot_tx(self):
 
         res2gConn = setWindowsSta(self.pc, v.THROUGHPUT_SSID, 'conn', self.__class__.__name__)
         if res2gConn is True:
@@ -20405,9 +20405,11 @@ class IxChariot_Lan2Wifi_2g_BW20_CHAN1(TestCase):
             lan_wifi = chkOSPingAvailable(v.IXIA_STA_IP, 5, self.__class__.__name__)
             self.assertTrue(lan_wifi, "Lan ping Wifi Failed.")
 
-            ixChariot_result_name = self.__class__.__name__ + "_tx.tst"
+            ixChariot_result_name = self.__class__.__name__ + "_TX.tst"
             throughputResult = runIxChariot(ixChariot_result_name)
-            self.assertNotEqual(throughputResult, -1, "IxChariot Throughput Test Failed")
+            if throughputResult == -1:
+                self.fail(msg="IxChariot Throughput Test Failed")
+
             print '@@@@@@@@@@@@@@**************%%%%%%%%%%%%'
             print throughputResult
 
