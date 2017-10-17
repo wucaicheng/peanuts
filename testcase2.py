@@ -20360,7 +20360,7 @@ class STA_CHECK(TestCase):
 
             count += 1
 
-class IxChariot_LanToWifi_2g_BW20_CHAN1(TestCase):
+class IxChariot_Lan2Wifi_2g_BW20_CHAN1(TestCase):
     @classmethod
     def setUpClass(self):
 
@@ -20389,7 +20389,7 @@ class IxChariot_LanToWifi_2g_BW20_CHAN1(TestCase):
             'wifiIndex': 1,
             'on': 0,
         }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # api.setWifi(self.dut, self.__name__, **option2g)
         self.dut.close()
         self.pc.close()
 
@@ -20397,10 +20397,10 @@ class IxChariot_LanToWifi_2g_BW20_CHAN1(TestCase):
 
         res2gConn = setWindowsSta(self.pc, v.THROUGHPUT_SSID, 'conn', self.__class__.__name__)
         if res2gConn is True:
-            resPingPercent = getPingStatus(self.dut, v.IXIA_STA_IP, v.PING_COUNT,
-                                                  self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.IXIA_STA_PING_PERCENT_PASS,
-                                    "Router Ping Sta wasnot good enough.")
+            # resPingPercent = getPingStatus(self.dut, v.IXIA_STA_IP, v.PING_COUNT,
+            #                                       self.__class__.__name__)
+            # self.assertGreaterEqual(resPingPercent['pass'], v.IXIA_STA_PING_PERCENT_PASS,
+            #                         "Router Ping Sta wasnot good enough.")
 
             lan_wifi = chkOSPingAvailable(v.IXIA_STA_IP, 5, self.__class__.__name__)
             self.assertTrue(lan_wifi, "Lan ping Wifi Failed.")
@@ -20408,7 +20408,8 @@ class IxChariot_LanToWifi_2g_BW20_CHAN1(TestCase):
             ixChariot_result_name = self.__class__.__name__ + "_tx.tst"
             throughputResult = runIxChariot(ixChariot_result_name)
             self.assertNotEqual(throughputResult, -1, "IxChariot Throughput Test Failed")
-
+            print '@@@@@@@@@@@@@@**************%%%%%%%%%%%%'
+            print throughputResult
 
 
 
