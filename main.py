@@ -860,7 +860,7 @@ class TestSuitePage(wx.Panel):
         self.selUploadLog = wx.CheckBox(self, -1, 'Upload Log')
         self.selUploadLog.SetValue(False)
         self.selSendMail = wx.CheckBox(self, -1, 'Send Mail')
-        self.selSendMail.SetValue(True)
+        # self.selSendMail.SetValue(True)
 
         self.Bind(wx.EVT_CHECKBOX, self.EvtSel2g, self.sel2gCheck)
         self.Bind(wx.EVT_CHECKBOX, self.EvtSel5g, self.sel5gCheck)

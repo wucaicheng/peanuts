@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 from unittest import *
-
+import os
 import api
 from common import *
 from common2 import *
@@ -20364,6 +20364,7 @@ class IxChariot_Lan2Wifi_2g_BW20_CHAN1(TestCase):
     @classmethod
     def setUpClass(self):
 
+        self.path = os.getcwd() + os.sep
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         self.pc = ShellClient(4)
@@ -20385,11 +20386,7 @@ class IxChariot_Lan2Wifi_2g_BW20_CHAN1(TestCase):
 
     @classmethod
     def tearDownClass(self):
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        # api.setWifi(self.dut, self.__name__, **option2g)
+
         self.dut.close()
         self.pc.close()
 
@@ -20407,8 +20404,12 @@ class IxChariot_Lan2Wifi_2g_BW20_CHAN1(TestCase):
 
             ixChariot_result_name = self.__class__.__name__ + "_TX.tst"
             throughputResult = runIxChariot(ixChariot_result_name)
-            if throughputResult == -1:
-                self.fail(msg="IxChariot Throughput Test Failed")
+            # call tcl with ixchariot will change the direction to ixchariot install path
+            os.chdir(self.path)
+            if throughputResult in v.TCL_RETURN:
+                self.fail(msg=v.TCL_RETURN[throughputResult])
+
+
 
             print '@@@@@@@@@@@@@@**************%%%%%%%%%%%%'
             print throughputResult

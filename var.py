@@ -216,7 +216,7 @@ REPORT_TAG_BEGIN = '----->TestSuite Execution Begin:'
 REPORT_TAG_RETRY = '----->Failed or Error TestCases Retry Times:'
 REPORT_TAG_END = '----->TestSuite Execution END'
 # -------------mail------------------#
-SEND_MAIL = 1
+SEND_MAIL = 0
 MAILTO_LIST = 'miwifi-test-wifi@xiaomi.com'
 MAIL_HOST = "mail.srv"  #设置服务器
 MAIL_USER = "robot"    #用户名
@@ -267,5 +267,12 @@ IXIA_WAN_PC = '192.168.1.2'
 
 IXIA_PATH = os.getcwd() + os.sep + "IxChariot_result" + os.sep
 
+TCL_RETURN = {
+    -1: 'IxChariot Error:Define a script for pair failed',
+    -2: 'IxChariot Error:Add the pair to the test failed',
+    -3: 'IxChariot Error:Run ixchariot test failed',
+    -4: 'IxChariot Error:Ixchariot cannot stop when the test timeout',
+    -5: 'IxChariot Error:Ixchariot finished but no result'
+}
 if __name__ == '__main__':
     print R1CM_MAX_RATE_2G['20']
