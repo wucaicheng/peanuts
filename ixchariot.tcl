@@ -4,6 +4,7 @@
 # -3 : Run ixchariot test failed
 # -4 : Ixchariot cannot stop when the test timeout
 # -5 : Ixchariot finished but no result
+# -6 : Save result failed
 
 #options
 list args
@@ -107,7 +108,11 @@ set Fsumavg [expr $sumavg / [format "%.3f" [expr $duration1 - 0.02]]]
 # Finally, let's save the test so we can look at it again. 
 puts "==========" 
 puts "Save the test..." 
-catch {chrTest save $test $testFile}
+
+if {[catch {chrTest save $test $testFile}]} {
+  return -6
+}
+
 return [format "%.1f" $Fsumavg]
 #chrTest delete $test force
 }

@@ -20409,12 +20409,8 @@ class IxChariot_Lan2Wifi_2g_BW20_CHAN1(TestCase):
             if throughputResult in v.TCL_RETURN:
                 self.fail(msg=v.TCL_RETURN[throughputResult])
 
-
-
             print '@@@@@@@@@@@@@@**************%%%%%%%%%%%%'
             print throughputResult
-
-
 
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
