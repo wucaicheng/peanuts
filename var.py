@@ -264,16 +264,21 @@ THROUGHPUT_SSID_5G = 'miwifi_throughput_5G'
 
 IXIA_LAN_PC = '192.168.31.2'
 IXIA_WAN_PC = '192.168.1.2'
-
 IXIA_PATH = os.getcwd() + os.sep + "IxChariot_result" + os.sep
 
 TCL_RETURN = {
-    -1: 'IxChariot Error:Define a script for pair failed',
-    -2: 'IxChariot Error:Add the pair to the test failed',
-    -3: 'IxChariot Error:Run ixchariot test failed',
-    -4: 'IxChariot Error:Ixchariot cannot stop when the test timeout',
-    -5: 'IxChariot Error:Ixchariot finished but no result',
-    -6: 'IxChariot Error:Save result failed'
+    '-1': 'IxChariot Error:Define a script for pair failed',
+    '-2': 'IxChariot Error:Add the pair to the test failed',
+    '-3': 'IxChariot Error:Run ixchariot test failed',
+    '-4': 'IxChariot Error:Ixchariot cannot stop when the test timeout',
+    '-5': 'IxChariot Error:Ixchariot running error, no result',
+    '-6': 'IxChariot Error:Save result failed'
 }
+
+THROUGHPUT_RESULT = {}
+# {'lan2wifi_2g_1_20_tx': '50.4'
+#  'lan2wifi_5g_36_80_rx': '150.4'
+# }'wan2wifi_5g_149_80_tx': '250.4'
+
 if __name__ == '__main__':
     print R1CM_MAX_RATE_2G['20']

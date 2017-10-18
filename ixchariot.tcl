@@ -3,7 +3,7 @@
 # -2 : Add the pair to the test failed
 # -3 : Run ixchariot test failed
 # -4 : Ixchariot cannot stop when the test timeout
-# -5 : Ixchariot finished but no result
+# -5 : Ixchariot running error, no result
 # -6 : Save result failed
 
 #options

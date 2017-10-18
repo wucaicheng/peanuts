@@ -20360,11 +20360,10 @@ class STA_CHECK(TestCase):
 
             count += 1
 
-class IxChariot_Lan2Wifi_2g_BW20_CHAN1(TestCase):
+class IxChariot_Lan2Wifi_2g_CHAN1_BW20(TestCase):
     @classmethod
     def setUpClass(self):
 
-        self.path = os.getcwd() + os.sep
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         self.pc = ShellClient(4)
@@ -20404,13 +20403,14 @@ class IxChariot_Lan2Wifi_2g_BW20_CHAN1(TestCase):
 
             ixChariot_result_name = self.__class__.__name__ + "_TX.tst"
             throughputResult = runIxChariot(ixChariot_result_name)
-            # call tcl with ixchariot will change the direction to ixchariot install path
-            os.chdir(self.path)
+            # call tcl with ixchariot will change the redirect the path to ixchariot install path
+            os.chdir(v.DEFAULT_PATH)
+            # throughputResult type is str
             if throughputResult in v.TCL_RETURN:
                 self.fail(msg=v.TCL_RETURN[throughputResult])
-
+            v.THROUGHPUT_RESULT['lan2wifi_2g_1_20_tx'] = throughputResult
             print '@@@@@@@@@@@@@@**************%%%%%%%%%%%%'
-            print throughputResult
+            print v.THROUGHPUT_RESULT
 
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
