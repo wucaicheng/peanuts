@@ -20381,7 +20381,7 @@ class IxChariot_Lan2Wifi_2g_CHAN1_BW20(TestCase):
             'encryption': 'mixed-psk',
             'pwd': v.THROUGHPUT_PW,
         }
-        # api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option2g)
 
     @classmethod
     def tearDownClass(self):
