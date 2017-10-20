@@ -20416,8 +20416,6 @@ class IxChariot_Lan2Wifi_2g_CHAN1_BW20(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-
-
 if __name__ == '__main__':
     v.HOST = "192.168.31.1"
     v.WEB_PWD = "12345678"
