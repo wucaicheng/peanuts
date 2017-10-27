@@ -265,6 +265,8 @@ THROUGHPUT_SSID_5G = 'miwifi_throughput_5G'
 IXIA_LAN_PC = '192.168.31.2'
 IXIA_WAN_PC = '192.168.1.2'
 IXIA_PATH = os.getcwd() + os.sep + "IxChariot_result" + os.sep
+IXIA_RESULT_PATH_ORIGIN = 'IxChariot_Throughput.xlsx'
+IXIA_RESULT_PATH = IXIA_PATH + IXIA_RESULT_PATH_ORIGIN
 
 TCL_RETURN = {
     '-1': 'IxChariot Error:Define a script for pair failed',
@@ -279,6 +281,42 @@ THROUGHPUT_RESULT = {}
 # {'lan2wifi_2g_1_20_tx': '50.4'
 #  'lan2wifi_5g_36_80_rx': '150.4'
 # }'wan2wifi_5g_149_80_tx': '250.4'
+XLSX_DATA_POSITION = {
+    "title": "A1",
+    "lan2wifi_2g_1_20_tx": "B10",
+    "lan2wifi_2g_1_20_rx": "C10",
+    "lan2wifi_2g_6_20_tx": "B11",
+    "lan2wifi_2g_6_20_rx": "C11",
+    "lan2wifi_2g_11_20_tx": "B12",
+    "lan2wifi_2g_11_20_rx": "C12",
+    "lan2wifi_2g_1_40_tx": "D10",
+    "lan2wifi_2g_1_40_rx": "E10",
+    "lan2wifi_2g_6_40_tx": "D11",
+    "lan2wifi_2g_6_40_rx": "E11",
+    "lan2wifi_2g_11_40_tx": "D12",
+    "lan2wifi_2g_11_40_rx": "E12",
+    "lan2wifi_5g_36_80_tx": "H10",
+    "lan2wifi_5g_36_80_rx": "I10",
+    "lan2wifi_5g_149_80_tx": "H11",
+    "lan2wifi_5g_149_80_rx": "I11",
+
+    "wan2wifi_2g_1_20_tx": "B20",
+    "wan2wifi_2g_1_20_rx": "C20",
+    "wan2wifi_2g_6_20_tx": "B21",
+    "wan2wifi_2g_6_20_rx": "C21",
+    "wan2wifi_2g_11_20_tx": "B22",
+    "wan2wifi_2g_11_20_rx": "C22",
+    "wan2wifi_2g_1_40_tx": "D20",
+    "wan2wifi_2g_1_40_rx": "E20",
+    "wan2wifi_2g_6_40_tx": "D21",
+    "wan2wifi_2g_6_40_rx": "E21",
+    "wan2wifi_2g_11_40_tx": "D22",
+    "wan2wifi_2g_11_40_rx": "E22",
+    "wan2wifi_5g_36_80_tx": "H20",
+    "wan2wifi_5g_36_80_rx": "I20",
+    "wan2wifi_5g_149_80_tx": "H21",
+    "wan2wifi_5g_149_80_rx": "I21",
+}
 
 if __name__ == '__main__':
     print R1CM_MAX_RATE_2G['20']

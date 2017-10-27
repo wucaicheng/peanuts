@@ -8,6 +8,7 @@ from collections import *
 import numpy as np
 import matplotlib.pyplot as plt
 from openpyxl import Workbook, load_workbook
+from openpyxl.styles.borders import Border, Side
 # from openpyxl.cell import column_index_from_string    ##openpyxl version2.3
 from openpyxl.utils import column_index_from_string
 import shutil
@@ -932,15 +933,45 @@ class GetFailedDetail(threading.Thread):
         self.running = False
 
 
+class GetIxChariotThroughput(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+        self.running = False
+
+    def run(self):
+        self.running = True
+        if len(THROUGHPUT_RESULT) is not 0:
+            try:
+                wb = load_workbook(IXIA_RESULT_PATH_ORIGIN)
+            except:
+                print "IxChariot result xlsx file no exists!"
+                return
+
+            wb['result'][XLSX_DATA_POSITION["title"]].value = REPORT_NAME
+            for test in THROUGHPUT_RESULT.keys():
+                wb['result'][XLSX_DATA_POSITION[test]].value = THROUGHPUT_RESULT[test]
+
+            wb.save(IXIA_RESULT_PATH)
+
+        self.stop()
+
+    def stop(self):
+        self.running = False
+
 if __name__ == '__main__':
     # print getThroughputLogVerbose("D:\Python\peanuts\AP_CLEAR_CHAN36_BW20_LAN_THROUGHPUT.log")
     # print getChannelFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
-    info = GetThroughputLog("R2D 开发版 2.15.57.log".decode("utf8").encode("gbk"))
-    info.start()
-    info.join()
+    # info = GetThroughputLog("R2D 开发版 2.15.57.log".decode("utf8").encode("gbk"))
+    # info.start()
+    # info.join()
     # t = GetTestModule("R1CM 开发版 2.11.13.log".decode('utf8').encode('gbk'))
     # t.start()
-
+    THROUGHPUT_RESULT = {'3': '333'}
+    REPORT_NAME = "fengjiang50"
+    info = GetIxChariotThroughput()
+    info.start()
+    info.join()
+    print("******************END*******************")
 
 
 

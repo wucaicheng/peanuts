@@ -1022,6 +1022,11 @@ class TestSuitePage(wx.Panel):
             # set testKeepGoing to False when click cancel
 
         if testKeepGoing is False: # click cancel
+            if len(v.THROUGHPUT_RESULT) is not 0:
+                getThroughputxlsx = pr.GetIxChariotThroughput()
+                getThroughputxlsx.start()
+                getThroughputxlsx.join()
+
             if os.path.exists(v.TEST_SUITE_LOG_PATH):
                 if not os.path.exists(v.REPORT_NAME):
                     os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_NAME)
@@ -1029,7 +1034,7 @@ class TestSuitePage(wx.Panel):
                     os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_NAME + "_" + str(random.randint(1, 9999)))
 
             if os.path.exists(v.IXIA_PATH):
-                ixiaResultPath = v.REPORT_NAME + "_IxChariot_Throughput_result"
+                ixiaResultPath = v.REPORT_NAME + "_IxChariot_Throughput"
                 if not os.path.exists(ixiaResultPath):
                     os.rename(v.IXIA_PATH, ixiaResultPath)
                 else:
@@ -1039,6 +1044,11 @@ class TestSuitePage(wx.Panel):
         # else: # reboot android device
         #     co.setAdbReboot(v.ANDROID_SERIAL_NUM, v.DEVICE_STATUS_LOG)
 
+        if len(v.THROUGHPUT_RESULT) is not 0:
+            getThroughputxlsx = pr.GetIxChariotThroughput()
+            getThroughputxlsx.start()
+            getThroughputxlsx.join()
+
         if os.path.exists(v.TEST_SUITE_LOG_PATH):
             if not os.path.exists(v.REPORT_NAME):
                 os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_NAME)
@@ -1046,7 +1056,7 @@ class TestSuitePage(wx.Panel):
                 os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_NAME + "_" + str(random.randint(1, 9999)))
 
         if os.path.exists(v.IXIA_PATH):
-            ixiaResultPath = v.REPORT_NAME + "_IxChariot_Throughput_result"
+            ixiaResultPath = v.REPORT_NAME + "_IxChariot_Throughput"
             if not os.path.exists(ixiaResultPath):
                 os.rename(v.IXIA_PATH, ixiaResultPath)
             else:
