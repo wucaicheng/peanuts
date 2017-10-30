@@ -2025,14 +2025,14 @@ def setWindowsSta(terminal, ssid, operation, logname):
             return True
     return False
 
-def runIxChariot(result_name):
+def runIxChariot(SIP, DIP, result_name):
 
     if not os.path.exists(v.IXIA_PATH):
         os.makedirs(v.IXIA_PATH)
     result_path = v.IXIA_PATH + result_name
     tcl = Tcl()
-    #a list args for tcl, [SIP, DIP, script, protocal, pairs, duration]
-    tcl.setvar('args', (v.IXIA_LAN_PC, v.IXIA_STA_IP, v.SCRIPT, v.PROTOCOL, v.PAIRS, v.DURATION, result_path))
+    #a list args for tcl, [SIP, DIP, script, protocal, pairs, duration, result_name]
+    tcl.setvar('args', (SIP, DIP, v.SCRIPT, v.PROTOCOL, v.PAIRS, v.DURATION, result_path))
     ret = tcl.eval('source ixchariot.tcl')
 
     return ret
