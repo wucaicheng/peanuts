@@ -2015,7 +2015,7 @@ def shutdownWan(terminal, wanIf, logname):
 
 def setWindowsSta(terminal, ssid, operation, logname):
 
-    commandDic = {"conn": "netsh wlan connect name=%s interface=miwifi_throughput" % ssid,
+    commandDic = {"conn": "netsh wlan connect name=%s interface=throughput" % ssid,
                    "disconn": "netsh wlan disconnect"}
     command = commandDic.get(operation)
     ret = setGet(terminal, command, logname)
