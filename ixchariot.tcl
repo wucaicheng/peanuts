@@ -31,7 +31,7 @@ set script "c:/Program Files (x86)/Ixia/IxChariot/Scripts/"
 append script $script1
 #set testFile "d:/results.tst"
 set timeout [expr $duration1 + 30]
-set test [chrTest new] 
+    set test [chrTest new]
 
 #config run options 
 set runOpts [chrTest getRunOpts $test]
@@ -75,7 +75,7 @@ if {[catch {chrTest start $test}]} {
 # We have to wait for the test to stop before we can look at
 # the results from it. We'll wait for 2 minutes here, then
 # call it an error if it has not yet stopped.
-puts "Wait for the test to stop..." 
+#puts "Wait for the test to stop..."
 if {![chrTest isStopped $test $timeout]} { 
   puts "ERROR: Test didn't stop in $timeout second!"
   chrTest stop $test
@@ -89,10 +89,11 @@ if {![chrTest isStopped $test $timeout]} {
  
 # Now let's get some results:
 # the throughput (avg, min, max)
-puts "" 
-puts "Test results:\n------------"
+#puts ""
+#puts "Test results:\n------------"
 
 set sumavg 0
+set sumtime 0
 for {set j 0} {$j < $pairs} {incr j} {
 if {[catch {set mtime [chrCommonResults get $pair MEAS_TIME]}]} {
     return -5
@@ -101,13 +102,24 @@ if {[catch {set mtime [chrCommonResults get $pair MEAS_TIME]}]} {
 set throughput [chrPairResults get $pair THROUGHPUT]
 set avg [format "%.3f" [lindex $throughput 0]]
 set sumavg [expr $sumavg + [expr $avg * $mtime]]
+set sumtime [expr $sumtime + $mtime]
 incr pair -1
 }
-set Fsumavg [expr $sumavg / [format "%.3f" [expr $duration1 - 0.02]]]
 
+#set start [chrTest get $test START_TIME]
+#set stop [chrTest get $test STOP_TIME]
+#set timeuse [expr $stop - $start]
+#puts "**************"
+#puts "$timeuse"
+set timeavg [expr $sumtime / $pairs]
+set Fsumavg [expr $sumavg / [expr $timeavg + 0.35]]
+#puts "$timeavg"
+#set Fsumavg [expr $sumavg / [format "%.3f" [expr $duration1 - 0.02]]]
+#set Fsumavg [expr $sumavg / $timeuse]
+#puts "$Fsumavg"
 # Finally, let's save the test so we can look at it again. 
-puts "==========" 
-puts "Save the test..." 
+#puts "=========="
+#puts "Save the test..."
 
 if {[catch {chrTest save $test $testFile}]} {
   return -6

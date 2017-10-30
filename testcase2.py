@@ -20360,6 +20360,7 @@ class STA_CHECK(TestCase):
 
             count += 1
 
+
 class IxChariot_Lan2Wifi_2g_CHAN1_BW20(TestCase):
     @classmethod
     def setUpClass(self):
@@ -20974,6 +20975,102 @@ class IxChariot_Lan2Wifi_5g_CHAN149_BW80(TestCase):
 
         else:
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class IxChariot_Wan2Wifi_2g_CHAN1_BW20(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.THROUGHPUT_SSID,
+            'channel': v.CHANNEL1,
+            'bandwidth': '20',
+            'encryption': 'mixed-psk',
+            'pwd': v.THROUGHPUT_PW,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        optionWan = {
+            'wanType': 'static',
+            'staticIp': '192.168.1.1',
+            'staticMask': '255.255.255.0',
+            'staticGateway': '192.168.1.2',
+            'dns1': '192.168.1.2',
+            'dns2': '',
+        }
+        api.setWan(self.dut, self.__name__, **optionWan)
+        optionWan1 = {
+            'wanType': 'dhcp',
+            'autoset': '0'
+        }
+        api.setWan(self.dut, self.__name__, **optionWan1)
+
+    @classmethod
+    def tearDownClass(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        optionWan = {
+            'wanType': 'dhcp',
+            'autoset': '0'
+        }
+        api.setWan(self.dut, self.__name__, **optionWan)
+        self.dut.close()
+        self.pc.close()
+
+    def tx(self):
+
+        res2gConn = setWindowsSta(self.pc, v.THROUGHPUT_SSID, 'conn', self.__class__.__name__)
+        if res2gConn is True:
+
+            lan_wifi = chkOSPingAvailable(v.IXIA_STA_IP, 5, self.__class__.__name__)
+            self.assertTrue(lan_wifi, "Lan ping Wifi Failed.")
+
+            ixChariot_result_name = self.__class__.__name__ + "_TX.tst"
+            throughputResult = runIxChariot(v.IXIA_LAN_PC, v.IXIA_STA_IP, ixChariot_result_name)
+            setWindowsSta(self.pc, v.THROUGHPUT_SSID, 'disconn', self.__class__.__name__)
+            # call tcl with ixchariot will change the redirect the path to ixchariot install path
+            os.chdir(v.DEFAULT_PATH)
+            # throughputResult type is str
+            if throughputResult in v.TCL_RETURN:
+                self.fail(msg=v.TCL_RETURN[throughputResult])
+            v.THROUGHPUT_RESULT['lan2wifi_2g_1_20_tx'] = throughputResult
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def rx(self):
+
+        res2gConn = setWindowsSta(self.pc, v.THROUGHPUT_SSID, 'conn', self.__class__.__name__)
+        if res2gConn is True:
+
+            lan_wifi = chkOSPingAvailable(v.IXIA_STA_IP, 5, self.__class__.__name__)
+            self.assertTrue(lan_wifi, "Lan ping Wifi Failed.")
+
+            ixChariot_result_name = self.__class__.__name__ + "_RX.tst"
+            throughputResult = runIxChariot(v.IXIA_STA_IP, v.IXIA_LAN_PC, ixChariot_result_name)
+            setWindowsSta(self.pc, v.THROUGHPUT_SSID, 'disconn', self.__class__.__name__)
+            # call tcl with ixchariot will change the redirect the path to ixchariot install path
+            os.chdir(v.DEFAULT_PATH)
+            # throughputResult type is str
+            if throughputResult in v.TCL_RETURN:
+                self.fail(msg=v.TCL_RETURN[throughputResult])
+            v.THROUGHPUT_RESULT['lan2wifi_2g_1_20_rx'] = throughputResult
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
 if __name__ == '__main__':

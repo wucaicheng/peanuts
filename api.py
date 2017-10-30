@@ -1611,6 +1611,22 @@ def chkWifiInfo(terminal, logname, **kwargs):
 
     return resBoolean, resDict
 
+def setWan(terminal, logname, **kwargs):
+    option = {
+        'wanType': 'static',
+        'staticIp': '192.168.1.1',
+        'staticMask': '255.255.255.0',
+        'staticGateway': '192.168.1.2',
+        'dns1': '192.168.1.2',
+        'dns2': '',
+        'autoset': ''
+    }
+
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wan'
+    ret = setCheck(terminal, logname, api, **option)
+    t.sleep(20)
+    return ret
 
 
 if __name__ == '__main__':
