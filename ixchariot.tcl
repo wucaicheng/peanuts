@@ -111,10 +111,10 @@ incr pair -1
 #set timeuse [expr $stop - $start]
 #puts "**************"
 #puts "$timeuse"
-set timeavg [expr $sumtime / $pairs]
-set Fsumavg [expr $sumavg / [expr $timeavg + 0.35]]
+#set timeavg [expr $sumtime / $pairs]
+#set Fsumavg [expr $sumavg / [expr $timeavg + 0.35]]
 #puts "$timeavg"
-#set Fsumavg [expr $sumavg / [format "%.3f" [expr $duration1 - 0.02]]]
+set Fsumavg [expr $sumavg / [format "%.3f" [expr $duration1 - 0.3]]]
 #set Fsumavg [expr $sumavg / $timeuse]
 #puts "$Fsumavg"
 # Finally, let's save the test so we can look at it again. 

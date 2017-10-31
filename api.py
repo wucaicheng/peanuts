@@ -1619,13 +1619,30 @@ def setWan(terminal, logname, **kwargs):
         'staticGateway': '192.168.1.2',
         'dns1': '192.168.1.2',
         'dns2': '',
-        'autoset': ''
+        'autoset': 0
     }
 
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wan'
     ret = setCheck(terminal, logname, api, **option)
-    t.sleep(20)
+    t.sleep(10)
+    return ret
+
+def setDMZ(terminal, logname, **kwargs):
+    option = {
+        'ip': '192.168.31.3'
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_dmz'
+    ret = setCheck(terminal, logname, api, **option)
+    t.sleep(10)
+    return ret
+
+def setDMZoff(terminal, logname):
+
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/dmz_off'
+    ret = setCheck(terminal, logname, api)
+    t.sleep(10)
     return ret
 
 

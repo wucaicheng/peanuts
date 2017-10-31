@@ -2019,10 +2019,12 @@ def setWindowsSta(terminal, ssid, operation, logname):
                    "disconn": "netsh wlan disconnect"}
     command = commandDic.get(operation)
     ret = setGet(terminal, command, logname)
-    for line in ret:
-        m = re.search('successfully', line)
-        if m:
-            return True
+    t.sleep(20)
+    if ret is not None:
+        for line in ret:
+            m = re.search('successfully', line)
+            if m:
+                return True
     return False
 
 def runIxChariot(SIP, DIP, result_name):

@@ -264,6 +264,7 @@ THROUGHPUT_SSID_5G = 'miwifi_throughput_5G'
 
 IXIA_LAN_PC = '192.168.31.2'
 IXIA_WAN_PC = '192.168.1.2'
+WAN_STATIC = '192.168.1.1'
 IXIA_PATH = os.getcwd() + os.sep + "IxChariot_result" + os.sep
 IXIA_RESULT_PATH_ORIGIN = 'IxChariot_Throughput.xlsx'
 IXIA_RESULT_PATH = IXIA_PATH + IXIA_RESULT_PATH_ORIGIN

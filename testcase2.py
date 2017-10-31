@@ -21001,18 +21001,17 @@ class IxChariot_Wan2Wifi_2g_CHAN1_BW20(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         optionWan = {
             'wanType': 'static',
-            'staticIp': '192.168.1.1',
+            'staticIp': v.WAN_STATIC,
             'staticMask': '255.255.255.0',
-            'staticGateway': '192.168.1.2',
-            'dns1': '192.168.1.2',
+            'staticGateway': v.IXIA_WAN_PC,
+            'dns1': v.IXIA_WAN_PC,
             'dns2': '',
         }
         api.setWan(self.dut, self.__name__, **optionWan)
-        optionWan1 = {
-            'wanType': 'dhcp',
-            'autoset': '0'
+        optionDMZ = {
+            'ip': v.IXIA_STA_IP
         }
-        api.setWan(self.dut, self.__name__, **optionWan1)
+        api.setDMZ(self.dut, self.__name__, **optionDMZ)
 
     @classmethod
     def tearDownClass(self):
@@ -21022,11 +21021,12 @@ class IxChariot_Wan2Wifi_2g_CHAN1_BW20(TestCase):
             'on': 0,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
-        optionWan = {
-            'wanType': 'dhcp',
-            'autoset': '0'
-        }
-        api.setWan(self.dut, self.__name__, **optionWan)
+        # optionWan = {
+        #     'wanType': 'dhcp',
+        #     'autoset': 0
+        # }
+        # api.setWan(self.dut, self.__name__, **optionWan)
+        # api.setDMZoff(self.dut, self.__name__)
         self.dut.close()
         self.pc.close()
 
@@ -21037,16 +21037,18 @@ class IxChariot_Wan2Wifi_2g_CHAN1_BW20(TestCase):
 
             lan_wifi = chkOSPingAvailable(v.IXIA_STA_IP, 5, self.__class__.__name__)
             self.assertTrue(lan_wifi, "Lan ping Wifi Failed.")
+            pc_wan = chkOSPingAvailable(v.WAN_STATIC, 5, self.__class__.__name__)
+            self.assertTrue(pc_wan, "PC ping Router WAN Failed.")
 
             ixChariot_result_name = self.__class__.__name__ + "_TX.tst"
-            throughputResult = runIxChariot(v.IXIA_LAN_PC, v.IXIA_STA_IP, ixChariot_result_name)
+            throughputResult = runIxChariot(v.IXIA_WAN_PC, v.WAN_STATIC, ixChariot_result_name)
             setWindowsSta(self.pc, v.THROUGHPUT_SSID, 'disconn', self.__class__.__name__)
             # call tcl with ixchariot will change the redirect the path to ixchariot install path
             os.chdir(v.DEFAULT_PATH)
             # throughputResult type is str
             if throughputResult in v.TCL_RETURN:
                 self.fail(msg=v.TCL_RETURN[throughputResult])
-            v.THROUGHPUT_RESULT['lan2wifi_2g_1_20_tx'] = throughputResult
+            v.THROUGHPUT_RESULT['wan2wifi_2g_1_20_tx'] = throughputResult
 
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
