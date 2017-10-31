@@ -1194,6 +1194,41 @@ treeIxChariotApi = [
     [
         "tx",
         "rx"
+    ],
+    "IxChariot_Wan2Wifi_2g_CHAN6_BW20",
+    [
+        "tx",
+        "rx"
+    ],
+    "IxChariot_Wan2Wifi_2g_CHAN11_BW20",
+    [
+        "tx",
+        "rx"
+    ],
+    "IxChariot_Wan2Wifi_2g_CHAN1_BW40",
+    [
+        "tx",
+        "rx"
+    ],
+    "IxChariot_Wan2Wifi_2g_CHAN6_BW40",
+    [
+        "tx",
+        "rx"
+    ],
+    "IxChariot_Wan2Wifi_2g_CHAN11_BW40",
+    [
+        "tx",
+        "rx"
+    ],
+    "IxChariot_Wan2Wifi_5g_CHAN36_BW80",
+    [
+        "tx",
+        "rx"
+    ],
+    "IxChariot_Wan2Wifi_5g_CHAN149_BW80",
+    [
+        "tx",
+        "rx"
     ]
 ]
 # -------------------------------------------------------
