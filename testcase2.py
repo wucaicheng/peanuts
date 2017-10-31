@@ -21617,7 +21617,7 @@ class IxChariot_Wan2Wifi_5g_CHAN36_BW80(TestCase):
     def tearDownClass(self):
 
         option2g = {
-            'wifiIndex': 1,
+            'wifiIndex': 2,
             'on': 0,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
@@ -21717,7 +21717,7 @@ class IxChariot_Wan2Wifi_5g_CHAN149_BW80(TestCase):
     def tearDownClass(self):
 
         option2g = {
-            'wifiIndex': 1,
+            'wifiIndex': 2,
             'on': 0,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
