@@ -3,8 +3,9 @@
 # -2 : Add the pair to the test failed
 # -3 : Run ixchariot test failed
 # -4 : Ixchariot cannot stop when the test timeout
-# -5 : Ixchariot running error, no result
+# -5 : Ixchariot running error, no date
 # -6 : Save result failed
+# -7 : Ixchariot running error, no elapsed time
 
 #options
 list args
@@ -92,40 +93,35 @@ if {![chrTest isStopped $test $timeout]} {
 #puts ""
 #puts "Test results:\n------------"
 
-set sumavg 0
-set sumtime 0
+set SendTotal 0
+set time 0
 for {set j 0} {$j < $pairs} {incr j} {
-if {[catch {set mtime [chrCommonResults get $pair MEAS_TIME]}]} {
+#Total date , Bytes
+if {[catch {set SendD [chrCommonResults get $pair BYTES_SENT_E1]}]} {
     return -5
 }
-#set mtime [chrCommonResults get $pair MEAS_TIME]
-set throughput [chrPairResults get $pair THROUGHPUT]
-set avg [format "%.3f" [lindex $throughput 0]]
-set sumavg [expr $sumavg + [expr $avg * $mtime]]
-set sumtime [expr $sumtime + $mtime]
+set SendTotal [expr $SendTotal + $SendD]
+#elapsed time
+if {[catch {set num [expr [chrPair getTimingRecordCount $pair] -1]}]} {
+    return -7
+}
+set timeR [chrPair getTimingRecord $pair $num]
+set elapsed [chrTimingRec get $timeR ELAPSED_TIME ]
+#puts "time======$eplased"
+if {$elapsed > $time} {
+set time $elapsed
+}
 incr pair -1
 }
+set total [expr $SendTotal / 125000]
+set avg [expr $total / $time]
 
-#set start [chrTest get $test START_TIME]
-#set stop [chrTest get $test STOP_TIME]
-#set timeuse [expr $stop - $start]
-#puts "**************"
-#puts "$timeuse"
-#set timeavg [expr $sumtime / $pairs]
-#set Fsumavg [expr $sumavg / [expr $timeavg + 0.35]]
-#puts "$timeavg"
-set Fsumavg [expr $sumavg / [format "%.3f" [expr $duration1 - 0.3]]]
-#set Fsumavg [expr $sumavg / $timeuse]
-#puts "$Fsumavg"
-# Finally, let's save the test so we can look at it again. 
-#puts "=========="
-#puts "Save the test..."
-
+# Finally, let's save the test so we can look at it again.
 if {[catch {chrTest save $test $testFile}]} {
   return -6
 }
 
-return [format "%.1f" $Fsumavg]
+return [format "%.3f" $avg]
 #chrTest delete $test force
 }
 

@@ -274,8 +274,9 @@ TCL_RETURN = {
     '-2': 'IxChariot Error:Add the pair to the test failed',
     '-3': 'IxChariot Error:Run ixchariot test failed',
     '-4': 'IxChariot Error:Ixchariot cannot stop when the test timeout',
-    '-5': 'IxChariot Error:Ixchariot running error, no result',
-    '-6': 'IxChariot Error:Save result failed'
+    '-5': 'IxChariot Error:Ixchariot running error, no date',
+    '-6': 'IxChariot Error:Save result failed',
+    '-7': 'IxChariot Error:Ixchariot running error, no elapsed time'
 }
 
 THROUGHPUT_RESULT = {}

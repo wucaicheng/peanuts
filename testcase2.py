@@ -20367,12 +20367,16 @@ class IxChariot_Lan2Wifi_2g_CHAN1_BW20(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
 
         option2g = {
             'wifiIndex': 1,
@@ -20384,6 +20388,7 @@ class IxChariot_Lan2Wifi_2g_CHAN1_BW20(TestCase):
             'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
+        shutdownWanCrontab(self.dut2, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -20394,6 +20399,7 @@ class IxChariot_Lan2Wifi_2g_CHAN1_BW20(TestCase):
         # }
         # api.setWifi(self.dut, self.__name__, **option2g)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):
@@ -20445,10 +20451,14 @@ class IxChariot_Lan2Wifi_2g_CHAN6_BW20(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -20462,6 +20472,7 @@ class IxChariot_Lan2Wifi_2g_CHAN6_BW20(TestCase):
             'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
+        shutdownWanCrontab(self.dut2, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -20472,6 +20483,7 @@ class IxChariot_Lan2Wifi_2g_CHAN6_BW20(TestCase):
         # }
         # api.setWifi(self.dut, self.__name__, **option2g)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):
@@ -20523,10 +20535,14 @@ class IxChariot_Lan2Wifi_2g_CHAN11_BW20(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -20540,6 +20556,7 @@ class IxChariot_Lan2Wifi_2g_CHAN11_BW20(TestCase):
             'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
+        shutdownWanCrontab(self.dut2, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -20550,6 +20567,7 @@ class IxChariot_Lan2Wifi_2g_CHAN11_BW20(TestCase):
         # }
         # api.setWifi(self.dut, self.__name__, **option2g)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):
@@ -20601,10 +20619,14 @@ class IxChariot_Lan2Wifi_2g_CHAN1_BW40(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -20618,6 +20640,7 @@ class IxChariot_Lan2Wifi_2g_CHAN1_BW40(TestCase):
             'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
+        shutdownWanCrontab(self.dut2, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -20628,6 +20651,7 @@ class IxChariot_Lan2Wifi_2g_CHAN1_BW40(TestCase):
         # }
         # api.setWifi(self.dut, self.__name__, **option2g)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):
@@ -20679,10 +20703,14 @@ class IxChariot_Lan2Wifi_2g_CHAN6_BW40(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -20696,6 +20724,7 @@ class IxChariot_Lan2Wifi_2g_CHAN6_BW40(TestCase):
             'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
+        shutdownWanCrontab(self.dut2, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -20706,6 +20735,7 @@ class IxChariot_Lan2Wifi_2g_CHAN6_BW40(TestCase):
         # }
         # api.setWifi(self.dut, self.__name__, **option2g)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):
@@ -20757,10 +20787,14 @@ class IxChariot_Lan2Wifi_2g_CHAN11_BW40(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -20774,6 +20808,7 @@ class IxChariot_Lan2Wifi_2g_CHAN11_BW40(TestCase):
             'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
+        shutdownWanCrontab(self.dut2, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -20784,6 +20819,7 @@ class IxChariot_Lan2Wifi_2g_CHAN11_BW40(TestCase):
         # }
         # api.setWifi(self.dut, self.__name__, **option2g)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):
@@ -20835,10 +20871,14 @@ class IxChariot_Lan2Wifi_5g_CHAN36_BW80(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -20851,6 +20891,7 @@ class IxChariot_Lan2Wifi_5g_CHAN36_BW80(TestCase):
             'pwd': v.THROUGHPUT_PW,
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        shutdownWanCrontab(self.dut2, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -20861,6 +20902,7 @@ class IxChariot_Lan2Wifi_5g_CHAN36_BW80(TestCase):
         # }
         # api.setWifi(self.dut, self.__name__, **option5g)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):
@@ -20912,10 +20954,14 @@ class IxChariot_Lan2Wifi_5g_CHAN149_BW80(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -20928,6 +20974,7 @@ class IxChariot_Lan2Wifi_5g_CHAN149_BW80(TestCase):
             'pwd': v.THROUGHPUT_PW,
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        shutdownWanCrontab(self.dut2, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -20938,6 +20985,7 @@ class IxChariot_Lan2Wifi_5g_CHAN149_BW80(TestCase):
         # }
         # api.setWifi(self.dut, self.__name__, **option5g)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):
@@ -20989,10 +21037,14 @@ class IxChariot_Wan2Wifi_2g_CHAN1_BW20(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -21006,6 +21058,7 @@ class IxChariot_Wan2Wifi_2g_CHAN1_BW20(TestCase):
             'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
+        shutdownWanCrontab(self.dut2, self.__name__)
         optionWan = {
             'wanType': 'static',
             'staticIp': v.WAN_STATIC,
@@ -21037,6 +21090,7 @@ class IxChariot_Wan2Wifi_2g_CHAN1_BW20(TestCase):
         # api.setWan(self.dut, self.__name__, **optionWan)
         # api.setDMZoff(self.dut, self.__name__)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):
@@ -21092,10 +21146,14 @@ class IxChariot_Wan2Wifi_2g_CHAN6_BW20(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -21109,6 +21167,7 @@ class IxChariot_Wan2Wifi_2g_CHAN6_BW20(TestCase):
             'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
+        shutdownWanCrontab(self.dut2, self.__name__)
         optionWan = {
             'wanType': 'static',
             'staticIp': v.WAN_STATIC,
@@ -21140,6 +21199,7 @@ class IxChariot_Wan2Wifi_2g_CHAN6_BW20(TestCase):
         # api.setWan(self.dut, self.__name__, **optionWan)
         # api.setDMZoff(self.dut, self.__name__)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):
@@ -21195,10 +21255,14 @@ class IxChariot_Wan2Wifi_2g_CHAN11_BW20(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -21212,6 +21276,7 @@ class IxChariot_Wan2Wifi_2g_CHAN11_BW20(TestCase):
             'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
+        shutdownWanCrontab(self.dut2, self.__name__)
         optionWan = {
             'wanType': 'static',
             'staticIp': v.WAN_STATIC,
@@ -21243,6 +21308,7 @@ class IxChariot_Wan2Wifi_2g_CHAN11_BW20(TestCase):
         # api.setWan(self.dut, self.__name__, **optionWan)
         # api.setDMZoff(self.dut, self.__name__)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):
@@ -21298,10 +21364,14 @@ class IxChariot_Wan2Wifi_2g_CHAN1_BW40(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -21315,6 +21385,7 @@ class IxChariot_Wan2Wifi_2g_CHAN1_BW40(TestCase):
             'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
+        shutdownWanCrontab(self.dut2, self.__name__)
         optionWan = {
             'wanType': 'static',
             'staticIp': v.WAN_STATIC,
@@ -21346,6 +21417,7 @@ class IxChariot_Wan2Wifi_2g_CHAN1_BW40(TestCase):
         # api.setWan(self.dut, self.__name__, **optionWan)
         # api.setDMZoff(self.dut, self.__name__)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):
@@ -21401,10 +21473,14 @@ class IxChariot_Wan2Wifi_2g_CHAN6_BW40(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -21418,6 +21494,7 @@ class IxChariot_Wan2Wifi_2g_CHAN6_BW40(TestCase):
             'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
+        shutdownWanCrontab(self.dut2, self.__name__)
         optionWan = {
             'wanType': 'static',
             'staticIp': v.WAN_STATIC,
@@ -21449,6 +21526,7 @@ class IxChariot_Wan2Wifi_2g_CHAN6_BW40(TestCase):
         # api.setWan(self.dut, self.__name__, **optionWan)
         # api.setDMZoff(self.dut, self.__name__)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):
@@ -21504,10 +21582,14 @@ class IxChariot_Wan2Wifi_2g_CHAN11_BW40(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -21521,6 +21603,7 @@ class IxChariot_Wan2Wifi_2g_CHAN11_BW40(TestCase):
             'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
+        shutdownWanCrontab(self.dut2, self.__name__)
         optionWan = {
             'wanType': 'static',
             'staticIp': v.WAN_STATIC,
@@ -21552,6 +21635,7 @@ class IxChariot_Wan2Wifi_2g_CHAN11_BW40(TestCase):
         # api.setWan(self.dut, self.__name__, **optionWan)
         # api.setDMZoff(self.dut, self.__name__)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):
@@ -21607,10 +21691,14 @@ class IxChariot_Wan2Wifi_5g_CHAN36_BW80(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -21623,6 +21711,7 @@ class IxChariot_Wan2Wifi_5g_CHAN36_BW80(TestCase):
             'pwd': v.THROUGHPUT_PW,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
+        shutdownWanCrontab(self.dut2, self.__name__)
         optionWan = {
             'wanType': 'static',
             'staticIp': v.WAN_STATIC,
@@ -21654,6 +21743,7 @@ class IxChariot_Wan2Wifi_5g_CHAN36_BW80(TestCase):
         # api.setWan(self.dut, self.__name__, **optionWan)
         # api.setDMZoff(self.dut, self.__name__)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):
@@ -21709,10 +21799,14 @@ class IxChariot_Wan2Wifi_5g_CHAN149_BW80(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret2 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
         self.pc = ShellClient(4)
         ret3 = self.pc.connect(host=v.IXIA_STA_HOST, userid=v.IXIA_STA_USERNAME, password=v.IXIA_STA_PWD)
         if ret3 is False:
             raise Exception("PC telnet connection is failed, please check network.")
+        if ret2 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -21725,6 +21819,7 @@ class IxChariot_Wan2Wifi_5g_CHAN149_BW80(TestCase):
             'pwd': v.THROUGHPUT_PW,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
+        shutdownWanCrontab(self.dut2, self.__name__)
         optionWan = {
             'wanType': 'static',
             'staticIp': v.WAN_STATIC,
@@ -21756,6 +21851,7 @@ class IxChariot_Wan2Wifi_5g_CHAN149_BW80(TestCase):
         # api.setWan(self.dut, self.__name__, **optionWan)
         # api.setDMZoff(self.dut, self.__name__)
         self.dut.close()
+        self.dut2.close()
         self.pc.close()
 
     def tx(self):

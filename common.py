@@ -2026,22 +2026,17 @@ def setWindowsSta(terminal, ssid, operation, logname):
             for line in ret:
                 m = re.search('successfully', line)
                 if m:
-                    t.sleep(10)
-                    ret2 = setGet(terminal, "netsh wlan show interfaces", logname)
-                    if ret2 is not None:
-                        for line2 in ret2:
-                            n = re.search(ssid, line2)
-                            if n:
-                                return True
+                    return True
         return False
 
     loop = 0
     resBoolean = chkInLoop(terminal, command, logname)
     while resBoolean is False and loop < 3:
         loop += 1
-        setGet(terminal, "netsh interface set interface throughput disable", logname)
+        terminal.command("netsh interface set interface throughput disable")
         t.sleep(5)
-        setGet(terminal, "netsh interface set interface throughput enable", logname)
+        # setGet(terminal, "netsh interface set interface throughput enable", logname)
+        terminal.command("netsh interface set interface throughput enable")
         t.sleep(5)
         resBoolean = chkInLoop(terminal, command, logname)
 
@@ -2058,6 +2053,13 @@ def runIxChariot(SIP, DIP, result_name):
     ret = tcl.eval('source ixchariot.tcl')
 
     return ret
+
+def shutdownWanCrontab(terminal, logname):
+
+    command = 'sed -i /wwdog/d /etc/crontabs/root'
+    setGet(terminal, command, logname)
+    t.sleep(5)
+    return True
 
 
 if __name__ == '__main__':
