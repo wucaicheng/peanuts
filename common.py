@@ -2018,14 +2018,34 @@ def setWindowsSta(terminal, ssid, operation, logname):
     commandDic = {"conn": "netsh wlan connect name=%s interface=throughput" % ssid,
                    "disconn": "netsh wlan disconnect"}
     command = commandDic.get(operation)
-    ret = setGet(terminal, command, logname)
-    t.sleep(20)
-    if ret is not None:
-        for line in ret:
-            m = re.search('successfully', line)
-            if m:
-                return True
-    return False
+
+    def chkInLoop(terminal, command, logname):
+        ret = setGet(terminal, command, logname)
+        t.sleep(5)
+        if ret is not None:
+            for line in ret:
+                m = re.search('successfully', line)
+                if m:
+                    t.sleep(10)
+                    ret2 = setGet(terminal, "netsh wlan show interfaces", logname)
+                    if ret2 is not None:
+                        for line2 in ret2:
+                            n = re.search(ssid, line2)
+                            if n:
+                                return True
+        return False
+
+    loop = 0
+    resBoolean = chkInLoop(terminal, command, logname)
+    while resBoolean is False and loop < 3:
+        loop += 1
+        setGet(terminal, "netsh interface set interface throughput disable", logname)
+        t.sleep(5)
+        setGet(terminal, "netsh interface set interface throughput enable", logname)
+        t.sleep(5)
+        resBoolean = chkInLoop(terminal, command, logname)
+
+    return resBoolean
 
 def runIxChariot(SIP, DIP, result_name):
 

@@ -20381,17 +20381,18 @@ class IxChariot_Lan2Wifi_2g_CHAN1_BW20(TestCase):
             'bandwidth': '20',
             'encryption': 'mixed-psk',
             'pwd': v.THROUGHPUT_PW,
+            'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
 
     @classmethod
     def tearDownClass(self):
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # option2g = {
+        #     'wifiIndex': 1,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option2g)
         self.dut.close()
         self.pc.close()
 
@@ -20458,17 +20459,18 @@ class IxChariot_Lan2Wifi_2g_CHAN6_BW20(TestCase):
             'bandwidth': '20',
             'encryption': 'mixed-psk',
             'pwd': v.THROUGHPUT_PW,
+            'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
 
     @classmethod
     def tearDownClass(self):
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # option2g = {
+        #     'wifiIndex': 1,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option2g)
         self.dut.close()
         self.pc.close()
 
@@ -20535,17 +20537,18 @@ class IxChariot_Lan2Wifi_2g_CHAN11_BW20(TestCase):
             'bandwidth': '20',
             'encryption': 'mixed-psk',
             'pwd': v.THROUGHPUT_PW,
+            'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
 
     @classmethod
     def tearDownClass(self):
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # option2g = {
+        #     'wifiIndex': 1,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option2g)
         self.dut.close()
         self.pc.close()
 
@@ -20612,17 +20615,18 @@ class IxChariot_Lan2Wifi_2g_CHAN1_BW40(TestCase):
             'bandwidth': '40',
             'encryption': 'mixed-psk',
             'pwd': v.THROUGHPUT_PW,
+            'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
 
     @classmethod
     def tearDownClass(self):
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # option2g = {
+        #     'wifiIndex': 1,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option2g)
         self.dut.close()
         self.pc.close()
 
@@ -20689,17 +20693,18 @@ class IxChariot_Lan2Wifi_2g_CHAN6_BW40(TestCase):
             'bandwidth': '40',
             'encryption': 'mixed-psk',
             'pwd': v.THROUGHPUT_PW,
+            'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
 
     @classmethod
     def tearDownClass(self):
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # option2g = {
+        #     'wifiIndex': 1,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option2g)
         self.dut.close()
         self.pc.close()
 
@@ -20766,17 +20771,18 @@ class IxChariot_Lan2Wifi_2g_CHAN11_BW40(TestCase):
             'bandwidth': '40',
             'encryption': 'mixed-psk',
             'pwd': v.THROUGHPUT_PW,
+            'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
 
     @classmethod
     def tearDownClass(self):
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # option2g = {
+        #     'wifiIndex': 1,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option2g)
         self.dut.close()
         self.pc.close()
 
@@ -20849,11 +20855,11 @@ class IxChariot_Lan2Wifi_5g_CHAN36_BW80(TestCase):
     @classmethod
     def tearDownClass(self):
 
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option5g)
+        # option5g = {
+        #     'wifiIndex': 2,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option5g)
         self.dut.close()
         self.pc.close()
 
@@ -20926,11 +20932,11 @@ class IxChariot_Lan2Wifi_5g_CHAN149_BW80(TestCase):
     @classmethod
     def tearDownClass(self):
 
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option5g)
+        # option5g = {
+        #     'wifiIndex': 2,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option5g)
         self.dut.close()
         self.pc.close()
 
@@ -20997,6 +21003,7 @@ class IxChariot_Wan2Wifi_2g_CHAN1_BW20(TestCase):
             'bandwidth': '20',
             'encryption': 'mixed-psk',
             'pwd': v.THROUGHPUT_PW,
+            'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         optionWan = {
@@ -21011,16 +21018,18 @@ class IxChariot_Wan2Wifi_2g_CHAN1_BW20(TestCase):
         optionDMZ = {
             'ip': v.IXIA_STA_IP
         }
-        api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        dmz = api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        if dmz is False:
+            raise Exception('Set DMZ failed, Maybe because of Port forwarding is opened')
 
     @classmethod
     def tearDownClass(self):
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # option2g = {
+        #     'wifiIndex': 1,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option2g)
         # optionWan = {
         #     'wanType': 'dhcp',
         #     'autoset': 0
@@ -21097,6 +21106,7 @@ class IxChariot_Wan2Wifi_2g_CHAN6_BW20(TestCase):
             'bandwidth': '20',
             'encryption': 'mixed-psk',
             'pwd': v.THROUGHPUT_PW,
+            'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         optionWan = {
@@ -21111,16 +21121,18 @@ class IxChariot_Wan2Wifi_2g_CHAN6_BW20(TestCase):
         optionDMZ = {
             'ip': v.IXIA_STA_IP
         }
-        api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        dmz = api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        if dmz is False:
+            raise Exception('Set DMZ failed, Maybe because of Port forwarding is opened')
 
     @classmethod
     def tearDownClass(self):
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # option2g = {
+        #     'wifiIndex': 1,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option2g)
         # optionWan = {
         #     'wanType': 'dhcp',
         #     'autoset': 0
@@ -21197,6 +21209,7 @@ class IxChariot_Wan2Wifi_2g_CHAN11_BW20(TestCase):
             'bandwidth': '20',
             'encryption': 'mixed-psk',
             'pwd': v.THROUGHPUT_PW,
+            'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         optionWan = {
@@ -21211,16 +21224,18 @@ class IxChariot_Wan2Wifi_2g_CHAN11_BW20(TestCase):
         optionDMZ = {
             'ip': v.IXIA_STA_IP
         }
-        api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        dmz = api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        if dmz is False:
+            raise Exception('Set DMZ failed, Maybe because of Port forwarding is opened')
 
     @classmethod
     def tearDownClass(self):
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # option2g = {
+        #     'wifiIndex': 1,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option2g)
         # optionWan = {
         #     'wanType': 'dhcp',
         #     'autoset': 0
@@ -21297,6 +21312,7 @@ class IxChariot_Wan2Wifi_2g_CHAN1_BW40(TestCase):
             'bandwidth': '40',
             'encryption': 'mixed-psk',
             'pwd': v.THROUGHPUT_PW,
+            'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         optionWan = {
@@ -21311,16 +21327,18 @@ class IxChariot_Wan2Wifi_2g_CHAN1_BW40(TestCase):
         optionDMZ = {
             'ip': v.IXIA_STA_IP
         }
-        api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        dmz = api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        if dmz is False:
+            raise Exception('Set DMZ failed, Maybe because of Port forwarding is opened')
 
     @classmethod
     def tearDownClass(self):
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # option2g = {
+        #     'wifiIndex': 1,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option2g)
         # optionWan = {
         #     'wanType': 'dhcp',
         #     'autoset': 0
@@ -21397,6 +21415,7 @@ class IxChariot_Wan2Wifi_2g_CHAN6_BW40(TestCase):
             'bandwidth': '40',
             'encryption': 'mixed-psk',
             'pwd': v.THROUGHPUT_PW,
+            'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         optionWan = {
@@ -21411,16 +21430,18 @@ class IxChariot_Wan2Wifi_2g_CHAN6_BW40(TestCase):
         optionDMZ = {
             'ip': v.IXIA_STA_IP
         }
-        api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        dmz = api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        if dmz is False:
+            raise Exception('Set DMZ failed, Maybe because of Port forwarding is opened')
 
     @classmethod
     def tearDownClass(self):
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # option2g = {
+        #     'wifiIndex': 1,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option2g)
         # optionWan = {
         #     'wanType': 'dhcp',
         #     'autoset': 0
@@ -21497,6 +21518,7 @@ class IxChariot_Wan2Wifi_2g_CHAN11_BW40(TestCase):
             'bandwidth': '40',
             'encryption': 'mixed-psk',
             'pwd': v.THROUGHPUT_PW,
+            'txpwr': 'min'
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         optionWan = {
@@ -21511,16 +21533,18 @@ class IxChariot_Wan2Wifi_2g_CHAN11_BW40(TestCase):
         optionDMZ = {
             'ip': v.IXIA_STA_IP
         }
-        api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        dmz = api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        if dmz is False:
+            raise Exception('Set DMZ failed, Maybe because of Port forwarding is opened')
 
     @classmethod
     def tearDownClass(self):
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # option2g = {
+        #     'wifiIndex': 1,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option2g)
         # optionWan = {
         #     'wanType': 'dhcp',
         #     'autoset': 0
@@ -21611,16 +21635,18 @@ class IxChariot_Wan2Wifi_5g_CHAN36_BW80(TestCase):
         optionDMZ = {
             'ip': v.IXIA_STA_IP
         }
-        api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        dmz = api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        if dmz is False:
+            raise Exception('Set DMZ failed, Maybe because of Port forwarding is opened')
 
     @classmethod
     def tearDownClass(self):
 
-        option2g = {
-            'wifiIndex': 2,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # option2g = {
+        #     'wifiIndex': 2,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option2g)
         # optionWan = {
         #     'wanType': 'dhcp',
         #     'autoset': 0
@@ -21711,16 +21737,18 @@ class IxChariot_Wan2Wifi_5g_CHAN149_BW80(TestCase):
         optionDMZ = {
             'ip': v.IXIA_STA_IP
         }
-        api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        dmz = api.setDMZ(self.dut, self.__name__, **optionDMZ)
+        if dmz is False:
+            raise Exception('Set DMZ failed, Maybe because of Port forwarding is opened')
 
     @classmethod
     def tearDownClass(self):
 
-        option2g = {
-            'wifiIndex': 2,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        # option2g = {
+        #     'wifiIndex': 2,
+        #     'on': 0,
+        # }
+        # api.setWifi(self.dut, self.__name__, **option2g)
         # optionWan = {
         #     'wanType': 'dhcp',
         #     'autoset': 0
