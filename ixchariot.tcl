@@ -18,8 +18,8 @@ set duration [lindex $args 5]
 set resultPath [lindex $args 6]
 
 # Where you installed NetIQ��s Chariot
-set NetIQ "c:/Program Files (x86)/Ixia/IxChariot"
-cd $NetIQ
+#set NetIQ "c:/Program Files (x86)/Ixia/IxChariot"
+#cd $NetIQ
 
 #load the Chariot
 load ChariotExt
@@ -32,7 +32,7 @@ set script "c:/Program Files (x86)/Ixia/IxChariot/Scripts/"
 append script $script1
 #set testFile "d:/results.tst"
 set timeout [expr $duration1 + 30]
-    set test [chrTest new]
+set test [chrTest new]
 
 #config run options 
 set runOpts [chrTest getRunOpts $test]
@@ -74,15 +74,17 @@ if {[catch {chrTest start $test}]} {
 }
 
 # We have to wait for the test to stop before we can look at
-# the results from it. We'll wait for 2 minutes here, then
+# the results from it. We'll wait for durition+30s here, then
 # call it an error if it has not yet stopped.
 #puts "Wait for the test to stop..."
 if {![chrTest isStopped $test $timeout]} { 
-  puts "ERROR: Test didn't stop in $timeout second!"
+  #puts "ERROR: Test didn't stop in $timeout second!"
   chrTest stop $test
   set stopCheck 0
-  while {$stopCheck!=1} {
+  set loop 1
+  while {!($stopCheck) && ($loop <6)} {
    set stopCheck [chrTest isStopped $test 2]
+   incr loop
    }
   catch {chrTest delete $test force}
   return -4
@@ -94,6 +96,7 @@ if {![chrTest isStopped $test $timeout]} {
 #puts "Test results:\n------------"
 
 set SendTotal 0
+set RecvTotal 0
 set time 0
 for {set j 0} {$j < $pairs} {incr j} {
 #Total date , Bytes
@@ -101,6 +104,9 @@ if {[catch {set SendD [chrCommonResults get $pair BYTES_SENT_E1]}]} {
     return -5
 }
 set SendTotal [expr $SendTotal + $SendD]
+set RecvD [chrCommonResults get $pair BYTES_RECV_E1]
+set RecvTotal [expr $RecvTotal + $RecvD]
+
 #elapsed time
 if {[catch {set num [expr [chrPair getTimingRecordCount $pair] -1]}]} {
     return -7
@@ -113,7 +119,7 @@ set time $elapsed
 }
 incr pair -1
 }
-set total [expr $SendTotal / 125000]
+set total [expr ($SendTotal +$RecvTotal) / 125000]
 set avg [expr $total / $time]
 
 # Finally, let's save the test so we can look at it again.
@@ -125,6 +131,6 @@ return [format "%.3f" $avg]
 #chrTest delete $test force
 }
 
-puts "=============ixchariot running============="
+#puts "=============ixchariot running============="
 
 runtest $ae1 $ae2 $protocol $pairCount $duration $script2 $resultPath
