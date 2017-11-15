@@ -2051,7 +2051,6 @@ def runIxChariot(SIP, DIP, result_name):
     #a list args for tcl, [SIP, DIP, script, protocal, pairs, duration, result_name]
     tcl.setvar('args', (SIP, DIP, v.SCRIPT, v.PROTOCOL, v.PAIRS, v.DURATION, result_path))
     ret = tcl.eval('source ixchariot.tcl')
-
     return ret
 
 def shutdownWanCrontab(terminal, logname):

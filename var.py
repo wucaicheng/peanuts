@@ -2,7 +2,7 @@
 from common2 import *
 import os
 
-VER = '3.9.9'
+VER = '3.9.10'
 
 TOOL_LIST = ["General", "Option", "Memory Tracking", "Test Suite"]
 
@@ -245,6 +245,7 @@ CHECK_STA_MAC2 = ''
 AP_REBOOT_COUNT = '800'
 
 # ------------------ixiachariot throughput-----------------
+CHARIOT_INSTALL_PATH = r'C:/Program Files (x86)/Ixia/IxChariot'
 SCRIPT_LIST = ['High_Performance_Throughput.scr', 'Throughput.scr']
 SCRIPT = SCRIPT_LIST[0]
 PROTOCOL_LIST = ['TCP', 'UDP']

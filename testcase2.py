@@ -3598,13 +3598,15 @@ class AP_BSD_BW_CHECK(TestCase):
         api.setAllWifi(self.dut, self.__class__.__name__, **option)
         bw_2g = getWlanBWRate(self.dut2, "2g", self.__class__.__name__)
         bw_5g = getWlanBWRate(self.dut2, "5g", self.__class__.__name__)
+        bw_Broadcom_2g = getBroadcomBW(self.dut2, "2g", self.__class__.__name__)
+        bw_Broadcom_5g = getBroadcomBW(self.dut2, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             self.assertEqual(bw_2g, v.R1CM_MAX_RATE_2G['20'], 'BSD 2g Auto BW isnot correct.')
             self.assertEqual(bw_5g, v.R1CM_MAX_RATE_5G['80'], 'BSD 5g Auto BW isnot correct.')
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            self.assertEqual(bw_2g, v.R1D_MAX_RATE_2G['20'], 'BSD 2g Auto BW isnot correct.')
-            self.assertEqual(bw_5g, v.R1D_MAX_RATE_5G['80'], 'BSD 5g Auto BW isnot correct.')
+            self.assertEqual(bw_Broadcom_2g, 20, 'BSD 2g Auto BW isnot correct.')
+            self.assertEqual(bw_Broadcom_5g, 80, 'BSD 5g Auto BW isnot correct.')
         if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
             self.fail("Device Donot Support BSD.")
         if v.DUT_MODULE == 'R3P':
@@ -3630,13 +3632,15 @@ class AP_BSD_BW_CHECK(TestCase):
         api.setAllWifi(self.dut, self.__class__.__name__, **option)
         bw_2g = getWlanBWRate(self.dut2, "2g", self.__class__.__name__)
         bw_5g = getWlanBWRate(self.dut2, "5g", self.__class__.__name__)
+        bw_Broadcom_2g = getBroadcomBW(self.dut2, "2g", self.__class__.__name__)
+        bw_Broadcom_5g = getBroadcomBW(self.dut2, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             self.assertEqual(bw_2g, v.R1CM_MAX_RATE_2G['40'], 'BSD 2g BW40 isnot correct.')
             self.assertEqual(bw_5g, v.R1CM_MAX_RATE_5G['20'], 'BSD 5g BW20 isnot correct.')
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            self.assertEqual(bw_2g, v.R1D_MAX_RATE_2G['40'], 'BSD 2g BW40 isnot correct.')
-            self.assertEqual(bw_5g, v.R1D_MAX_RATE_5G['20'], 'BSD 5g BW20 isnot correct.')
+            self.assertEqual(bw_Broadcom_2g, 40, 'BSD 2g BW40 isnot correct.')
+            self.assertEqual(bw_Broadcom_5g, 20, 'BSD 5g BW20 isnot correct.')
         if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
             self.fail("Device Donot Support BSD.")
         if v.DUT_MODULE == 'R3P':
@@ -3662,13 +3666,15 @@ class AP_BSD_BW_CHECK(TestCase):
         api.setAllWifi(self.dut, self.__class__.__name__, **option)
         bw_2g = getWlanBWRate(self.dut2, "2g", self.__class__.__name__)
         bw_5g = getWlanBWRate(self.dut2, "5g", self.__class__.__name__)
+        bw_Broadcom_2g = getBroadcomBW(self.dut2, "2g", self.__class__.__name__)
+        bw_Broadcom_5g = getBroadcomBW(self.dut2, "5g", self.__class__.__name__)
 
         if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
             self.assertEqual(bw_2g, v.R1CM_MAX_RATE_2G['20'], 'BSD 2g BW20 isnot correct.')
             self.assertEqual(bw_5g, v.R1CM_MAX_RATE_5G['40'], 'BSD 5g BW40 isnot correct.')
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            self.assertEqual(bw_2g, v.R1D_MAX_RATE_2G['20'], 'BSD 2g BW20 isnot correct.')
-            self.assertEqual(bw_5g, v.R1D_MAX_RATE_5G['40'], 'BSD 5g BW40 isnot correct.')
+            self.assertEqual(bw_Broadcom_2g, 20, 'BSD 2g BW20 isnot correct.')
+            self.assertEqual(bw_Broadcom_5g, 40, 'BSD 5g BW40 isnot correct.')
         if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
             self.fail("Device Donot Support BSD.")
         if v.DUT_MODULE == 'R3P':
@@ -5928,7 +5934,7 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
 
         wanIfname = v.WAN_IFNAME.get(v.DUT_MODULE)
         wanInBrlan = wanIfInBrlan(self.dut, wanIfname, self.__class__.__name__)
-        if v.DUT_MODULE not in ["R3P", "R3G"]:
+        if v.DUT_MODULE not in ["R3P", "R3G", "R2D"]:
             self.assertTrue(wanInBrlan, "wan port isnot in br-lan.")
         else:
             self.assertTrue(True)

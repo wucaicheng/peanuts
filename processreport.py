@@ -934,9 +934,10 @@ class GetFailedDetail(threading.Thread):
 
 
 class GetIxChariotThroughput(threading.Thread):
-    def __init__(self):
+    def __init__(self, report):
         threading.Thread.__init__(self)
         self.running = False
+        self.report = report
 
     def run(self):
         self.running = True
@@ -947,7 +948,7 @@ class GetIxChariotThroughput(threading.Thread):
                 print "IxChariot result xlsx file no exists!"
                 return
 
-            wb['result'][XLSX_DATA_POSITION["title"]].value = REPORT_NAME
+            wb['result'][XLSX_DATA_POSITION["title"]].value = self.report
             for test in THROUGHPUT_RESULT.keys():
                 wb['result'][XLSX_DATA_POSITION[test]].value = THROUGHPUT_RESULT[test]
 
