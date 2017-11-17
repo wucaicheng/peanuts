@@ -111,7 +111,7 @@ INTF_5G = 'wl0'
 INTF_GUEST = 'guest'
 
 WORD_RANGE = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
-SPEC_RANGE = '~!@#$%^&*() =+\\|]}[{\'\";:/?.>,<'
+SPEC_RANGE = '~!@#%^*() =+][\'\":/?.>,<'
 CHINESE_RANGE = "宣室求贤访逐臣贾生才调更无伦可怜夜半虚前席不问苍生问鬼神火佛秋金"
 
 SSID = generateRandomString(WORD_RANGE, 31)
