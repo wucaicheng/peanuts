@@ -117,6 +117,10 @@ treeBasicApi = [
         "assoc_psk_sta_5g",
         "assoc_tkippsk2_sta_5g",
         "assoc_tkippsk_sta_5g",
+        "assoc_psk2_sta_2g",
+        "assoc_psk_sta_2g",
+        "assoc_tkippsk2_sta_2g",
+        "assoc_tkippsk_sta_2g"
     ],
     'AP_MIXEDPSK_CHAN_BW20',
     [
