@@ -1,4 +1,5 @@
 # ------------------- basic cases for daily--------------------
+from collections import OrderedDict
 
 BasicCase4DualBand = [
     # wifi basic
@@ -222,3 +223,17 @@ BasicCase4DualBand = [
     ],
 ]
 
+
+def generateCaseDict(caselist):
+
+        cases = OrderedDict()
+        # cases = {}
+        for i in range(len(caselist)):
+            if isinstance(caselist[i], str):
+                cases[caselist[i]] = caselist[i+1]
+        return cases
+
+if __name__ == "__main__":
+
+    case = generateCaseDict(BasicCase4DualBand)
+    print case

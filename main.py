@@ -18,6 +18,7 @@ import sendmail as sm
 import memmonitor as mm
 import processreport as pr
 import api
+import basicCase
 # ----------------------------------------------------------------------------
 
 
@@ -861,12 +862,14 @@ class TestSuitePage(wx.Panel):
         self.selUploadLog.SetValue(False)
         self.selSendMail = wx.CheckBox(self, -1, 'Send Mail')
         # self.selSendMail.SetValue(True)
+        self.selTest4Daily = wx.CheckBox(self, -1, 'BasicTest')
 
         self.Bind(wx.EVT_CHECKBOX, self.EvtSel2g, self.sel2gCheck)
         self.Bind(wx.EVT_CHECKBOX, self.EvtSel5g, self.sel5gCheck)
         self.Bind(wx.EVT_CHECKBOX, self.EvtSelGuest, self.selGuestCheck)
         self.Bind(wx.EVT_CHECKBOX, self.EvtSelUploadLog, self.selUploadLog)
         self.Bind(wx.EVT_CHECKBOX, self.EvtSelSendMail, self.selSendMail)
+        self.Bind(wx.EVT_CHECKBOX, self.EvtTest4Daily, self.selTest4Daily)
 
         self.applyBtn = wx.Button(self, -1, 'Apply')
         self.cancelBtn = wx.Button(self, -1, 'Cancel')
@@ -894,6 +897,7 @@ class TestSuitePage(wx.Panel):
         checkBoxSizer.Add(self.selGuestCheck, 0, wx.LEFT, 10)
         checkBoxSizer.Add(self.selUploadLog, 0, wx.LEFT, 10)
         checkBoxSizer.Add(self.selSendMail, 0, wx.LEFT, 10)
+        checkBoxSizer.Add(self.selTest4Daily, 0, wx.LEFT, 10)
 
         mainSizer.Add(treeLbl, 0, wx.ALIGN_LEFT | wx.TOP | wx.LEFT | wx.BOTTOM, 10)
         mainSizer.Add(checkBoxSizer, 0, wx.LEFT | wx.BOTTOM, 10)
@@ -1116,7 +1120,10 @@ class TestSuitePage(wx.Panel):
 
         v.FAIL_RETRY = self.retry.GetValue()
         allSuiteTuple = ()
-        selCasesDic = self.TestCaseGenerator()
+        if v.ONLYTEST_BASIC4DAILY:
+            selCasesDic = basicCase.generateCaseDict(basicCase.BasicCase4DualBand)
+        else:
+            selCasesDic = self.TestCaseGenerator()
         for i in selCasesDic:
             testCaseClass = getattr(tc, i)
             maptc = map(testCaseClass, selCasesDic[i])
@@ -1267,6 +1274,11 @@ class TestSuitePage(wx.Panel):
             v.SEND_MAIL = 1
         else:
             v.SEND_MAIL = 0
+    def EvtTest4Daily(self, event):
+        if self.selTest4Daily.IsChecked() is True:
+            v.ONLYTEST_BASIC4DAILY = 1
+        else:
+            v.ONLYTEST_BASIC4DAILY = 0
 
 
 class Frame(wx.Frame):

@@ -3,9 +3,8 @@ from common2 import *
 import os
 
 VER = '3.9.10'
-
 TOOL_LIST = ["General", "Option", "Memory Tracking", "Test Suite"]
-
+ONLYTEST_BASIC4DAILY = 0
 # ----------------General-----------------
 
 SAVE_BTN_FLAG = False  # represent save button pressed or not
