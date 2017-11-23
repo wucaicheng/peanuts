@@ -20479,6 +20479,13 @@ class IxChariot_Lan2Wifi_2g_CHAN6_BW20(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         shutdownWanCrontab(self.dut2, self.__name__)
+        optionQosBand = {
+            'manual': 1,
+            'upload': 1000,
+            'download': 1000
+        }
+        api.setQosBand(self.dut, self.__name__, **optionQosBand)
+        api.setQosSwitch(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -20488,6 +20495,10 @@ class IxChariot_Lan2Wifi_2g_CHAN6_BW20(TestCase):
         #     'on': 0,
         # }
         # api.setWifi(self.dut, self.__name__, **option2g)
+        optionQosSwitch = {
+            'on': 0,
+        }
+        api.setQosSwitch(self.dut, self.__name__, **optionQosSwitch)
         self.dut.close()
         self.dut2.close()
         self.pc.close()
@@ -20731,6 +20742,13 @@ class IxChariot_Lan2Wifi_2g_CHAN6_BW40(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         shutdownWanCrontab(self.dut2, self.__name__)
+        optionQosBand = {
+            'manual': 1,
+            'upload': 1000,
+            'download': 1000
+        }
+        api.setQosBand(self.dut, self.__name__, **optionQosBand)
+        api.setQosSwitch(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -20740,6 +20758,10 @@ class IxChariot_Lan2Wifi_2g_CHAN6_BW40(TestCase):
         #     'on': 0,
         # }
         # api.setWifi(self.dut, self.__name__, **option2g)
+        optionQosSwitch = {
+            'on': 0,
+        }
+        api.setQosSwitch(self.dut, self.__name__, **optionQosSwitch)
         self.dut.close()
         self.dut2.close()
         self.pc.close()
@@ -20898,6 +20920,13 @@ class IxChariot_Lan2Wifi_5g_CHAN36_BW80(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option5g)
         shutdownWanCrontab(self.dut2, self.__name__)
+        optionQosBand = {
+            'manual': 1,
+            'upload': 1000,
+            'download': 1000
+        }
+        api.setQosBand(self.dut, self.__name__, **optionQosBand)
+        api.setQosSwitch(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -20907,6 +20936,10 @@ class IxChariot_Lan2Wifi_5g_CHAN36_BW80(TestCase):
         #     'on': 0,
         # }
         # api.setWifi(self.dut, self.__name__, **option5g)
+        optionQosSwitch = {
+            'on': 0,
+        }
+        api.setQosSwitch(self.dut, self.__name__, **optionQosSwitch)
         self.dut.close()
         self.dut2.close()
         self.pc.close()
@@ -21189,6 +21222,13 @@ class IxChariot_Wan2Wifi_2g_CHAN6_BW20(TestCase):
         dmz = api.setDMZ(self.dut, self.__name__, **optionDMZ)
         if dmz is False:
             raise Exception('Set DMZ failed, Maybe because of Port forwarding is opened')
+        optionQosBand = {
+            'manual': 1,
+            'upload': 1000,
+            'download': 1000
+        }
+        api.setQosBand(self.dut, self.__name__, **optionQosBand)
+        api.setQosSwitch(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -21204,6 +21244,10 @@ class IxChariot_Wan2Wifi_2g_CHAN6_BW20(TestCase):
         # }
         # api.setWan(self.dut, self.__name__, **optionWan)
         # api.setDMZoff(self.dut, self.__name__)
+        optionQosSwitch = {
+            'on': 0,
+        }
+        api.setQosSwitch(self.dut, self.__name__, **optionQosSwitch)
         self.dut.close()
         self.dut2.close()
         self.pc.close()
@@ -21516,6 +21560,13 @@ class IxChariot_Wan2Wifi_2g_CHAN6_BW40(TestCase):
         dmz = api.setDMZ(self.dut, self.__name__, **optionDMZ)
         if dmz is False:
             raise Exception('Set DMZ failed, Maybe because of Port forwarding is opened')
+        optionQosBand = {
+            'manual': 1,
+            'upload': 1000,
+            'download': 1000
+        }
+        api.setQosBand(self.dut, self.__name__, **optionQosBand)
+        api.setQosSwitch(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -21531,6 +21582,10 @@ class IxChariot_Wan2Wifi_2g_CHAN6_BW40(TestCase):
         # }
         # api.setWan(self.dut, self.__name__, **optionWan)
         # api.setDMZoff(self.dut, self.__name__)
+        optionQosSwitch = {
+            'on': 0,
+        }
+        api.setQosSwitch(self.dut, self.__name__, **optionQosSwitch)
         self.dut.close()
         self.dut2.close()
         self.pc.close()
@@ -21733,6 +21788,13 @@ class IxChariot_Wan2Wifi_5g_CHAN36_BW80(TestCase):
         dmz = api.setDMZ(self.dut, self.__name__, **optionDMZ)
         if dmz is False:
             raise Exception('Set DMZ failed, Maybe because of Port forwarding is opened')
+        optionQosBand = {
+            'manual': 1,
+            'upload': 1000,
+            'download': 1000
+        }
+        api.setQosBand(self.dut, self.__name__, **optionQosBand)
+        api.setQosSwitch(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -21748,6 +21810,10 @@ class IxChariot_Wan2Wifi_5g_CHAN36_BW80(TestCase):
         # }
         # api.setWan(self.dut, self.__name__, **optionWan)
         # api.setDMZoff(self.dut, self.__name__)
+        optionQosSwitch = {
+            'on': 0,
+        }
+        api.setQosSwitch(self.dut, self.__name__, **optionQosSwitch)
         self.dut.close()
         self.dut2.close()
         self.pc.close()

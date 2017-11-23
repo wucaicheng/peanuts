@@ -1121,7 +1121,8 @@ class TestSuitePage(wx.Panel):
         v.FAIL_RETRY = self.retry.GetValue()
         allSuiteTuple = ()
         if v.ONLYTEST_BASIC4DAILY:
-            selCasesDic = basicCase.generateCaseDict(basicCase.BasicCase4DualBand)
+            ba = basicCase.BasicCase()
+            selCasesDic = ba.generateCaseDict(data.BasicCase4DualBand)
         else:
             selCasesDic = self.TestCaseGenerator()
         for i in selCasesDic:

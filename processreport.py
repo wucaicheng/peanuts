@@ -937,7 +937,7 @@ class GetIxChariotThroughput(threading.Thread):
     def __init__(self, report):
         threading.Thread.__init__(self)
         self.running = False
-        self.report = report
+        self.report2 = report
 
     def run(self):
         self.running = True
@@ -948,7 +948,7 @@ class GetIxChariotThroughput(threading.Thread):
                 print "IxChariot result xlsx file no exists!"
                 return
 
-            wb['result'][XLSX_DATA_POSITION["title"]].value = self.report
+            wb['result'][XLSX_DATA_POSITION["title"]].value = self.report2
             for test in THROUGHPUT_RESULT.keys():
                 wb['result'][XLSX_DATA_POSITION[test]].value = THROUGHPUT_RESULT[test]
 
@@ -967,9 +967,9 @@ if __name__ == '__main__':
     # info.join()
     # t = GetTestModule("R1CM 开发版 2.11.13.log".decode('utf8').encode('gbk'))
     # t.start()
-    THROUGHPUT_RESULT = {'3': '333'}
-    REPORT_NAME = "fengjiang50"
-    info = GetIxChariotThroughput()
+    THROUGHPUT_RESULT = {'lan2wifi_2g_1_20_tx': '50.4'}
+    REPORT_NAME = "fengjiang  50"
+    info = GetIxChariotThroughput(REPORT_NAME)
     info.start()
     info.join()
     print("******************END*******************")
