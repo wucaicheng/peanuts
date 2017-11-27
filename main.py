@@ -1027,7 +1027,7 @@ class TestSuitePage(wx.Panel):
 
         if testKeepGoing is False: # click cancel
             if len(v.THROUGHPUT_RESULT) is not 0:
-                getThroughputxlsx = pr.GetIxChariotThroughput(v.REPORT_NAME)
+                getThroughputxlsx = pr.GetIxChariotThroughput()
                 getThroughputxlsx.start()
                 getThroughputxlsx.join()
 
@@ -1049,7 +1049,7 @@ class TestSuitePage(wx.Panel):
         #     co.setAdbReboot(v.ANDROID_SERIAL_NUM, v.DEVICE_STATUS_LOG)
 
         if len(v.THROUGHPUT_RESULT) is not 0:
-            getThroughputxlsx = pr.GetIxChariotThroughput(v.REPORT_NAME)
+            getThroughputxlsx = pr.GetIxChariotThroughput()
             getThroughputxlsx.start()
             getThroughputxlsx.join()
 
