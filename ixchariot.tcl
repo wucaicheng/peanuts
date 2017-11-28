@@ -80,9 +80,10 @@ if {[catch {chrTest start $test}]} {
 if {![chrTest isStopped $test $timeout]} { 
   #puts "ERROR: Test didn't stop in $timeout second!"
   chrTest stop $test
+  chrTest abandon $test
   set stopCheck 0
   set loop 1
-  while {!($stopCheck) && ($loop <6)} {
+  while {!($stopCheck) && ($loop <10)} {
    set stopCheck [chrTest isStopped $test 2]
    incr loop
    }
