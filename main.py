@@ -105,7 +105,7 @@ class GeneralPage(wx.Panel):
         # DUT connection ctrl
         typeLbl = wx.StaticText(self, -1, 'Device:')
         self.type = wx.Choice(self, -1, choices=v.DUT_MODULE_LIST)
-        self.type.SetSelection(0)
+        self.type.SetSelection(6)
         self.Bind(wx.EVT_CHOICE, self.EvtChoice, self.type)
 
         connLbl = wx.StaticText(self, -1, "Shell:")
@@ -861,7 +861,7 @@ class TestSuitePage(wx.Panel):
         self.selUploadLog = wx.CheckBox(self, -1, 'Upload Log')
         self.selUploadLog.SetValue(False)
         self.selSendMail = wx.CheckBox(self, -1, 'Send Mail')
-        # self.selSendMail.SetValue(True)
+        self.selSendMail.SetValue(True)
         self.selTest4Daily = wx.CheckBox(self, -1, 'BasicTest')
 
         self.Bind(wx.EVT_CHECKBOX, self.EvtSel2g, self.sel2gCheck)
