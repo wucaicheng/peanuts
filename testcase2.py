@@ -1895,7 +1895,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         bw = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
         bw_Broadcom = getBroadcomBW(self.dut, "2g", self.__class__.__name__)
 
-        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G', 'R4']:
             if bw == v.R1CM_MAX_RATE_2G['20']:
                 pass
             else:
@@ -1920,6 +1920,11 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
                 pass
             else:
                 self.fail("Auto BW isnot correct.")
+        if v.DUT_MODULE == 'R4C':
+            if bw == v.R4C_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Auto BW isnot correct.")
 
     def autochan_BW_check_5g(self):
 
@@ -1934,7 +1939,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
         bw_Broadcom = getBroadcomBW(self.dut, "5g", self.__class__.__name__)
 
-        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G', 'R4']:
             if bw == v.R1CM_MAX_RATE_5G['80']:
                 pass
             else:
@@ -1944,7 +1949,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
                 pass
             else:
                 self.fail("Auto BW isnot correct.")
-        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+        if v.DUT_MODULE in ['R1CL', 'R3L', 'R4C']:
             self.fail("Donot Support 5G.")
         if v.DUT_MODULE == 'R3P':
             if bw == v.R3P_MAX_RATE_5G['80']:
@@ -1971,7 +1976,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         bw = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
         bw_Broadcom = getBroadcomBW(self.dut, "2g", self.__class__.__name__)
 
-        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G', 'R4']:
             if bw == v.R1CM_MAX_RATE_2G['40']:
                 pass
             else:
@@ -1996,6 +2001,11 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
                 pass
             else:
                 self.fail("Channel 1 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R4C':
+            if bw == v.R4C_MAX_RATE_2G['40']:
+                pass
+            else:
+                self.fail("Auto BW isnot correct.")
 
     def chan6_BW20_CHECK_2g(self):
 
@@ -2011,7 +2021,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         bw = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
         bw_Broadcom = getBroadcomBW(self.dut, "2g", self.__class__.__name__)
 
-        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G', 'R4']:
             if bw == v.R1CM_MAX_RATE_2G['20']:
                 pass
             else:
@@ -2036,6 +2046,11 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
                 pass
             else:
                 self.fail("Channel 6 BW20 isnot correct.")
+        if v.DUT_MODULE == 'R4C':
+            if bw == v.R4C_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Auto BW isnot correct.")
 
     def chan11_BW40_CHECK_2g(self):
 
@@ -2051,7 +2066,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         bw = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
         bw_Broadcom = getBroadcomBW(self.dut, "2g", self.__class__.__name__)
 
-        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G', 'R4']:
             if bw == v.R1CM_MAX_RATE_2G['40']:
                 pass
             else:
@@ -2076,6 +2091,11 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
                 pass
             else:
                 self.fail("Channel 11 BW40 isnot correct.")
+        if v.DUT_MODULE == 'R4C':
+            if bw == v.R4C_MAX_RATE_2G['40']:
+                pass
+            else:
+                self.fail("Auto BW isnot correct.")
 
     def chan13_BWauto_CHECK_2g(self):
 
@@ -2090,7 +2110,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         bw = getWlanBWRate(self.dut, "2g", self.__class__.__name__)
         bw_Broadcom = getBroadcomBW(self.dut, "2g", self.__class__.__name__)
 
-        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G', 'R4']:
             if bw == v.R1CM_MAX_RATE_2G['20']:
                 pass
             else:
@@ -2115,6 +2135,11 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
                 pass
             else:
                 self.fail("Channel 13 BWauto isnot correct.")
+        if v.DUT_MODULE == 'R4C':
+            if bw == v.R4C_MAX_RATE_2G['20']:
+                pass
+            else:
+                self.fail("Auto BW isnot correct.")
 
     def chan36_BW20_CHECK_5g(self):
 
@@ -2130,7 +2155,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
         bw_Broadcom = getBroadcomBW(self.dut, "5g", self.__class__.__name__)
 
-        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G', 'R4']:
             if bw == v.R1CM_MAX_RATE_5G['20']:
                 pass
             else:
@@ -2140,7 +2165,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
                 pass
             else:
                 self.fail("Channel 36 BW20 isnot correct.")
-        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+        if v.DUT_MODULE in ['R1CL', 'R3L', 'R4C']:
             self.fail("Donot Support 5G.")
         if v.DUT_MODULE == 'R3P':
             if bw == v.R3P_MAX_RATE_5G['20']:
@@ -2167,7 +2192,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
         bw_Broadcom = getBroadcomBW(self.dut, "5g", self.__class__.__name__)
 
-        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G', 'R4']:
             if bw == v.R1CM_MAX_RATE_5G['40']:
                 pass
             else:
@@ -2177,7 +2202,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
                 pass
             else:
                 self.fail("Channel 48 BW40 isnot correct.")
-        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+        if v.DUT_MODULE in ['R1CL', 'R3L', 'R4C']:
             self.fail("Donot Support 5G.")
         if v.DUT_MODULE == 'R3P':
             if bw == v.R3P_MAX_RATE_5G['40']:
@@ -2204,7 +2229,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
         bw_Broadcom = getBroadcomBW(self.dut, "5g", self.__class__.__name__)
 
-        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G', 'R4']:
             if bw == v.R1CM_MAX_RATE_5G['80']:
                 pass
             else:
@@ -2214,7 +2239,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
                 pass
             else:
                 self.fail("Channel 52 BW80 isnot correct.")
-        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+        if v.DUT_MODULE in ['R1CL', 'R3L', 'R4C']:
             self.fail("Donot Support 5G.")
         if v.DUT_MODULE == 'R3P':
             if bw == v.R3P_MAX_RATE_5G['80']:
@@ -2241,7 +2266,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
         bw_Broadcom = getBroadcomBW(self.dut, "5g", self.__class__.__name__)
 
-        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G', 'R4']:
             if bw == v.R1CM_MAX_RATE_5G['20']:
                 pass
             else:
@@ -2251,7 +2276,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
                 pass
             else:
                 self.fail("Channel 64 BW20 isnot correct.")
-        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+        if v.DUT_MODULE in ['R1CL', 'R3L', 'R4C']:
             self.fail("Donot Support 5G.")
         if v.DUT_MODULE == 'R3P':
             if bw == v.R3P_MAX_RATE_5G['20']:
@@ -2278,7 +2303,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
         bw_Broadcom = getBroadcomBW(self.dut, "5g", self.__class__.__name__)
 
-        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G', 'R4']:
             if bw == v.R1CM_MAX_RATE_5G['40']:
                 pass
             else:
@@ -2288,7 +2313,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
                 pass
             else:
                 self.fail("Channel 157 BW40 isnot correct.")
-        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+        if v.DUT_MODULE in ['R1CL', 'R3L', 'R4C']:
             self.fail("Donot Support 5G.")
         if v.DUT_MODULE == 'R3P':
             if bw == v.R3P_MAX_RATE_5G['40']:
@@ -2314,7 +2339,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
         bw = getWlanBWRate(self.dut, "5g", self.__class__.__name__)
         bw_Broadcom = getBroadcomBW(self.dut, "5g", self.__class__.__name__)
 
-        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G', 'R4']:
             if bw == v.R1CM_MAX_RATE_5G['20']:
                 pass
             else:
@@ -2324,7 +2349,7 @@ class AP_MIXEDPSK_BW_CHECK(TestCase):
                 pass
             else:
                 self.fail("Channel 165 BWauto isnot correct.")
-        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+        if v.DUT_MODULE in ['R1CL', 'R3L', 'R4C']:
             self.fail("Donot Support 5G.")
         if v.DUT_MODULE == 'R3P':
             if bw == v.R3P_MAX_RATE_5G['20']:
@@ -3601,13 +3626,13 @@ class AP_BSD_BW_CHECK(TestCase):
         bw_Broadcom_2g = getBroadcomBW(self.dut2, "2g", self.__class__.__name__)
         bw_Broadcom_5g = getBroadcomBW(self.dut2, "5g", self.__class__.__name__)
 
-        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G', 'R4']:
             self.assertEqual(bw_2g, v.R1CM_MAX_RATE_2G['20'], 'BSD 2g Auto BW isnot correct.')
             self.assertEqual(bw_5g, v.R1CM_MAX_RATE_5G['80'], 'BSD 5g Auto BW isnot correct.')
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
             self.assertEqual(bw_Broadcom_2g, 20, 'BSD 2g Auto BW isnot correct.')
             self.assertEqual(bw_Broadcom_5g, 80, 'BSD 5g Auto BW isnot correct.')
-        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+        if v.DUT_MODULE in ['R1CL', 'R3L', 'R4C']:
             self.fail("Device Donot Support BSD.")
         if v.DUT_MODULE == 'R3P':
             self.assertEqual(bw_2g, v.R3P_MAX_RATE_2G['20'], 'BSD 2g Auto BW isnot correct.')
@@ -3635,13 +3660,13 @@ class AP_BSD_BW_CHECK(TestCase):
         bw_Broadcom_2g = getBroadcomBW(self.dut2, "2g", self.__class__.__name__)
         bw_Broadcom_5g = getBroadcomBW(self.dut2, "5g", self.__class__.__name__)
 
-        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G', 'R4']:
             self.assertEqual(bw_2g, v.R1CM_MAX_RATE_2G['40'], 'BSD 2g BW40 isnot correct.')
             self.assertEqual(bw_5g, v.R1CM_MAX_RATE_5G['20'], 'BSD 5g BW20 isnot correct.')
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
             self.assertEqual(bw_Broadcom_2g, 40, 'BSD 2g BW40 isnot correct.')
             self.assertEqual(bw_Broadcom_5g, 20, 'BSD 5g BW20 isnot correct.')
-        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+        if v.DUT_MODULE in ['R1CL', 'R3L', 'R4C']:
             self.fail("Device Donot Support BSD.")
         if v.DUT_MODULE == 'R3P':
             self.assertEqual(bw_2g, v.R3P_MAX_RATE_2G['40'], 'BSD 2g BW40 isnot correct.')
@@ -3669,13 +3694,13 @@ class AP_BSD_BW_CHECK(TestCase):
         bw_Broadcom_2g = getBroadcomBW(self.dut2, "2g", self.__class__.__name__)
         bw_Broadcom_5g = getBroadcomBW(self.dut2, "5g", self.__class__.__name__)
 
-        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G']:
+        if v.DUT_MODULE in ['R1CM', 'R3', 'R3A', 'R3G', 'R4']:
             self.assertEqual(bw_2g, v.R1CM_MAX_RATE_2G['20'], 'BSD 2g BW20 isnot correct.')
             self.assertEqual(bw_5g, v.R1CM_MAX_RATE_5G['40'], 'BSD 5g BW40 isnot correct.')
         if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
             self.assertEqual(bw_Broadcom_2g, 20, 'BSD 2g BW20 isnot correct.')
             self.assertEqual(bw_Broadcom_5g, 40, 'BSD 5g BW40 isnot correct.')
-        if v.DUT_MODULE == 'R1CL' or v.DUT_MODULE == 'R3L':
+        if v.DUT_MODULE in ['R1CL', 'R3L', 'R4C']:
             self.fail("Device Donot Support BSD.")
         if v.DUT_MODULE == 'R3P':
             self.assertEqual(bw_2g, v.R3P_MAX_RATE_2G['20'], 'BSD 2g BW20 isnot correct.')
@@ -4686,7 +4711,7 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
 
         # connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
         checkSTA = True
-        if v.DUT_MODULE in ['R1CM', "R3", "R3P", "R3A", "R3G", "R1CL", "R3L"]:
+        if v.DUT_MODULE in ['R1CM', "R3", "R3P", "R3A", "R3G", "R1CL", "R3L", 'R4', 'R4C']:
             checkSTA = chkStaOnline(self.dut2, 'MTK_guest', result['ip'], self.__class__.__name__)
         if v.DUT_MODULE in ['R1D', 'R2D']:
             checkSTA = chkStaOnline(self.dut2, 'Broadcom_guest', result['ip'], self.__class__.__name__)
@@ -5934,7 +5959,7 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
 
         wanIfname = v.WAN_IFNAME.get(v.DUT_MODULE)
         wanInBrlan = wanIfInBrlan(self.dut, wanIfname, self.__class__.__name__)
-        if v.DUT_MODULE not in ["R3P", "R3G", "R2D"]:
+        if v.DUT_MODULE not in ["R3P", "R3G", "R2D", "R4"]:
             self.assertTrue(wanInBrlan, "wan port isnot in br-lan.")
         else:
             self.assertTrue(True)

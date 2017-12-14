@@ -9,7 +9,7 @@ ONLYTEST_BASIC4DAILY = 0
 
 SAVE_BTN_FLAG = False  # represent save button pressed or not
 
-DUT_MODULE_LIST = ['R1D', 'R1CM', 'R2D', "R1CL", "R3", "R3L", "R3P", "R3D", "PLW", "R3A", "R3G"]
+DUT_MODULE_LIST = ['R1D', 'R1CM', 'R2D', "R1CL", "R3", "R3L", "R3P", "R3D", "PLW", "R3A", "R3G", "R4", "R4C"]
 DUT_MODULE = DUT_MODULE_LIST[0]
 HOST = "192.168.31.1"
 HOST_UPPER = "192.168.100.1"
@@ -53,6 +53,9 @@ R2D_MAX_RATE_2G = {'20': 144, '40': 300}
 R2D_MAX_RATE_5G = {'20': 173, '40': 400, '80': 866}
 R1D_MAX_RATE_2G = {'20': 144, '40': 300}
 R1D_MAX_RATE_5G = {'20': 173, '40': 400, '80': 866}
+R4_MAX_RATE_2G = {'20': 144, '40': 300}
+R4_MAX_RATE_5G = {'20': 173, '40': 400, '80': 867}
+R4C_MAX_RATE_2G = {'20': 216, '40': 450}
 """
 connection_type = 1 represent ssh
                   2 represent telnet
@@ -79,7 +82,9 @@ WAN_IFNAME = {
     "R3P": 'eth1',
     "R3D": 'eth0',
     "R3A": 'eth0.2',
-    "R3G": 'eth1'
+    "R3G": 'eth1',
+    "R4": 'eth1',
+    "R4C": 'eth0',
 }
 # -------------pc telnet------------------#
 PC_USERNAME = 'jac-pc2'
